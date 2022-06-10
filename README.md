@@ -68,3 +68,32 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## File structure
+
+需要先安装 tree 工具
+mac下安装
+```bash
+  brew install tree
+```
+使用：
+```bash
+tree -L 1 # L 1 指只显示一级目录，如果要查看的目录包含中文，使用tree -N
+```
+结果：
+.
+├── App.js
+├── App.test.js
+├── api                      // 网络请求代码、工具类函数和相关配置
+├── application              // 项目核心代码
+├── assets                   // 字体配置及全局样式
+├── baseUI                   // 基础UI轮子
+├── components               // 可复用的UI组件
+├── index.js                 
+├── logo.svg
+├── reportWebVitals.js      // 性能监控
+├── routes                  // 路由配置文件
+├── serviceWorker.js        // PWA离线应用配置
+├── setupTests.js
+├── store                   // redux相关文件
+└── style.js                // 默认样式

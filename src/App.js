@@ -1,13 +1,17 @@
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import { GlobalStyle } from "./style";
 
+import routes from "./routes";
+import { renderRoutes } from "react-router-config";
 
 function App() {
+  
   return (
-    <div className="App">
+    <Router>
       <GlobalStyle/>
-      
-      <h2> 欢迎你大帅比 </h2>
-    </div>
+      { renderRoutes(routes) }
+    </Router>
   );
 }
 
