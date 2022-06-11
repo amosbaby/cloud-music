@@ -13,10 +13,11 @@ function RecommendList(props){
           {/* 加参数可减小请求的图片资源大小 */}
           <img src={item.picUrl+"?param=300x300"} alt="music"/>
           <div className="play-count">
-          <ion-icon name="play-circle-outline" className="play"></ion-icon>
-          <span className="count"> {formatPlayCount(item.playCount)} </span>
+            <ion-icon name="play-circle-outline" className="play"></ion-icon>
+             <span className="count"> {formatPlayCount(item.playCount)} </span>
           </div>
         </div>
+        <div className="desc"> {item.name} </div>
       </ListItem>
     )
   })

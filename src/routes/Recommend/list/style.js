@@ -59,7 +59,8 @@ export const ListItem = styled.div`
       height: 100%;
       border: 3px;
     }
-    .desc{
+  }
+  .desc{
       overflow: hidden;
       margin-top: 2px;
       padding: 0 2px;
@@ -68,5 +69,4 @@ export const ListItem = styled.div`
       font-size: ${GlobalStyle["font-size-s"]};
       color: ${GlobalStyle["font-color-desc"]};
     }
-  }
 `
