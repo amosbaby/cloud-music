@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-export const baseURL = 'http://49.234.14.84:3000/'
+export const baseURL = '/api'
 
 // 创建axios 实例
 const axiosInstance = axios.create({
-  baseURL
+  baseURL,
 })
 
 axiosInstance.interceptors.response.use(
