@@ -1,9 +1,9 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import Home from "./Home";
-import Rank from "./Rank";
-import Recommend from "./Recommend";
-import Singers from "./Singers";
+import Home from "../application/Home";
+import Rank from "../application/Rank";
+import Recommend from "../application/Recommend";
+import Singers from "../application/Singers";
 
  const routes = [{
   path:'/',
