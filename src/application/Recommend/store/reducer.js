@@ -12,6 +12,8 @@ const fn = (state=defaultState,action)=>{
         return state.set('bannerList',action.data)
     case actionTypes.UPDATE_RECOMMEND_LIST:
       return state.set('recommendList',action.data)
+    case actionTypes.UPDATE_LOADING_STATUS:
+        return state.set('loadingStatus',action.data)
     default:
       return  state
   }

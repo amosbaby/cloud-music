@@ -12,6 +12,11 @@ export const updateRecommendList = (data)=>({
   data: fromJS(data)
 })
 
+export const updateLoadingStatus = (data)=>({
+  type: actionTypes.UPDATE_LOADING_STATUS,
+  data
+})
+
 export const getBannerList = () => {
   return (dispatch) => {
     getBannerListRequest().then(res=>{
@@ -26,6 +31,7 @@ export const getRecommendList = () => {
   return (dispatch) => {
     getRecommendListRequest().then(res => {
       dispatch(updateRecommendList(res.result))
+      dispatch(updateLoadingStatus(false))
     }).catch(()=>{
       console.log('推荐列表数据传输错误')
     })
