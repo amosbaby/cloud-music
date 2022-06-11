@@ -32,6 +32,8 @@ export const ListItem = styled.div`
       background: linear-gradient(hsla(0,0%,43%,.4),hsla(0,0%,100%,0));
     }
     position: relative;
+    /* 图片加载时需要占位，否则better-scroll不能正确获得子元素的高度，导致content的判定高度小于wrapper。
+      RecommendList里的img_wrapper设置 height: 0; padding-bottom: 100%; 就是为了给图片一个占位高度 */
     height: 0;
     padding-bottom: 100%;
     .play-count{
