@@ -1,21 +1,30 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Scroll from "../../components/scroll";
 import Slider from "../../components/slider";
 import RecommendList from "./list";
 import { Content } from "./style";
-import { mapStateToProps, mapDispatchToProps } from './utils'
+import * as actionTypes from './store/actionCreators'
+
 
 function Recommend(props){
 
-  const { getBannerDataDispatch, getRecommendDataDispatch } = props
+  // const { getBannerDataDispatch, getRecommendDataDispatch } = props
+  const dispatch = useDispatch()
   useEffect(()=>{
-    getBannerDataDispatch()
-    getRecommendDataDispatch()
+    dispatch(actionTypes.getBannerList())
+    dispatch(actionTypes.getRecommendList())
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const {bannerList,recommendList} = props
+  // const {bannerList,recommendList} = props
+  const bannerList = useSelector((state) => {
+    return state.recommend.getIn(['bannerList'])
+  })
+  const recommendList = useSelector((state) => {
+    return state.recommend.getIn(['recommendList'])
+  })
+
   const bannerListJS = bannerList ? bannerList.toJS() : []
   const recommendListJS = recommendList ? recommendList.toJS() : []
 
@@ -32,4 +41,4 @@ function Recommend(props){
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(Recommend))
+export default React.memo(Recommend)

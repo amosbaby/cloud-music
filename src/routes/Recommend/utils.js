@@ -1,3 +1,6 @@
+/** 
+ * 使用 useDispatch 与 useSelector代替
+ */
 import * as actionTypes from './store/actionCreators'
 const mapStateToProps = (state) => ({
   // 勿在此处使用toJS，否则每次比较时都会不同
