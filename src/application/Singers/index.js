@@ -2,30 +2,31 @@ import React, { useState } from "react";
 import { alphaTypes, categoryTypes } from "../../api/horizon-data";
 import Horizon from "../../baseUI/Horizon";
 import { ListContainer, NavContainer } from "./style";
-import { mapStateToProps,mapDispatchToProps } from "./store/utils";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { List, ListItem } from "./style";
 import Scroll from "../../components/scroll";
+import { getSingerList } from "./store/actionCreators";
 
 function Singers(props){
   
-  const [category,setCategory] = useState('')
+  const [category,setCategory] = useState({type:-1,area:-1,key:'1000'})
   const [alpha,setAlpha] = useState('')
-  const {getSingerListDispatch} = props
+  
+  const singerList = useSelector((state) => {
+    return state.singers.getIn(['singerList'])
+  })
+  const dispatch = useDispatch()
   const handleCategoryClick = (index) => {
     const value = categoryTypes[index]
     setCategory(value)
-    getSingerListDispatch(value,alpha)
+    dispatch(getSingerList(value.type,value.area,alpha))
   }
 
   const handleAlphaClick = (index) => {
     const value = alphaTypes[index]
     setAlpha(value.key)
-    getSingerListDispatch(category,value.key)
+    dispatch(getSingerList(category.type,category.area,value.key))
   }
-
-
-  const {singerList} = props
 
   const singersListJS = singerList ? singerList.toJS() : []
 
@@ -63,4 +64,4 @@ function Singers(props){
   )
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(React.memo(Singers))
+export default React.memo(Singers)
