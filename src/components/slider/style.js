@@ -31,7 +31,7 @@ export const SliderContainer = styled.div`
     .slider-image{
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: fill;
       }
     .swiper-pagination-bullet-active{
       background: ${GlobalStyle["theme-color"]};

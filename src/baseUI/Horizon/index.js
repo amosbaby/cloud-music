@@ -23,12 +23,12 @@ function Horizon(props){
         <List>
             <span> {title} </span>
             {
-              list.map((item) => {
+              list.map((item,index) => {
                 return (
                   <ListItem 
                     key={item.key}
                     className={preValue === item.key ? 'selected' : ''}
-                    onClick={() => handleClick(item.key)}
+                    onClick={() => handleClick(index)}
                   >
                     {item.name}
                   </ListItem>
