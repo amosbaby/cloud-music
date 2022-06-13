@@ -5,7 +5,7 @@ import { EnterLoading, ListContainer, NavContainer } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { List, ListItem } from "./style";
 import Scroll from "../../components/scroll";
-import { getMoreSingerList, getSingerList, updatePullDownLoading, updatePullUpLoading } from "./store/actionCreators";
+import { getHotSingerList, getMoreSingerList, getSingerList, updatePullDownLoading, updatePullUpLoading } from "./store/actionCreators";
 import Loading from "../../components/loading";
 import LazyLoad,{forceCheck} from 'react-lazyload';
 import { CategoryDataContext, UPDATE_ALPHA, UPDATE_CATEGORY } from "../../shared-status";
@@ -16,22 +16,26 @@ function Singers(props){
  
   const dispatch = useDispatch()
 
-  useEffect(()=>{
-    dispatch(getSingerList(category.type,category.area,alpha))
-  },[category,alpha,dispatch])
-  
   const singerList = useSelector((state) => {
     return state.singers.getIn(['singerList'])
   })
 
+  useEffect(()=>{
+    if(!singerList.size){
+      dispatch(getHotSingerList())
+    }
+  },[singerList,dispatch])
+  
   const handleCategoryClick = (index) => {
     const data = categoryTypes[index]
     sharedDataDispatch({type: UPDATE_CATEGORY, data })
+    dispatch(getSingerList(category.type,category.area,alpha))
   }
 
   const handleAlphaClick = (index) => {
     const value = alphaTypes[index]
     sharedDataDispatch({type: UPDATE_ALPHA, data:value.key })
+    dispatch(getSingerList(category.type,category.area,alpha))
   }
 
   const singersListJS = singerList ? singerList.toJS() : []
