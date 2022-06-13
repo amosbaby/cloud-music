@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { alphaTypes, categoryTypes } from "../../api/horizon-data";
 import Horizon from "../../baseUI/Horizon";
 import { EnterLoading, ListContainer, NavContainer } from "./style";
@@ -8,11 +8,12 @@ import Scroll from "../../components/scroll";
 import { getMoreSingerList, getSingerList, updatePullDownLoading, updatePullUpLoading } from "./store/actionCreators";
 import Loading from "../../components/loading";
 import LazyLoad,{forceCheck} from 'react-lazyload';
+import { CategoryDataContext, UPDATE_ALPHA, UPDATE_CATEGORY } from "../../shared-status";
 
 function Singers(props){
-  
-  const [category,setCategory] = useState({type:-1,area:-1,key:'1000'})
-  const [alpha,setAlpha] = useState('')
+  const { data, dispatch : sharedDataDispatch } = useContext(CategoryDataContext)
+  const { category, alpha } = data.toJS()
+ 
   const dispatch = useDispatch()
 
   useEffect(()=>{
@@ -24,13 +25,13 @@ function Singers(props){
   })
 
   const handleCategoryClick = (index) => {
-    const value = categoryTypes[index]
-    setCategory(value)
+    const data = categoryTypes[index]
+    sharedDataDispatch({type: UPDATE_CATEGORY, data })
   }
 
   const handleAlphaClick = (index) => {
     const value = alphaTypes[index]
-    setAlpha(value.key)
+    sharedDataDispatch({type: UPDATE_ALPHA, data:value.key })
   }
 
   const singersListJS = singerList ? singerList.toJS() : []

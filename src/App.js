@@ -1,11 +1,11 @@
 import React from "react";
 import { renderRoutes } from "react-router-config";
 import { Provider } from "react-redux";
-
 import { GlobalStyle } from "./style";
 import routes from "./routes";
 import store from "./store";
 import { HashRouter } from "react-router-dom";
+import { SharedStatus } from "./shared-status";
 
 
 function App() {
@@ -14,7 +14,9 @@ function App() {
     <Provider store={store}>
       <HashRouter>
         <GlobalStyle/>
-        { renderRoutes(routes) }
+        <SharedStatus>
+          { renderRoutes(routes) }
+        </SharedStatus>
       </HashRouter>
     </Provider>
   );
