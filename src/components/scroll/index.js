@@ -1,9 +1,10 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from "react"
 import * as PropTypes from 'prop-types';
 import Bscroll from 'better-scroll'
 import { PullDownLoading, PullUpLoading, ScrollContainer } from "./style";
 import Loading from "../loading";
 import LoadingV2 from "../loadingV2";
+import { debounce } from "../../api/utils";
 
 const Scroll = forwardRef((props,ref)=>{
   const [bScroll,setBScroll] = useState(null)
@@ -30,6 +31,14 @@ const Scroll = forwardRef((props,ref)=>{
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   const {onScroll,pullDown,pullUp,refresh} = props
+
+  const pullUpDebounce = useMemo(() => {
+    return debounce(pullUp,300)
+  },[pullUp])
+  const pullDownDebounce = useMemo(() => {
+    return debounce(pullDown,300)
+  },[pullDown])
+
   // 监听scroll
   useEffect(()=>{
     if(!bScroll || !onScroll)return 
@@ -46,13 +55,13 @@ const Scroll = forwardRef((props,ref)=>{
     if(!bScroll || !pullUp)return 
     bScroll.on('scrollEnd',()=>{
       if(bScroll.y <= bScroll.maxScrollY + 100){
-        pullUp()
+        pullUpDebounce()
       }
     })
     return () => {
       bScroll.off('scrollEnd')
     }
-  },[pullUp,bScroll])
+  },[pullUp,pullUpDebounce,bScroll])
 
   // 监听下拉刷新
   useEffect(()=>{
@@ -60,13 +69,13 @@ const Scroll = forwardRef((props,ref)=>{
     bScroll.on('touchEnd',(pos)=>{
       // 下拉松手后会有一个位移，只要大于50px就执行
       if(pos.y > 50){
-        pullDown()
+        pullDownDebounce()
       }
     })
     return () => {
       bScroll.off('scrollEnd')
     }
-  },[pullDown,bScroll])
+  },[pullDown,pullDownDebounce,bScroll])
 
   // 刷新，每次都执行
   useEffect(()=>{

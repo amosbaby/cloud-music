@@ -13,3 +13,44 @@ export function formatPlayCount(count){
     return Math.floor (count / 10000000)/ 10 + "亿";
   }
 }
+
+/**
+ * 防抖
+ * @param {Function} fn 需要防抖的函数
+ * @param {number} delay 防抖延迟时间，在此期间重新触发会导致重新计时
+ * @returns 
+ */
+export function debounce(fn, delay){
+  let timer
+  return (...args)=>{
+    if(timer){
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      fn.apply(this,args)
+      clearTimeout(timer)
+      timer = null
+    }, delay);
+  }
+}
+
+/**
+ * 节流
+ * @param {Function} fn 需要节流的函数
+ * @param {number} delay 节流时间
+ */
+export function throttle(fn, delay){
+  let isBlock = false
+  let timer
+  return (...args) => {
+    if(isBlock){
+      return
+    }
+    fn.apply(this,args)
+    timer = setTimeout(() => {
+      isBlock = false
+      clearTimeout(timer)
+      timer = null
+    }, delay);
+  }
+}

@@ -55,6 +55,7 @@ export const updatePullUpLoading = (data)=>({
 export const getHotSingerList = (offset = 0) => {
   return (dispatch)=>{
     getTopSingerListRequest(offset).then(res=>{
+      dispatch(updatePageIndex(offset+1))
       dispatch(updateSingerList(res.artists));
       dispatch(updateEnterLoading(false))
       dispatch(updatePullDownLoading(false))
@@ -64,9 +65,10 @@ export const getHotSingerList = (offset = 0) => {
 
 export const getMoreHotSingerList = ()=>{
   return (dispatch,getState)=>{
-    const offset = getState().getIn(['singers','pageIndex'])
-    const singerList = getState().getIn(['singers','singerList']).toJS()
+    const offset = getState().singers.getIn(['pageIndex'])
+    const singerList = getState().singers.getIn(['singerList']).toJS()
     getTopSingerListRequest(offset).then(res=>{
+      dispatch(updatePageIndex(offset+1))
       dispatch(updateSingerList([...singerList,...res.artists]));
       dispatch(updateEnterLoading(false))
       dispatch(updatePullDownLoading(false))
@@ -84,6 +86,7 @@ export const getMoreHotSingerList = ()=>{
 export const getSingerList = (type,area,alpha,offset=0) => {
   return (dispatch)=>{
     getSignerListRequest(type,area,alpha,offset).then(res=>{
+      dispatch(updatePageIndex(offset+1))
       dispatch(updateSingerList(res.artists));
       dispatch(updateEnterLoading(false))
       dispatch(updatePullDownLoading(false))
@@ -96,6 +99,7 @@ export const getMoreSingerList = (type,area,alpha) => {
     const offset = getState().singers.getIn(['pageIndex'])
     const singerList = getState().singers.getIn(['singerList'])?.toJS()
     getSignerListRequest(type,area,alpha,offset).then(res=>{
+      dispatch(updatePageIndex(offset+1))
       dispatch(updateSingerList([...singerList,...res.artists]));
       dispatch(updateEnterLoading(false))
       dispatch(updatePullUpLoading(false))

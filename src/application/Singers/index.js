@@ -7,6 +7,7 @@ import { List, ListItem } from "./style";
 import Scroll from "../../components/scroll";
 import { getMoreSingerList, getSingerList, updatePullDownLoading, updatePullUpLoading } from "./store/actionCreators";
 import Loading from "../../components/loading";
+import LazyLoad,{forceCheck} from 'react-lazyload';
 
 function Singers(props){
   
@@ -42,7 +43,9 @@ function Singers(props){
             return (
               <ListItem key={item.accountId+''+index}>
                 <div className="img_wrapper">
-                  <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music" />
+                  <LazyLoad placeholder={<img width="100%" height="100%" src={require('./singer.png')} alt="music"/>}> 
+                     <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music" />
+                  </LazyLoad>
                   <span className="name"> {item.name} </span>
                 </div>
               </ListItem>
@@ -81,7 +84,7 @@ function Singers(props){
       <Horizon list={alphaTypes} title="首字母: " handleClick={handleAlphaClick} preValue={alpha}></Horizon>
     </NavContainer>
     <ListContainer>
-      <Scroll pullUp={handlePullUp} pullDown={handlePullDown} pullDownLoading={pullDownLoading} pullUpLoading={pullUpLoading}>
+      <Scroll pullUp={handlePullUp} pullDown={handlePullDown} pullDownLoading={pullDownLoading} pullUpLoading={pullUpLoading} onScroll={forceCheck}>
         { renderSingerList() }
       </Scroll>
     </ListContainer>

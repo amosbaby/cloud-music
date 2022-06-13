@@ -30,6 +30,6 @@ export const getTopSingerListRequest = (offset) => {
  * @param {number} offset 当前位置
  * @returns 
  */
-export const getSignerListRequest = (type,area, alpha, offset) => {
+export const getSignerListRequest = (type,area, alpha, offset,initial=30) => {
   return axiosInstance.get(`/artist/list?type=${type}&area=${area}&initial=${alpha.toLowerCase()}&offset=${offset}`)
 }
