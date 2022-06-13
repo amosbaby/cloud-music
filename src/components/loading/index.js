@@ -12,7 +12,7 @@ const loading = keyframes`
 `
 const LoadingWrapper = styled.div`
   >div {
-    position: fixed;
+    position: absolute;
     z-index: 1000;
     left: 0; 
     right: 0;  
@@ -30,9 +30,9 @@ const LoadingWrapper = styled.div`
     animation-delay: -0.7s;
   }
 `
-function Loading ()  {
+function Loading (props)  {
   return (
-    <LoadingWrapper>
+    <LoadingWrapper >
       <div></div>
       <div></div>
     </LoadingWrapper>

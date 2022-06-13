@@ -1,31 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { alphaTypes, categoryTypes } from "../../api/horizon-data";
 import Horizon from "../../baseUI/Horizon";
-import { ListContainer, NavContainer } from "./style";
+import { EnterLoading, ListContainer, NavContainer } from "./style";
 import { useDispatch, useSelector } from "react-redux";
 import { List, ListItem } from "./style";
 import Scroll from "../../components/scroll";
-import { getSingerList } from "./store/actionCreators";
+import { getMoreSingerList, getSingerList, updatePullDownLoading, updatePullUpLoading } from "./store/actionCreators";
+import Loading from "../../components/loading";
 
 function Singers(props){
   
   const [category,setCategory] = useState({type:-1,area:-1,key:'1000'})
   const [alpha,setAlpha] = useState('')
+  const dispatch = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getSingerList(category.type,category.area,alpha))
+  },[category,alpha,dispatch])
   
   const singerList = useSelector((state) => {
     return state.singers.getIn(['singerList'])
   })
-  const dispatch = useDispatch()
+
   const handleCategoryClick = (index) => {
     const value = categoryTypes[index]
     setCategory(value)
-    dispatch(getSingerList(value.type,value.area,alpha))
   }
 
   const handleAlphaClick = (index) => {
     const value = alphaTypes[index]
     setAlpha(value.key)
-    dispatch(getSingerList(category.type,category.area,value.key))
   }
 
   const singersListJS = singerList ? singerList.toJS() : []
@@ -49,6 +53,27 @@ function Singers(props){
     )
   }
 
+  const pullDownLoading = useSelector((state) => {
+    return state.singers.getIn(['pullDownLoading'])
+  })
+  const pullUpLoading = useSelector((state) => {
+    return state.singers.getIn(['pullUpLoading'])
+  })
+  const enterLoading = useSelector((state) => {
+    return state.singers.getIn(['enterLoading'])
+  })
+
+  const handlePullUp = () => {
+    dispatch(updatePullUpLoading(true))
+    dispatch(getMoreSingerList(category.type,category.area,alpha))
+  }
+  const handlePullDown = () => {
+    dispatch(updatePullDownLoading(true))
+    dispatch(getSingerList(category.type,category.area,alpha))
+  }
+
+  // const enterLoadingStyle =  {display: enterLoading ? '' : "none",zIndex:100}
+
   return (
    <div>
     <NavContainer>
@@ -56,10 +81,12 @@ function Singers(props){
       <Horizon list={alphaTypes} title="首字母: " handleClick={handleAlphaClick} preValue={alpha}></Horizon>
     </NavContainer>
     <ListContainer>
-      <Scroll>
+      <Scroll pullUp={handlePullUp} pullDown={handlePullDown} pullDownLoading={pullDownLoading} pullUpLoading={pullUpLoading}>
         { renderSingerList() }
       </Scroll>
     </ListContainer>
+    {/* 入场动画加载 */}
+     { enterLoading ? <EnterLoading ><Loading ></Loading></EnterLoading> : null } 
    </div>
   )
 }

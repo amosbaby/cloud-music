@@ -93,12 +93,12 @@ export const getSingerList = (type,area,alpha,offset=0) => {
 
 export const getMoreSingerList = (type,area,alpha) => {
   return (dispatch,getState)=>{
-    const offset = getState().getIn(['singers','pageIndex'])
-    const singerList = getState().getIn(['singers','singerList']).toJS()
+    const offset = getState().singers.getIn(['pageIndex'])
+    const singerList = getState().singers.getIn(['singerList'])?.toJS()
     getSignerListRequest(type,area,alpha,offset).then(res=>{
       dispatch(updateSingerList([...singerList,...res.artists]));
       dispatch(updateEnterLoading(false))
-      dispatch(updatePullDownLoading(false))
+      dispatch(updatePullUpLoading(false))
     }).catch(err=>console.log('歌手数据获取失败!',err))
   }
 }

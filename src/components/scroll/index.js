@@ -1,7 +1,9 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react"
 import * as PropTypes from 'prop-types';
 import Bscroll from 'better-scroll'
-import { ScrollContainer } from "./style";
+import { PullDownLoading, PullUpLoading, ScrollContainer } from "./style";
+import Loading from "../loading";
+import LoadingV2 from "../loadingV2";
 
 const Scroll = forwardRef((props,ref)=>{
   const [bScroll,setBScroll] = useState(null)
@@ -87,13 +89,19 @@ const Scroll = forwardRef((props,ref)=>{
       }
     }
   }))
+  const {pullDownLoading,pullUpLoading} = props
+  const pullDownLoadingStyle =  {display: pullDownLoading ? '' : "none"}
+  const pullUpLoadingStyle =  {display: pullUpLoading ? '' : "none"}
 
   return (
     <ScrollContainer ref={scrollContainerRef}>
       { props.children }
+      {/* 滑倒底部加载动画 */}
+      <PullUpLoading style={pullUpLoadingStyle}> <Loading></Loading> </PullUpLoading>
+      {/* 顶部下来刷新动画 */}
+      <PullDownLoading style={pullDownLoadingStyle}> <LoadingV2></LoadingV2> </PullDownLoading>
     </ScrollContainer>
   )
-
 })
 
 export default Scroll

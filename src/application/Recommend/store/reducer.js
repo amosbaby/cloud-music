@@ -3,7 +3,8 @@ import { fromJS } from 'immutable';
 
 const defaultState = fromJS({
   bannerList:[],
-  recommendList:[]
+  recommendList:[],
+  loadingStatus: true
 })
 
 const fn = (state=defaultState,action)=>{

@@ -38,7 +38,7 @@ function Recommend(props){
 
   return (
     <Content> 
-      { loadingStatus ? <Loading>   </Loading> :  <Scroll className="list" onScroll={forceCheck}>
+      { loadingStatus ? <Loading> </Loading> :  <Scroll className="list" onScroll={forceCheck}>
         <div>
           <Slider bannerList={bannerListJS}/>  
           <RecommendList recommendList={recommendListJS}></RecommendList>

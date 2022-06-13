@@ -4,7 +4,7 @@ import { UPDATE_ENTER_LOADING, UPDATE_PAGE_INDEX, UPDATE_PULL_DOWN_LOADING, UPDA
 const defaultState = fromJS({
   singerList:[],
   pageIndex:0, // 当前页数
-  enterLoading:false, // 入场动画状态
+  enterLoading:true, // 入场动画状态
   pullDownLoading:false ,//下拉刷新
   pullUpLoading:false, // 上拉加载
 })
