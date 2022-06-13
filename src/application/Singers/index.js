@@ -80,8 +80,6 @@ function Singers(props){
     dispatch(getSingerList(category.type,category.area,alpha))
   }
 
-  // const enterLoadingStyle =  {display: enterLoading ? '' : "none",zIndex:100}
-
   return (
    <div>
     <NavContainer>

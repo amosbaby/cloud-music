@@ -33,3 +33,10 @@ export const getTopSingerListRequest = (offset) => {
 export const getSignerListRequest = (type,area, alpha, offset,initial=30) => {
   return axiosInstance.get(`/artist/list?type=${type}&area=${area}&initial=${alpha.toLowerCase()}&offset=${offset}`)
 }
+
+/**
+ * 调用此接口,可获取所有榜单内容摘要
+ */
+export const getRankListRequest = () => {
+  return axiosInstance.get('/toplist/detail')
+}
