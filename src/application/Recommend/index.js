@@ -7,6 +7,7 @@ import { Content } from "./style";
 import * as actionTypes from './store/actionCreators'
 import {forceCheck} from 'react-lazyload'
 import Loading from "../../components/loading";
+import { renderRoutes } from "react-router-config";
 
 function Recommend(props){
   const bannerList = useSelector((state) => {
@@ -41,11 +42,11 @@ function Recommend(props){
       { loadingStatus ? <Loading> </Loading> :  <Scroll className="list" onScroll={forceCheck}>
         <div>
           <Slider bannerList={bannerListJS}/>  
-          <RecommendList recommendList={recommendListJS}></RecommendList>
+          <RecommendList recommendList={recommendListJS} ></RecommendList>
         </div>
       </Scroll> }
      
-    
+      { renderRoutes(props.route.routes) }
     </Content>
   )
 }

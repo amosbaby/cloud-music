@@ -2,13 +2,18 @@ import React from "react";
 import { formatPlayCount } from "../../../api/utils";
 import { List, ListItem, ListWrapper } from "./style";
 import LazyLoad from 'react-lazyload';
+import { withRouter } from "react-router-dom";
 
 function RecommendList(props){
   const {recommendList} = props
 
+  const enterDetail = (id)=>{
+    props.history.push(`/recommend/${id}`)
+  }
+
   const list = recommendList.map(item=>{
     return (
-      <ListItem key={item.id}>
+      <ListItem key={item.id} onClick={()=>enterDetail(item.id)}>
         <div className="img_wrapper">
           <div className="decorate"></div>
           {/* 加参数可减小请求的图片资源大小 */}
@@ -36,4 +41,4 @@ function RecommendList(props){
 
 }
 
-export default RecommendList
+export default React.memo(withRouter(RecommendList))
