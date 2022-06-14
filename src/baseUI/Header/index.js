@@ -3,14 +3,16 @@ import * as propTypes from 'prop-types'
 import { HeaderContainer } from "./style";
 
 const Header = React.forwardRef((props,ref) => {
-  const { handleClick,title } = props
+  const { handleClick,title, isMarquee } = props
 
   return (
     <HeaderContainer ref={ref}>
       <span className="back-button">
        <ion-icon  name="chevron-back-outline" onClick={handleClick}></ion-icon>
       </span>
-      <h1> {title} </h1>
+      {
+        isMarquee ? <marquee> <h1>{title}</h1> </marquee> : null
+      }
     </HeaderContainer>
   )
 
@@ -19,11 +21,13 @@ const Header = React.forwardRef((props,ref) => {
 Header.defaultProps = {
   handleClick: () => {},
   title:'标题',
+  isMarquee: false
 }
 
 Header.propTypes = {
   handleClick: propTypes.func,
-  title: propTypes.string
+  title: propTypes.string,
+  isMarquee: propTypes.bool
 }
 
 export default React.memo(Header)

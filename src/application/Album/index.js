@@ -6,13 +6,37 @@ import Header from "../../baseUI/Header"
 import Scroll from "../../components/scroll"
 import { currentAlbum } from "./mock.data"
 import { formatPlayCount, getName } from "../../api/utils"
+import GlobalStyle from "../../assets/global-style"
+
+const HEADER_HEIGHT = 45
 
 export function Album(props){
   const [showStatus,setShowStatus] = useState(true)
+  const [title,setTitle] = useState('歌单')
+  const [ isMarquee, setIsMarquee ] = useState(false) // 是否显示跑马灯
+  const headerRef = useRef()
 
-  const nodeRef = useRef()
+  const nodeRef = useRef() // CSSTransition用于引用子组件
   const handleBackClick = ()=>{
     setShowStatus(false)
+  }
+
+  const handleScroll = (position) => {
+    const minScrollY = -HEADER_HEIGHT
+    const percent = Math.abs(position.y/minScrollY)
+    const headerDom = headerRef.current
+    // 滑过顶部的高度开始变化
+    if(position.y < minScrollY){
+      headerDom.style.backgroundColor = GlobalStyle["theme-color"]
+      headerDom.style.opacity = Math.min(1,(percent-1)/2)
+      setTitle(currentAlbum.name)
+      setIsMarquee(true)
+    }else{
+      headerDom.style.backgroundColor = ''
+      headerDom.style.opacity = 1
+      setTitle('歌单')
+      setIsMarquee(false)
+    }
   }
 
 
@@ -29,8 +53,8 @@ export function Album(props){
     >
     
       <Content ref={nodeRef}>
-         <Header   title={'返回'} handleClick={handleBackClick}></Header>
-         <Scroll bounceTop={false}>
+         <Header ref={headerRef}  title={title} isMarquee={isMarquee} handleClick={handleBackClick}></Header>
+         <Scroll bounceTop={false} onScroll={handleScroll}>
             <div>
                 <TopDesc background={currentAlbum.coverImgUrl}>
                     <div className="background">
