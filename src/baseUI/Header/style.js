@@ -11,7 +11,7 @@ export const HeaderContainer = styled.div`
   z-index: 100;
   display: flex;
   line-height: 40px;
-  color: black;
+  color: ${GlobalStyle["font-color-light"]};
   .back-button {
     font-size: 24px;
     line-height: 100%;
