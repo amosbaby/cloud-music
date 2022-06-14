@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { renderRoutes } from "react-router-config";
 import Loading from "../../components/loading";
 import Scroll from "../../components/scroll";
 import { getRankList } from "./store/actionCreators";
@@ -26,6 +27,7 @@ function Rank(props){
 
   const globalStartIndex = rankListJS.findIndex(item=>item.tracks.length)
   
+
   const renderSongList = (list) => {
     return list.length ? (
       <SongList>
@@ -38,13 +40,19 @@ function Rank(props){
       ) : null
   }
 
+  const handleClick = (id)=>{
+    props.history.push(`/rank/${id}`)
+  }
+
   const renderRankList = (list, isGlobal) => {
     return (
       <List isGlobal={isGlobal} >
           {
             list.map(item=>{
               return (
-                <ListItem key={item.id} tracks={item.tracks} isGlobal={isGlobal}> 
+                <ListItem key={item.id} tracks={item.tracks} isGlobal={isGlobal}
+                  onClick={()=> handleClick(item.id)}
+                > 
                   <div className="img_wrapper">
                     <img src={item.coverImgUrl} alt="rank"/>
                     <div className="decorate"></div>
@@ -72,6 +80,7 @@ function Rank(props){
         </Scroll>
         {/* 入场动画加载 */}
         {loading  ? <Loading></Loading> : null }
+        { renderRoutes(props.route.routes) }
     </Container>
   )
 }

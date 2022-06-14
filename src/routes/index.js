@@ -29,7 +29,13 @@ import Singers from "../application/Singers";
     },
     {
       path:'/rank',
-      component:Rank
+      component:Rank,
+      routes:[
+        {
+          path:'/rank/:id',
+          component:Album
+        },
+      ]
     },
     {
       path:'/singers',
