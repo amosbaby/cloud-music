@@ -1,12 +1,14 @@
-import React, {useRef} from "react"
+import React, {useEffect, useRef} from "react"
 import { useState } from "react"
 import { Content, Menu, SongItem, SongList, TopDesc } from "./style"
 import {CSSTransition} from 'react-transition-group'
 import Header from "../../baseUI/Header"
 import Scroll from "../../components/scroll"
-import { currentAlbum } from "./mock.data"
 import { formatPlayCount, getName } from "../../api/utils"
 import GlobalStyle from "../../assets/global-style"
+import { useDispatch, useSelector } from "react-redux"
+import { getAlbumDetail } from "./store/actionCreators"
+import Loading from "../../components/loading"
 
 const HEADER_HEIGHT = 45
 
@@ -15,6 +17,20 @@ export function Album(props){
   const [title,setTitle] = useState('歌单')
   const [ isMarquee, setIsMarquee ] = useState(false) // 是否显示跑马灯
   const headerRef = useRef()
+  const loading = useSelector((state)=>{
+    return state.album.getIn(['loading'])
+  })
+  const currentAlbumState = useSelector((state)=>{
+    return state.album.getIn(['albumDetail'])
+  })
+  const currentAlbum = currentAlbumState ? currentAlbumState.toJS() : {}
+
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    if(!currentAlbumState.size || currentAlbum.id !== props.match.params.id ){
+      dispatch(getAlbumDetail(props.match.params.id))
+    }
+  },[])
 
   const nodeRef = useRef() // CSSTransition用于引用子组件
   const handleBackClick = ()=>{
@@ -54,6 +70,7 @@ export function Album(props){
     
       <Content ref={nodeRef}>
          <Header ref={headerRef}  title={title} isMarquee={isMarquee} handleClick={handleBackClick}></Header>
+        { loading ? <Loading></Loading> :
          <Scroll bounceTop={false} onScroll={handleScroll}>
             <div>
                 <TopDesc background={currentAlbum.coverImgUrl}>
@@ -123,7 +140,8 @@ export function Album(props){
                   </SongItem>
                 </SongList>
             </div>
-         </Scroll>
+         </Scroll> 
+          }
       </Content> 
     
     </CSSTransition>

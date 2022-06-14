@@ -40,3 +40,12 @@ export const getSignerListRequest = (type,area, alpha, offset,initial=30) => {
 export const getRankListRequest = () => {
   return axiosInstance.get('/toplist/detail')
 }
+
+/**
+ * 获取album详情
+ * @param {string} id album 的id
+ * @returns 
+ */
+export const getAlbumDetailRequest = (id) => {
+  return axiosInstance.get(`/playlist/detail?id=${id}`)
+}
