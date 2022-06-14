@@ -1,11 +1,11 @@
 import React, {useRef} from "react"
 import { useState } from "react"
-import { Content, Menu, TopDesc } from "./style"
+import { Content, Menu, SongItem, SongList, TopDesc } from "./style"
 import {CSSTransition} from 'react-transition-group'
 import Header from "../../baseUI/Header"
 import Scroll from "../../components/scroll"
 import { currentAlbum } from "./mock.data"
-import { formatPlayCount } from "../../api/utils"
+import { formatPlayCount, getName } from "../../api/utils"
 
 export function Album(props){
   const [showStatus,setShowStatus] = useState(true)
@@ -68,6 +68,36 @@ export function Album(props){
                     <ion-icon name="ellipsis-horizontal-outline"></ion-icon> 更多
                   </div>
                 </Menu>
+                <SongList>
+                  <div className="first_line">
+                    <div className="play_all">
+                      <ion-icon name="play-circle-outline"></ion-icon>
+                      <span> 播放全部 <span className="sum">(共{currentAlbum.tracks.length}首)</span> </span>
+                    </div>
+                    <div className="add_list">
+                      <ion-icon name="star"></ion-icon>
+                      <span> 收藏({formatPlayCount(currentAlbum.subscribedCount)}) </span>
+                    </div>
+                  </div>
+              
+                  <SongItem>
+                    {
+                      currentAlbum.tracks.map((item,index)=>{
+                        return (
+                          <li key={item.name+index}>
+                            <span className="index"> {index+1} </span>
+                            <div className="info"> 
+                              <span> {item.name} </span>
+                              <span>
+                                { getName(item.ar)} - {item.al.name}
+                              </span>
+                             </div>
+                          </li>
+                        )
+                      })
+                    }
+                  </SongItem>
+                </SongList>
             </div>
          </Scroll>
       </Content> 
