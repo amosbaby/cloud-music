@@ -1,6 +1,7 @@
 import React from "react";
 import { renderRoutes } from "react-router-config";
 import { NavLink } from "react-router-dom";
+import Player from "../Player";
 import { Tab, TabItem, Top } from "./style";
 
 function Home(props){
@@ -24,6 +25,7 @@ function Home(props){
       </Tab>
       {/* renderRoutes只能渲染一层，所以home下的路由需要再Home页再执行一次 */}
      { renderRoutes(props.route.routes) }
+     <Player></Player>
     </React.Fragment>
   )
 }
