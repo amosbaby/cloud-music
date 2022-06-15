@@ -11,7 +11,7 @@ const Header = React.forwardRef((props,ref) => {
        <ion-icon  name="chevron-back-outline" onClick={handleClick}></ion-icon>
       </span>
       {
-        isMarquee ? <marquee> <h1>{title}</h1> </marquee> : null
+        isMarquee ? <marquee> <h1>{title}</h1> </marquee> : <h1>{title}</h1>
       }
     </HeaderContainer>
   )

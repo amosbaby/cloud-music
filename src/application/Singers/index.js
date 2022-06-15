@@ -9,6 +9,7 @@ import { getHotSingerList, getMoreSingerList, getSingerList, updatePullDownLoadi
 import Loading from "../../components/loading";
 import LazyLoad,{forceCheck} from 'react-lazyload';
 import { CategoryDataContext, UPDATE_ALPHA, UPDATE_CATEGORY } from "../../shared-status";
+import { renderRoutes } from "react-router-config";
 
 function Singers(props){
   const { data, dispatch : sharedDataDispatch } = useContext(CategoryDataContext)
@@ -38,6 +39,10 @@ function Singers(props){
     dispatch(getSingerList(category.type,category.area,alpha))
   }
 
+  const handleEnterDetail = (id) => {
+    props.history.push(`/singers/${id}`)
+  }
+
   const singersListJS = singerList ? singerList.toJS() : []
 
   const renderSingerList = ()=>{
@@ -46,7 +51,7 @@ function Singers(props){
         {
           singersListJS.map((item,index)=>{
             return (
-              <ListItem key={item.accountId+''+index}>
+              <ListItem key={item.id+''+index} onClick={()=> handleEnterDetail(item.id)}>
                 <div className="img_wrapper">
                   <LazyLoad placeholder={<img width="100%" height="100%" src={require('./singer.png')} alt="music"/>}> 
                      <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music" />
@@ -93,6 +98,9 @@ function Singers(props){
     </ListContainer>
     {/* 入场动画加载 */}
      { enterLoading ? <EnterLoading ><Loading ></Loading></EnterLoading> : null } 
+     {
+       renderRoutes(props.route.routes)
+     }
    </div>
   )
 }

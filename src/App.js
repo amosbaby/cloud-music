@@ -13,10 +13,11 @@ function App() {
   return (
     <Provider store={store}>
       <HashRouter>
-        <GlobalStyle/>
+        
         <SharedStatus>
           { renderRoutes(routes) }
         </SharedStatus>
+        <GlobalStyle/>
       </HashRouter>
     </Provider>
   );
