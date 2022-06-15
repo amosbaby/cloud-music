@@ -64,7 +64,7 @@ export const MiniPlayerContainer = styled.div`
     flex: 0 0 30px;
     padding: 0 10px;
     ion-icon, .icon-playlist {
-      font-size: 30px;
+      font-size: 25px;
       color: ${GlobalStyle["theme-color"]};
     }
     .icon-mini {
