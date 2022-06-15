@@ -10,8 +10,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getAlbumDetail, updateLoadingStatus } from "./store/actionCreators"
 import Loading from "../../components/loading"
 import SongList from "../SongList"
-
-const HEADER_HEIGHT = 45
+import { HEADER_HEIGHT } from "../../api/constant"
 
 export function Album(props){
   const [showStatus,setShowStatus] = useState(true)
@@ -43,7 +42,7 @@ export function Album(props){
   },[])
 
   const handleScroll = useCallback((position) => {
-    const minScrollY = -HEADER_HEIGHT
+    const minScrollY = - HEADER_HEIGHT
     const percent = Math.abs(position.y/minScrollY)
     const headerDom = headerRef.current
     // 滑过顶部的高度开始变化
