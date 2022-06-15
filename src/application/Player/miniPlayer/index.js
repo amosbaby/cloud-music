@@ -1,29 +1,47 @@
-import React from "react";
+import React, { useRef } from "react";
+import {CSSTransition} from 'react-transition-group';
 import { getName } from "../../../api/utils";
 import { MiniPlayerContainer } from "./style";
 
 function MiniPlayer(props){
-  const {song} = props
+  const {song,fullScreen ,toggleFullScreen} = props
+  const playerRef = useRef()
+
+  const renderPlayer = ()=>{
+    return (
+      <MiniPlayerContainer ref={playerRef}>
+        <div className="icon" onClick={()=>toggleFullScreen && toggleFullScreen(true)}>
+          <div className="imgWrapper">
+            <img src={song.al.picUrl} alt="img" width="40px" height="40px"/>
+          </div>
+        </div>
+        <div className="text">
+          <h2 className="name"> {song.name} </h2>
+          <p className="desc"> {getName(song.ar)} </p>
+        </div>
+        <div className="control">
+          <ion-icon name="stop-circle-outline"></ion-icon>
+        </div>
+        <div className="control">
+          <ion-icon name="musical-notes-outline"></ion-icon>
+        </div>
+    </MiniPlayerContainer>
+    )
+  }
 
   return (
-    <MiniPlayerContainer>
-      <div className="icon">
-        <div className="imgWrapper">
-          <img src={song.al.picUrl} alt="img" width="40px" height="40px"/>
-        </div>
-      </div>
-      <div className="text">
-        <h2 className="name"> {song.name} </h2>
-        <p className="desc"> {getName(song.ar)} </p>
-      </div>
-      <div className="control">
-        <ion-icon name="stop-circle-outline"></ion-icon>
-      </div>
-      <div className="control">
-        <ion-icon name="musical-notes-outline"></ion-icon>
-      </div>
-      
-    </MiniPlayerContainer>
+    <CSSTransition 
+    classNames="mini"
+    in={!fullScreen}
+    timeout={400}
+    onEnter={()=>{ playerRef.current.style.display = "flex" }}
+    onExited={()=>{ playerRef.current.style.display = "none" }}
+    nodeRef={playerRef}
+    mountOnEnter
+  >
+    { renderPlayer() }
+  </CSSTransition>
+    
   )
 }
 
