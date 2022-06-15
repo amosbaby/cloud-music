@@ -5,6 +5,12 @@ export const CircleWrapper = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: ${(props) =>`${props.radius}px`};
+  width: ${(props) =>`${props.radius}px`};
+  svg{
+    position: absolute;
+  }
   circle {
     stroke-width: 8px;
     transform-origin: center;

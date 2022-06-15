@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import {CSSTransition} from 'react-transition-group';
 import { getName } from "../../../api/utils";
-import ProcessCircle from "../../../baseUI/ProcessCircle";
+import ProgressCircle from "../../../baseUI/ProgressCircle";
 import { MiniPlayerContainer } from "./style";
 
 function MiniPlayer(props){
@@ -21,9 +21,9 @@ function MiniPlayer(props){
           <p className="desc"> {getName(song.ar)} </p>
         </div>
         <div className="control">
-          <ProcessCircle radius={32} percent={0.3}>
+          <ProgressCircle radius={32} percent={0.3}>
             <ion-icon name="pause-outline"></ion-icon>
-          </ProcessCircle>
+          </ProgressCircle>
         </div>
         <div className="control">
           <ion-icon name="musical-notes-outline"></ion-icon>

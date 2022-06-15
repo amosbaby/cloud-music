@@ -2,9 +2,11 @@ import React, { useRef } from "react";
 import {CSSTransition} from 'react-transition-group'
 import animations from "create-keyframe-animation";
 
+
 import { getName } from "../../../api/utils";
-import { Bottom, CDWrapper, Middle, NormalPlayerContainer, Operators, Top } from "./style";
+import { Bottom, CDWrapper, Middle, NormalPlayerContainer, Operators, ProgressWrapper, Top } from "./style";
 import { prefixStyle } from "../../../api/utils/css";
+import ProgressBar from "../../../baseUI/ProgressBar";
 
 function NormalPlayer(props){
 
@@ -105,6 +107,13 @@ function NormalPlayer(props){
           </CDWrapper>
         </Middle>
         <Bottom className="bottom">
+        <ProgressWrapper>
+          <span className="time time-l">0:00</span>
+          <div className="progress-bar-wrapper">
+            <ProgressBar percent={0.2}></ProgressBar>
+          </div>
+          <div className="time time-r">4:17</div>
+        </ProgressWrapper>
           <Operators>
             <div className="icon i-left">
               <ion-icon name="repeat-outline"></ion-icon>
