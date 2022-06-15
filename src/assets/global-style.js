@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle,keyframes } from "styled-components";
 /** 扩大点击区域 */
 const extendClick = createGlobalStyle`
   position: relative;
@@ -36,6 +36,15 @@ const rightToLeftAnimation=createGlobalStyle`
   }
 `
 
+const rotate = keyframes`
+  0%{
+    transform: rotate(0);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+`;
+
 
 const GlobalStyle = {
   'theme-color': '#d44439',
@@ -57,7 +66,9 @@ const GlobalStyle = {
   /** 一行文字溢出部分用...代替 */
   noWrap,
   /** 从右到左动画 */
-  rightToLeftAnimation
+  rightToLeftAnimation,
+  /** 旋转 */
+  rotate
 }
 
 

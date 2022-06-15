@@ -1,14 +1,6 @@
-import styled,{keyframes} from 'styled-components'
+import styled from 'styled-components'
 import GlobalStyle from '../../../assets/global-style'
 
-const rotate = keyframes`
-  0%{
-    transform: rotate(0);
-  }
-  100%{
-    transform: rotate(360deg);
-  }
-`
 export const MiniPlayerContainer = styled.div`
   display: flex;
   align-items: center;
@@ -41,7 +33,7 @@ export const MiniPlayerContainer = styled.div`
       img {
         border-radius: 50%;
         &.play {
-          animation: ${rotate} 10s infinite;
+          animation: ${GlobalStyle.rotate} 10s infinite;
           &.pause {
             animation-play-state: paused;
           }
