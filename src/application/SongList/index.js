@@ -4,7 +4,7 @@ import { formatPlayCount, getName } from "../../api/utils";
 import {SongList as ListStyle ,SongItem } from './style'
 
 const SongList = forwardRef((props,refs)=>{
-  const {songs, collectCount,showCollect} = props
+  const {songs, collectCount,showCollect,musicAnimation} = props
 
   const renderCollect = () => {
     return (
@@ -15,13 +15,17 @@ const SongList = forwardRef((props,refs)=>{
     )
   }
 
+  const selectItem = (event,index)=>{
+    musicAnimation(event.nativeEvent.clientX,event.nativeEvent.clientY)
+  }
+
   const renderSongItem = () => {
     return (
       <>
         {
           songs.map((item,index)=>{
             return (
-              <li key={item.name+index}>
+              <li key={item.name+index} onClick={e=>selectItem(e,index)}>
                 <span className="index"> {index+1} </span>
                 <div className="info"> 
                   <span> {item.name} </span>

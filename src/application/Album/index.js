@@ -11,6 +11,7 @@ import { getAlbumDetail, updateLoadingStatus } from "./store/actionCreators"
 import Loading from "../../components/loading"
 import SongList from "../SongList"
 import { HEADER_HEIGHT } from "../../api/constant"
+import MusicNode from "../../baseUI/MusicNode"
 
 export function Album(props){
   const [showStatus,setShowStatus] = useState(true)
@@ -83,8 +84,14 @@ export function Album(props){
       </div>
      </TopDesc>
   )
-  return (
 
+  const musicNodeRef = useRef()
+  const musicAnimation = (x,y)=>{
+    musicNodeRef.current.startAnimation({x,y})
+  }
+
+
+  return (
   <CSSTransition
       in={showStatus}  
       timeout={300} 
@@ -115,10 +122,11 @@ export function Album(props){
                     <ion-icon name="ellipsis-horizontal-outline"></ion-icon> 更多
                   </div>
                 </Menu>
-                <SongList songs={currentAlbum.tracks} collectCount={currentAlbum.subscribedCount}></SongList>
+                <SongList musicAnimation={musicAnimation} songs={currentAlbum.tracks} collectCount={currentAlbum.subscribedCount}></SongList>
             </div>
          </Scroll> 
           }
+          <MusicNode ref={musicNodeRef}></MusicNode>
       </Content> 
     
     </CSSTransition>

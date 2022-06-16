@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { PlayMode,PlayMode2 } from "../../api/constant";
+import { PlayMode } from "../../api/constant";
 import { getRandomInt, getSongUrl } from "../../api/utils";
 import MiniPlayer from "./miniPlayer";
 import { MockPlayList } from "./mock.data";
@@ -33,6 +33,7 @@ function Player(){
     //   audioRef.current.play() 
     // });
     setCurrentTime(0)
+    setPercent(0)
     setDuration(current.dt/1000 | 0)
   },[])
 
@@ -57,6 +58,7 @@ function Player(){
   const handleLoop = ()=>{
     audioRef.current.currentTime = 0
     setCurrentTime(0)
+    setPercent(0)
     audioRef.current.play()
   }
 
@@ -118,6 +120,12 @@ function Player(){
     setCurrentIndex(index)
   }
 
+  const handlePlayEnded = ()=>{
+    setPlaying(false)
+    setPercent(0)
+    handleNext()
+  }
+
   return (
     <>
       {
@@ -127,7 +135,7 @@ function Player(){
             <MiniPlayer percent={percent}  duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen}  song={currentSong} clickPlaying={clickPlaying}> </MiniPlayer>
         </> : null
       }
-      <audio ref={audioRef} onTimeUpdate={updateTime}></audio>
+      <audio ref={audioRef} onTimeUpdate={updateTime} onEnded={handlePlayEnded}></audio>
     </>
   )
 }

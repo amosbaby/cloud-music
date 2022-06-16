@@ -8,6 +8,7 @@ import { HEADER_HEIGHT } from "../../api/constant"
 import { useDispatch, useSelector } from "react-redux"
 import { getArtist, updateLoading } from "./store/actionCreators"
 import Loading from "../../components/loading"
+import MusicNode from "../../baseUI/MusicNode"
 
 function Singer(props){
   const [showStatus, setShowStatus] = useState(true)
@@ -94,7 +95,13 @@ function Singer(props){
       // imageWrapperRef.current.style.zIndex = 99
     }
   },[]
-)
+  )
+
+  const musicNodeRef = useRef()
+  const musicAnimation = (x,y)=>{
+    musicNodeRef.current.startAnimation({x,y})
+  }
+
   return (
     <CSSTransition 
       in={showStatus}
@@ -117,10 +124,12 @@ function Singer(props){
         <BgLayer ref={layerRef}></BgLayer>
         <SongListWrapper ref={songScrollWrapperRef}>
           <Scroll ref={songScrollRef} onScroll={handleScroll}>
-            <SongList songs={hotSongs} collectCount={artist.subscribedCount} showCollect={false}></SongList>
+            <SongList songs={hotSongs} collectCount={artist.subscribedCount} showCollect={false} musicAnimation={musicAnimation}> 
+            </SongList>
           </Scroll>
         </SongListWrapper>
         { loading ? <Loading></Loading> : null }
+        <MusicNode ref={musicNodeRef}></MusicNode>
       </Container>
     </CSSTransition>
   )
