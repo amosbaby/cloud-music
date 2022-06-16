@@ -6,7 +6,7 @@ function ProgressCircle(props){
   // 整个背景周长
   const dashArray = Math.PI * 2 * 50
   // 未高亮部分
-  const dashOffset = (1 - percent) * dashArray
+  const dashOffset = (1 - Number(percent || 0)) * dashArray
 
   return (
     <CircleWrapper radius={radius}>
