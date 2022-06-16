@@ -1,14 +1,14 @@
 import React, { useRef } from "react";
 import {CSSTransition} from 'react-transition-group'
-import { getName } from "../../../api/utils";
+import { formatPlayTime, getName } from "../../../api/utils";
 import { Bottom, CDWrapper, Middle, NormalPlayerContainer, Operators, ProgressWrapper, Top } from "./style";
 import ProgressBar from "../../../baseUI/ProgressBar";
 import { createAfterEnter, createAfterLeave, createEnter, createLeave } from "./animation";
 
 function NormalPlayer(props){
 
-  const {song,playing,percent,fullScreen} = props
-  const {clickPlaying,toggleFullScreen} = props
+  const {song,playing,percent,duration,currentTime,fullScreen} = props
+  const {clickPlaying,toggleFullScreen,onProgressChange} = props
   const playerRef = useRef()
   const cdWrapperRef = useRef()
 
@@ -41,11 +41,11 @@ function NormalPlayer(props){
         </Middle>
         <Bottom className="bottom">
         <ProgressWrapper>
-          <span className="time time-l">0:00</span>
+          <span className="time time-l">{ formatPlayTime(currentTime) } </span>
           <div className="progress-bar-wrapper">
-            <ProgressBar percent={percent}></ProgressBar>
+            <ProgressBar percent={percent} updatePercent={onProgressChange}></ProgressBar>
           </div>
-          <div className="time time-r">4:17</div>
+          <div className="time time-r">{ formatPlayTime(duration) } </div>
         </ProgressWrapper>
           <Operators>
             <div className="icon i-left">

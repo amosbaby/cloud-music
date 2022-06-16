@@ -64,3 +64,25 @@ export const getName = list => {
   });
   return str;
 };
+
+/**
+ * 拼接出歌曲的url链接
+ * @param {string} id 歌曲链接
+ * @returns 
+ */
+export const getSongUrl = id => {
+  return `https://music.163.com/song/media/outer/url?id=${id}.mp3`;
+};
+
+
+/**
+ * 转换歌曲播放时间
+ * @param {number} interval 
+ * @returns 
+ */
+export const formatPlayTime = interval => {
+  interval = interval | 0;// |0表示向下取整
+  const minute = (interval / 60) | 0;
+  const second = (interval % 60).toString().padStart(2, "0");
+  return `${minute}:${second}`;
+};

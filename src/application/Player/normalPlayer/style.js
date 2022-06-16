@@ -151,6 +151,7 @@ export const ProgressWrapper = styled.div`
     width: 30px;
     &.time-l {
       text-align: left;
+      margin-right: 5px;
     }
     &.time-r {
       text-align: right;
