@@ -86,3 +86,14 @@ export const formatPlayTime = interval => {
   const second = (interval % 60).toString().padStart(2, "0");
   return `${minute}:${second}`;
 };
+
+
+/**
+ * 获取随机整数
+ * @param {number} min 最小值
+ * @param {number} max 最大值
+ * @returns 
+ */
+export function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
