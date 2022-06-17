@@ -77,6 +77,10 @@ function Player(props){
     }
   }
 
+  const onAudioError = ()=>{
+    handleNext()
+  }
+
   const handleLoop = ()=>{
     audioRef.current.currentTime = 0
     setCurrentTime(0)
@@ -111,6 +115,7 @@ function Player(props){
       setPlaying(true)
     }
     setCurrentIndex(index)
+    handleLoop()
   }
 
   const handleNext = ()=>{
@@ -118,21 +123,21 @@ function Player(props){
       handleLoop()
       return
     }
-
+    const total = playList.length
     let index
 
     switch(playMode){
       case PlayMode.loop:
-        index = currentIndex === playList.length - 1 ? 0 : currentIndex + 1
+        index = currentIndex === total - 1 ? 0 : currentIndex + 1
         break
       case PlayMode.random:
-        index = getRandomInt(0, playList.length - 1)
+        index = getRandomInt(0, total - 1)
         break
       case PlayMode.sequence:
-        index = Math.min(currentIndex - 1,playList - 1)
+        index = Math.min(currentIndex + 1,total - 1)
         break
       default:
-        index = playList - 1
+        index = total - 1
         break
     }
 
@@ -140,6 +145,7 @@ function Player(props){
       setPlaying(true)
     }
     setCurrentIndex(index)
+    handleLoop()
   }
 
   const handlePlayEnded = ()=>{
@@ -157,7 +163,7 @@ function Player(props){
             <MiniPlayer percent={percent}  duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen}  song={currentSong} clickPlaying={clickPlaying}> </MiniPlayer>
         </> : null
       }
-      <audio ref={audioRef} onTimeUpdate={updateTime} onEnded={handlePlayEnded}></audio>
+      <audio ref={audioRef} onTimeUpdate={updateTime} onEnded={handlePlayEnded} onError={onAudioError}></audio>
     </>
   )
 }
