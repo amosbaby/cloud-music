@@ -1,13 +1,20 @@
-import React from "react";
+import React, {  useState } from "react";
 import { renderRoutes } from "react-router-config";
 import { NavLink } from "react-router-dom";
 import Player from "../Player";
 import { Tab, TabItem, Top } from "./style";
+export const PlayListContext = React.createContext()
+export const CurrentIndexContext= React.createContext()
 
 function Home(props){
-  return (
-    <React.Fragment>
-      <Top>
+
+  const [playList,setPlayList] = useState([])
+  const [currentIndex,setCurrentIndex] = useState(0)
+
+  const renderHome = ()=>{
+    return (
+      <>
+        <Top>
         <span> <ion-icon name="grid-outline"></ion-icon> </span>
         <span> 网易云音乐 </span>
         <span> <ion-icon name="search-outline"></ion-icon> </span>
@@ -25,8 +32,19 @@ function Home(props){
       </Tab>
       {/* renderRoutes只能渲染一层，所以home下的路由需要再Home页再执行一次 */}
      { renderRoutes(props.route.routes) }
-     <Player></Player>
-    </React.Fragment>
+     <Player currentIndex={currentIndex} playList={playList}></Player>
+     </>
+    )
+  }
+
+  return (
+    <>
+      <PlayListContext.Provider value={setPlayList}>
+        <CurrentIndexContext.Provider value={setCurrentIndex}>
+            { renderHome() }
+        </CurrentIndexContext.Provider>
+      </PlayListContext.Provider>
+    </>
   )
 }
 

@@ -1,7 +1,8 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useContext } from "react";
 import * as propsTypes from 'prop-types'
 import { formatPlayCount, getName } from "../../api/utils";
 import {SongList as ListStyle ,SongItem } from './style'
+import { CurrentIndexContext, PlayListContext } from "../Home";
 
 const SongList = forwardRef((props,refs)=>{
   const {songs, collectCount,showCollect,musicAnimation} = props
@@ -14,9 +15,13 @@ const SongList = forwardRef((props,refs)=>{
     </div>
     )
   }
+  const setPlayList = useContext(PlayListContext)
+  const setCurrentIndex = useContext(CurrentIndexContext)
 
   const selectItem = (event,index)=>{
     musicAnimation(event.nativeEvent.clientX,event.nativeEvent.clientY)
+    setPlayList(songs)
+    setCurrentIndex(index)
   }
 
   const renderSongItem = () => {

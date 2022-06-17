@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { PlayMode } from "../../api/constant";
 import { getRandomInt, getSongUrl } from "../../api/utils";
+import { CurrentIndexContext } from "../Home";
 import MiniPlayer from "./miniPlayer";
-import { MockPlayList } from "./mock.data";
 import NormalPlayer from "./normalPlayer";
 
-function Player(){
-  const playList = MockPlayList
+function Player(props){
+  const {playList, currentIndex} = props
   const [fullScreen,setFullScreen] = useState(false)
   const [percent,setPercent] = useState(0)
   const [ playing,setPlaying ] = useState(false)
@@ -14,7 +14,11 @@ function Player(){
   const [ playMode,setPlayMode ] = useState(PlayMode.sequence)
   const [ currentTime,setCurrentTime ] = useState(0)
   const [ currentSong,setCurrentSong ] = useState({})
-  const [ currentIndex,setCurrentIndex ] = useState(0)
+
+
+  const setCurrentIndex = useContext(CurrentIndexContext)
+  
+  
   
   const audioRef = useRef()
 
@@ -23,22 +27,40 @@ function Player(){
     setPlaying(state)
   },[])
 
-  useEffect(()=>{
-    const current = playList[currentIndex]
-    if(!current)return 
-    
-    setCurrentSong(current)
-    audioRef.current.src = getSongUrl(current.al.id)
-    // setTimeout(() => {
-    //   audioRef.current.play() 
-    // });
-    setCurrentTime(0)
-    setPercent(0)
-    setDuration(current.dt/1000 | 0)
-  },[])
 
   useEffect(()=>{
-    playing ? audioRef.current.play() : audioRef.current.pause()
+    const current = playList && playList[currentIndex]
+    if(!current) return
+    setCurrentSong(current||{})
+    
+    setCurrentTime(0)
+    setPercent(0)
+    setPlaying(true)
+    setDuration(current.dt/1000 | 0)
+    setTimeout(() => {
+        audioRef.current.src = getSongUrl(current.id)
+        // audioRef.current.play()
+    });
+  },[playList,currentIndex])
+
+
+
+  // useEffect(()=>{
+  //   const current = playList && playList[currentIndex]
+  //   if(!current)return 
+    
+    
+  //   audioRef.current.src = getSongUrl(current.al.id)
+  //   setTimeout(() => {
+  //     audioRef.current.play() 
+  //   });
+  //   setCurrentTime(0)
+  //   setPercent(0)
+  //   setDuration(current.dt/1000 | 0)
+  // },[])
+
+  useEffect(()=>{
+    playing ? audioRef.current.play() : audioRef.current.pause() 
   },[playing])
 
   const updateTime = (event)=>{
