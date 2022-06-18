@@ -3,7 +3,7 @@ console.log('set up proxy')
 module.exports = function (app) {
     console.log('app:',app)
     app.use(createProxyMiddleware("/api", {
-        target: "http://49.234.14.84:3000/", 
+        target: "https://music-api.amos.js.cn/", 
         changeOrigin: true, //控制服务器接收到的请求头中host字段的值
         /*
            changeOrigin设置为true时，服务器收到的请求头中的host为：localhost:5000
