@@ -30,6 +30,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "publish": "scp -rp build/* root@tx.server:/root/workspace/site/test/music/",
+    "deploy": "npm run build && npm run publish",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
