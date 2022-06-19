@@ -1,9 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ProgressBarWrapper } from "./style";
 
 function ProgressBar(props){
 
-  const {updatePercent} = props
+  const {updatePercent,percent} = props
   const progressBarRef = useRef()
   const progressRef = useRef()
   const progressBtnWrapperRef = useRef()
@@ -47,6 +47,14 @@ function ProgressBar(props){
     const curPercent = progressRef.current.clientWidth/barWidth;// 新的进度计算
     updatePercent && updatePercent(curPercent);// 把新的进度传给回调函数并执行
   }
+  useEffect(()=>{
+    const clientWidth = progressBarRef.current.clientWidth
+    const offsetWidth = clientWidth * percent
+    progressRef.current.style.width = `${offsetWidth}px`
+    progressBtnWrapperRef.current.style.transform= `translate3d(${offsetWidth}px,0,0)`
+    // updateOffset(offsetWidth)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[percent])
 
 
   return (

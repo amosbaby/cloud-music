@@ -60,11 +60,14 @@ function Player(props){
   // },[])
 
   useEffect(()=>{
-    playing ? audioRef.current.play() : audioRef.current.pause() 
+    setTimeout(() => {
+      playing ? audioRef.current.play() : audioRef.current.pause()  
+    });
   },[playing])
 
   const updateTime = (event)=>{
     setCurrentTime(event.target.currentTime)
+    setPercent(event.target.currentTime/duration)
   }
 
   const onProgressChange = (percent) =>{
@@ -151,7 +154,11 @@ function Player(props){
   const handlePlayEnded = ()=>{
     setPlaying(false)
     setPercent(0)
-    handleNext()
+    handleNext() 
+  }
+
+  const handlePlay=(e)=>{
+    console.log('handlePlay',e)
   }
 
   return (
@@ -163,7 +170,7 @@ function Player(props){
             <MiniPlayer percent={percent}  duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen}  song={currentSong} clickPlaying={clickPlaying}> </MiniPlayer>
         </> : null
       }
-      <audio ref={audioRef} onTimeUpdate={updateTime} onEnded={handlePlayEnded} onError={onAudioError}></audio>
+      <audio autoPlay ref={audioRef} onTimeUpdate={updateTime} onEnded={handlePlayEnded} onError={onAudioError} onPlay={handlePlay}></audio>
     </>
   )
 }
