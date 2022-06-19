@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { PlayMode } from "../../api/constant";
 import { getRandomInt, getSongUrl } from "../../api/utils";
+import Toast from "../../baseUI/Toast";
 import { CurrentIndexContext } from "../Home";
 import MiniPlayer from "./miniPlayer";
 import NormalPlayer from "./normalPlayer";
@@ -18,15 +19,23 @@ function Player(props){
 
   const setCurrentIndex = useContext(CurrentIndexContext)
   
-  
-  
   const audioRef = useRef()
+  const [modeText, setModeText] = useState("");
+  const toastRef = useRef();
+
 
   const clickPlaying = useCallback((event,state)=>{
     event.stopPropagation();
     setPlaying(state)
   },[])
 
+  useEffect(()=>{
+    setModeText(playMode.desc)
+  },[playMode])
+
+  useEffect(()=>{
+    toastRef.current.show()
+  },[modeText])
 
   useEffect(()=>{
     const current = playList && playList[currentIndex]
@@ -42,22 +51,6 @@ function Player(props){
         // audioRef.current.play()
     });
   },[playList,currentIndex])
-
-
-
-  // useEffect(()=>{
-  //   const current = playList && playList[currentIndex]
-  //   if(!current)return 
-    
-    
-  //   audioRef.current.src = getSongUrl(current.al.id)
-  //   setTimeout(() => {
-  //     audioRef.current.play() 
-  //   });
-  //   setCurrentTime(0)
-  //   setPercent(0)
-  //   setDuration(current.dt/1000 | 0)
-  // },[])
 
   useEffect(()=>{
     setTimeout(() => {
@@ -81,7 +74,11 @@ function Player(props){
   }
 
   const onAudioError = ()=>{
-    handleNext()
+    setModeText('无权播放!')
+    setTimeout(() => {
+      handleNext()  
+    }, 1000);
+    
   }
 
   const handleLoop = ()=>{
@@ -171,6 +168,7 @@ function Player(props){
         </> : null
       }
       <audio autoPlay ref={audioRef} onTimeUpdate={updateTime} onEnded={handlePlayEnded} onError={onAudioError} onPlay={handlePlay}></audio>
+      <Toast ref={toastRef} text={modeText}></Toast>
     </>
   )
 }
