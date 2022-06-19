@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { getArtist, updateLoading } from "./store/actionCreators"
 import Loading from "../../components/loading"
 import MusicNode from "../../baseUI/MusicNode"
+import { ShouldAddBottom } from "../../api/utils"
 
 function Singer(props){
   const [showStatus, setShowStatus] = useState(true)
@@ -102,6 +103,8 @@ function Singer(props){
     musicNodeRef.current.startAnimation({x,y})
   }
 
+  const addBottom = ShouldAddBottom()
+
   return (
     <CSSTransition 
       in={showStatus}
@@ -112,7 +115,7 @@ function Singer(props){
       onExited={props.history.goBack}
       nodeRef={nodeRef}
     >
-      <Container ref={nodeRef}>
+      <Container ref={nodeRef} addBottom={addBottom}>
         <Header ref={headerRef} title={artist.name} handleClick={()=> handleBackClick()}></Header>
         <ImgWrapper ref={imageWrapperRef} bgUrl={artist.picUrl}> 
           <div className="filter"></div>

@@ -8,6 +8,7 @@ import * as actionTypes from './store/actionCreators'
 import {forceCheck} from 'react-lazyload'
 import Loading from "../../components/loading";
 import { renderRoutes } from "react-router-config";
+import { ShouldAddBottom } from "../../api/utils";
 
 function Recommend(props){
   const bannerList = useSelector((state) => {
@@ -36,9 +37,10 @@ function Recommend(props){
   const bannerListJS = bannerList ? bannerList.toJS() : []
   const recommendListJS = recommendList ? recommendList.toJS() : []
 
+  const addBottom = ShouldAddBottom()
 
   return (
-    <Content> 
+    <Content addBottom={addBottom}> 
       { loadingStatus ? <Loading> </Loading> :  <Scroll className="list" onScroll={forceCheck}>
         <div>
           <Slider bannerList={bannerListJS}/>  

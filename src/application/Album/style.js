@@ -2,11 +2,11 @@ import styled from 'styled-components'
 import GlobalStyle from '../../assets/global-style'
 
 export const Content = styled.div`
-   position: fixed;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: ${props=>props.addBottom ? '60px' : 0};
   z-index: 1000;
   background: ${GlobalStyle["background-color"]};
   ${GlobalStyle.rightToLeftAnimation}

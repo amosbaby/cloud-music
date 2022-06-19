@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { HasMiniPlayerContext } from "../../application/Home";
+
 /**
  * 格式化播放量
  * @param {number} count 
@@ -96,4 +99,13 @@ export const formatPlayTime = interval => {
  */
 export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+/**
+ * 页面是否需要加底部边界：用于有miniPlayer时底部需要预留边距
+ * @returns 
+ */
+export function ShouldAddBottom(){
+  const hasMiniPlayer = useContext(HasMiniPlayerContext)
+  return hasMiniPlayer
 }

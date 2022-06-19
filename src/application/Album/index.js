@@ -4,7 +4,7 @@ import { Content, Menu, TopDesc } from "./style"
 import {CSSTransition} from 'react-transition-group'
 import Header from "../../baseUI/Header"
 import Scroll from "../../components/scroll"
-import { formatPlayCount } from "../../api/utils"
+import { formatPlayCount, ShouldAddBottom } from "../../api/utils"
 import GlobalStyle from "../../assets/global-style"
 import { useDispatch, useSelector } from "react-redux"
 import { getAlbumDetail, updateLoadingStatus } from "./store/actionCreators"
@@ -90,6 +90,7 @@ export function Album(props){
     musicNodeRef.current.startAnimation({x,y})
   }
 
+  const addBottom = ShouldAddBottom()
 
   return (
   <CSSTransition
@@ -102,7 +103,7 @@ export function Album(props){
       nodeRef={nodeRef}
     >
     
-      <Content ref={nodeRef}>
+      <Content ref={nodeRef} addBottom={addBottom}>
          <Header ref={headerRef}  title={title} isMarquee={isMarquee} handleClick={handleBackClick}></Header>
         { loading ? <Loading></Loading> :
          <Scroll bounceTop={false} onScroll={handleScroll}>

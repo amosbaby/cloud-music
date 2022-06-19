@@ -8,6 +8,7 @@ export const NavContainer = styled.div`
   padding: 5px;
   position: fixed;
   top: 95px;
+  bottom: ${props=>props.addBottom ? '60px' : 0};
 `
 export const ListContainer = styled.div`
   position: fixed;

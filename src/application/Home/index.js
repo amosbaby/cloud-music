@@ -3,6 +3,7 @@ import { renderRoutes } from "react-router-config";
 import { NavLink } from "react-router-dom";
 import Player from "../Player";
 import { Tab, TabItem, Top } from "./style";
+export const HasMiniPlayerContext = React.createContext(false)
 export const PlayListContext = React.createContext()
 export const CurrentIndexContext= React.createContext()
 
@@ -10,6 +11,7 @@ function Home(props){
 
   const [playList,setPlayList] = useState([])
   const [currentIndex,setCurrentIndex] = useState(0)
+  const hasMiniPlayer = playList && playList.length > 0
 
   const renderHome = ()=>{
     return (
@@ -41,7 +43,9 @@ function Home(props){
     <>
       <PlayListContext.Provider value={setPlayList}>
         <CurrentIndexContext.Provider value={setCurrentIndex}>
+          <HasMiniPlayerContext.Provider value={hasMiniPlayer}>
             { renderHome() }
+            </HasMiniPlayerContext.Provider>
         </CurrentIndexContext.Provider>
       </PlayListContext.Provider>
     </>

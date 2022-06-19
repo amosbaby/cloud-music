@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { renderRoutes } from "react-router-config";
+import { ShouldAddBottom } from "../../api/utils";
 import Loading from "../../components/loading";
 import Scroll from "../../components/scroll";
 import { getRankList } from "./store/actionCreators";
@@ -68,8 +69,10 @@ function Rank(props){
   }
   const displayStyle = {display: loading ? '' : 'none' }
 
+  const addBottom = ShouldAddBottom()
+
   return (
-    <Container> 
+    <Container addBottom={addBottom}> 
         <Scroll>
             <div >
               <h1 className="official" style={displayStyle} > 官方榜 </h1>

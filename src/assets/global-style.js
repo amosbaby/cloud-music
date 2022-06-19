@@ -1,6 +1,6 @@
-import { createGlobalStyle,keyframes } from "styled-components";
+import styled,{ keyframes, } from "styled-components";
 /** 扩大点击区域 */
-const extendClick = createGlobalStyle`
+const extendClick = styled.div`
   position: relative;
   &::before{
     content: '';
@@ -12,13 +12,13 @@ const extendClick = createGlobalStyle`
   }
 `
 /** 一行文字溢出部分用...代替 */ 
-const noWrap = createGlobalStyle`
+const noWrap = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 `
 /** 从右到左动画 */
-const rightToLeftAnimation=createGlobalStyle`
+const rightToLeftAnimation=styled.div`
   transform-origin: right bottom;
   &.fly-enter, &.fly-appear {
     transform: translate3d(100%, 0, 0);
