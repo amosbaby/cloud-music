@@ -1,15 +1,16 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import {CSSTransition} from 'react-transition-group'
-import { formatPlayTime, getName } from "../../../api/utils";
+import { formatPlayTime, getName, GetNextPlayMode } from "../../../api/utils";
 import { Bottom, CDWrapper, Middle, NormalPlayerContainer, Operators, ProgressWrapper, Top } from "./style";
 import ProgressBar from "../../../baseUI/ProgressBar";
 import { createAfterEnter, createAfterLeave, createEnter, createLeave } from "./animation";
 import { PlayMode } from "../../../api/constant";
+import { SetCurrentPlayModeContext } from "../../Home";
 
 function NormalPlayer(props){
 
   const {song,playing,percent,duration,currentTime,fullScreen,mode} = props
-  const {handlePre,handleNext,clickPlaying,toggleFullScreen,handleChangeMode,onProgressChange} = props
+  const {handleShowList,handlePre,handleNext,clickPlaying,toggleFullScreen,onProgressChange} = props
   const playerRef = useRef()
   const cdWrapperRef = useRef()
 
@@ -19,17 +20,11 @@ function NormalPlayer(props){
   const leave = createLeave(cdWrapperRef)
   const afterLeave = createAfterLeave(playerRef,cdWrapperRef)
 
-  const handleClickMode = ()=>{
-    const currentModeIndex =( mode.index + 1) % 3
-    const currentMode = Object.values(PlayMode).find(item=>item.index === currentModeIndex)
-    handleChangeMode(currentMode)
-  }
+  const setCurrentPlayMode = useContext(SetCurrentPlayModeContext)
 
-  let modeIconName = 'repeat-outline'
-  if(mode === PlayMode.random){
-    modeIconName = 'shuffle-outline'
-  }else if(mode === PlayMode.sequence){
-    modeIconName = 'reload-outline'
+  const handleClickMode = ()=>{
+    const currentMode = GetNextPlayMode(mode)
+    setCurrentPlayMode(currentMode)
   }
 
   const renderPlayer = ()=> {
@@ -63,7 +58,7 @@ function NormalPlayer(props){
         </ProgressWrapper>
           <Operators>
             <div className="icon i-left" onClick={()=>handleClickMode()}>
-              <ion-icon name={modeIconName}></ion-icon>
+              <ion-icon name={mode.icon}></ion-icon>
             </div>
             <div className="icon i-left" onClick={handlePre}>
               <ion-icon name="play-skip-back-outline"></ion-icon>
@@ -77,7 +72,7 @@ function NormalPlayer(props){
             <div className="icon i-right" onClick={handleNext}>
               <ion-icon name="play-skip-forward-outline"></ion-icon>
             </div>
-            <div className="icon i-right">
+            <div className="icon i-right" onClick={handleShowList}>
               <ion-icon name="list-circle-outline"></ion-icon>
             </div>
           </Operators>
@@ -85,8 +80,6 @@ function NormalPlayer(props){
     </NormalPlayerContainer>
     )
   }
-
-
 
   return (   
     <CSSTransition 

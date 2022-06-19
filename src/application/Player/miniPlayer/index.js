@@ -6,7 +6,7 @@ import { MiniPlayerContainer } from "./style";
 
 function MiniPlayer(props){
   const {song,fullScreen,playing,percent} = props
-  const {clickPlaying,toggleFullScreen} = props
+  const {clickPlaying,handleShowList,toggleFullScreen} = props
   const playerRef = useRef()
 
   const renderPlayer = ()=>{
@@ -29,7 +29,7 @@ function MiniPlayer(props){
            }
           </ProgressCircle>
         </div>
-        <div className="control">
+        <div className="control" onClick={handleShowList}>
           <ion-icon name="musical-notes-outline"></ion-icon>
         </div>
     </MiniPlayerContainer>

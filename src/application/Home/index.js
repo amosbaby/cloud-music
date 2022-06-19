@@ -1,15 +1,22 @@
 import React, {  useState } from "react";
 import { renderRoutes } from "react-router-config";
 import { NavLink } from "react-router-dom";
+import { PlayMode } from "../../api/constant";
+import PlayList from "../../components/play-list";
 import Player from "../Player";
 import { Tab, TabItem, Top } from "./style";
 export const HasMiniPlayerContext = React.createContext(false)
 export const PlayListContext = React.createContext()
+export const ShowPlayListContext = React.createContext(false)
 export const CurrentIndexContext= React.createContext()
+export const CurrentPlayModeContext = React.createContext()
+export const SetCurrentPlayModeContext = React.createContext()
 
 function Home(props){
 
   const [playList,setPlayList] = useState([])
+  const [currentMode,setCurrentPlayMode] = useState(PlayMode.sequence)
+  const [showPlayList,setShowPlayList] = useState(false)
   const [currentIndex,setCurrentIndex] = useState(0)
   const hasMiniPlayer = playList && playList.length > 0
 
@@ -34,7 +41,8 @@ function Home(props){
       </Tab>
       {/* renderRoutes只能渲染一层，所以home下的路由需要再Home页再执行一次 */}
      { renderRoutes(props.route.routes) }
-     <Player currentIndex={currentIndex} playList={playList}></Player>
+     <Player currentMode={currentMode} currentIndex={currentIndex} playList={playList}></Player>
+     <PlayList currentMode={currentMode} show={showPlayList} playList={playList} currentSong={playList[currentIndex]}></PlayList>
      </>
     )
   }
@@ -44,7 +52,13 @@ function Home(props){
       <PlayListContext.Provider value={setPlayList}>
         <CurrentIndexContext.Provider value={setCurrentIndex}>
           <HasMiniPlayerContext.Provider value={hasMiniPlayer}>
-            { renderHome() }
+            <ShowPlayListContext.Provider value={setShowPlayList}>
+              <CurrentPlayModeContext.Provider value={currentMode}>
+                <SetCurrentPlayModeContext.Provider value={setCurrentPlayMode}>
+                  {renderHome()}
+                </SetCurrentPlayModeContext.Provider>
+              </CurrentPlayModeContext.Provider>
+            </ShowPlayListContext.Provider>
             </HasMiniPlayerContext.Provider>
         </CurrentIndexContext.Provider>
       </PlayListContext.Provider>

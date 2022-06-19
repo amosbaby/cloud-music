@@ -1,5 +1,7 @@
 import { useContext } from "react";
-import { HasMiniPlayerContext } from "../../application/Home";
+import { CurrentPlayModeContext, HasMiniPlayerContext, SetCurrentPlayModeContext } from "../../application/Home";
+import { PlayMode } from "../constant";
+
 
 /**
  * 格式化播放量
@@ -108,4 +110,24 @@ export function getRandomInt(min, max) {
 export function ShouldAddBottom(){
   const hasMiniPlayer = useContext(HasMiniPlayerContext)
   return hasMiniPlayer
+}
+
+/**
+ * 获取当前播放模式信息
+ * @returns {PlayMode}
+ */
+export function GetCurrentPlayMode(){
+  const mode = useContext(CurrentPlayModeContext)
+  return mode
+}
+
+/**
+ * 获取下一个切换的播放模式
+ * @returns 
+ */
+export function GetNextPlayMode(mode){
+  const currentMode = mode || PlayMode.sequence
+  const currentModeIndex =(currentMode.index + 1) % 3
+  return Object.values(PlayMode).find(item=>item.index === currentModeIndex)
+  
 }
