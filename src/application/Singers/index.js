@@ -30,13 +30,13 @@ function Singers(props){
   const handleCategoryClick = (index) => {
     const data = categoryTypes[index]
     sharedDataDispatch({type: UPDATE_CATEGORY, data })
-    dispatch(getSingerList(category.type,category.area,alpha))
+    dispatch(getSingerList(data.type,category.area,alpha))
   }
 
   const handleAlphaClick = (index) => {
-    const value = alphaTypes[index]
-    sharedDataDispatch({type: UPDATE_ALPHA, data:value.key })
-    dispatch(getSingerList(category.type,category.area,alpha))
+    const value = alphaTypes[index].key
+    sharedDataDispatch({type: UPDATE_ALPHA, data:value })
+    dispatch(getSingerList(category.type,category.area,value))
   }
 
   const handleEnterDetail = (id) => {

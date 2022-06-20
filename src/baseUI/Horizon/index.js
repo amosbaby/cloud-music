@@ -15,7 +15,6 @@ function Horizon(props){
   },[])
 
   const { title,list,preValue, handleClick } = props
-  
 
   return (
     <Scroll direction={"horizontal"}> 

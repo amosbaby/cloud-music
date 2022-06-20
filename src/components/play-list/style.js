@@ -27,20 +27,7 @@ export const PlayListWrapper = styled.div `
     }
   }
     /* 下面是动画部分的代码 */
-  &.list-fade-enter {
-    opacity: 0;
-  }
-  &.list-fade-enter-active {
-    opacity: 1;
-    transition: all 0.3s;
-  }
-  &.list-fade-exit {
-    opacity: 1;
-  }
-  &.list-fade-exit-active {
-    opacity: 0;
-    transition: all 0.3s;
-  }
+  ${GlobalStyle["fadeBottomToTop"]}
 `;
 export const ScrollWrapper = styled.div`
   height: 400px;

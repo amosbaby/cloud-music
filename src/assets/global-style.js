@@ -36,6 +36,23 @@ const rightToLeftAnimation=styled.div`
   }
 `
 
+const fadeBottomToTop=styled.div`
+  &.list-fade-enter {
+    opacity: 0;
+  }
+  &.list-fade-enter-active {
+    opacity: 1;
+    transition: all 0.3s;
+  }
+  &.list-fade-exit {
+    opacity: 1;
+  }
+  &.list-fade-exit-active {
+    opacity: 0;
+    transition: all 0.3s;
+  }
+`
+
 const rotate = keyframes`
   0%{
     transform: rotate(0);
@@ -67,6 +84,8 @@ const GlobalStyle = {
   noWrap,
   /** 从右到左动画 */
   rightToLeftAnimation,
+  /** 底部到顶部淡入淡出 */
+  fadeBottomToTop,
   /** 旋转 */
   rotate
 }
