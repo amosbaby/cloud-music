@@ -2,7 +2,7 @@ import React, { useCallback, useContext, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { GetCurrentPlayMode, getName, GetNextPlayMode } from "../../api/utils";
 import { prefixStyle } from "../../api/utils/css";
-import { CurrentIndexContext, SetCurrentPlayModeContext, ShowPlayListContext } from "../../application/Home";
+import { CurrentIndexContext, DeleteSongIndexContext, SetCurrentPlayModeContext, ShowPlayListContext } from "../../application/Home";
 import Scroll from "../scroll";
 import { ListContent, ListHeader, PlayListWrapper, ScrollWrapper } from "./style";
 
@@ -11,6 +11,7 @@ function PlayList(props){
   const [isShow, setIsShow] = useState(false)
   const setShowPlayList = useContext(ShowPlayListContext)
   const setCurrentIndex = useContext(CurrentIndexContext)
+  const deleteSongIndex = useContext(DeleteSongIndexContext)
   const playListRef = useRef()
   const wrapperRef = useRef()
   const transform= prefixStyle('transform')
@@ -61,6 +62,11 @@ function PlayList(props){
        </span>
     )
   }
+  
+  const handleDelete = useCallback((e,index)=>{
+    e.stopPropagation()
+    deleteSongIndex(index)
+  },[deleteSongIndex])
 
   const handleChangeSong = useCallback((e,index)=>{
     e.stopPropagation()
@@ -80,12 +86,15 @@ function PlayList(props){
                     <span className="text"> 
                       {item.name} - {getName(item.ar)} 
                     </span>
-                    <span className="like"> 
+                    {/* <span className="like"> 
                        <ion-icon className='current' name='heart-circle-outline'></ion-icon>  
-                    </span>
-                    <span className="delete"> 
+                    </span> */}
+                    {
+                      currentSong.id !== item.id ? (  <span className="delete" onClick={e=>handleDelete(e,index)}> 
                       <ion-icon name="trash-outline"></ion-icon>
-                    </span>
+                    </span>) : null
+                    }
+                  
                   </li>
                 )
               })
