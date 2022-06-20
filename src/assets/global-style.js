@@ -1,4 +1,4 @@
-import styled,{ keyframes, } from "styled-components";
+import styled,{  css, keyframes, } from "styled-components";
 /** 扩大点击区域 */
 const extendClick = styled.div`
   position: relative;
@@ -18,7 +18,7 @@ const noWrap = styled.div`
   white-space: nowrap;
 `
 /** 从右到左动画 */
-const rightToLeftAnimation=styled.div`
+const rightToLeftAnimation=css`
   transform-origin: right bottom;
   &.fly-enter, &.fly-appear {
     transform: translate3d(100%, 0, 0);
@@ -36,7 +36,7 @@ const rightToLeftAnimation=styled.div`
   }
 `
 
-const fadeBottomToTop=styled.div`
+const fadeBottomToTop=css`
   &.list-fade-enter {
     opacity: 0;
   }
