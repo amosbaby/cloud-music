@@ -22,7 +22,7 @@ export function createAfterEnter(cdWrapperRef){
   }
 }
 
-export function createAfterLeave(playerRef,cdWrapperRef){
+export function createAfterLeave(playerRef,cdWrapperRef,currentModeRef){
   return ()=>{
     if(!cdWrapperRef.current) return
     const cdWrapperDom = cdWrapperRef.current
@@ -30,6 +30,7 @@ export function createAfterLeave(playerRef,cdWrapperRef){
     cdWrapperDom.style[transform] = ""
     // 一定要注意现在要把 normalPlayer 这个 DOM 给隐藏掉，因为 CSSTransition 的工作只是把动画执行一遍。不置为 none 现在全屏播放器页面还是存在
     playerRef.current.style.display = "none"
+    currentModeRef.current = 'cd'
   }
 }
 

@@ -56,5 +56,14 @@ export const getAlbumDetailRequest = (id) => {
  * @returns 
  */
 export const getArtistRequest = (id) => {
-  return axiosInstance.get (`/artists?id=${id}`);
+  return axiosInstance.get(`/artists?id=${id}`);
+}
+
+/**
+ * 获取歌词
+ * @param {string} id 歌曲id
+ * @returns 
+ */
+export const getLyricRequest = (id) => {
+  return axiosInstance.get(`/lyric?id=${id}`)
 }

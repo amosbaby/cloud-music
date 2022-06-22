@@ -1,30 +1,81 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import {CSSTransition} from 'react-transition-group'
 import { formatPlayTime, getName, GetNextPlayMode } from "../../../api/utils";
-import { Bottom, CDWrapper, Middle, NormalPlayerContainer, Operators, ProgressWrapper, Top } from "./style";
+import { Bottom, CDWrapper, LyricContainer, LyricWrapper, Middle, NormalPlayerContainer, Operators, ProgressWrapper, Top } from "./style";
 import ProgressBar from "../../../baseUI/ProgressBar";
 import { createAfterEnter, createAfterLeave, createEnter, createLeave } from "./animation";
-import { PlayMode } from "../../../api/constant";
 import { SetCurrentPlayModeContext } from "../../Home";
+import Scroll from "../../../components/scroll";
 
 function NormalPlayer(props){
 
   const {song,playing,percent,duration,currentTime,fullScreen,mode} = props
   const {handleShowList,handlePre,handleNext,clickPlaying,toggleFullScreen,onProgressChange} = props
+  const {currentLyric,playingLyric,currentLyricIndex} = props
+
+  const currentModeRef = useRef('cd')
   const playerRef = useRef()
   const cdWrapperRef = useRef()
+  const lyricScrollRef = useRef()
+  const lyricCssNodeRef = useRef()
+  const cdCssNodeRef = useRef()
+  const lyricLineRef = useRef([])
 
 // 启用帧动画
   const enter =  createEnter(playerRef,cdWrapperRef)
   const afterEnter = createAfterEnter(cdWrapperRef)
   const leave = createLeave(cdWrapperRef)
-  const afterLeave = createAfterLeave(playerRef,cdWrapperRef)
+  const afterLeave = createAfterLeave(playerRef,cdWrapperRef,currentModeRef)
 
   const setCurrentPlayMode = useContext(SetCurrentPlayModeContext)
 
   const handleClickMode = ()=>{
     const currentMode = GetNextPlayMode(mode)
     setCurrentPlayMode(currentMode)
+  }
+
+  const toggleModeChange = (event)=>{
+    // event.stopPropagation()
+    console.log('toggleModeChange:',event)
+    currentModeRef.current  =  currentModeRef.current === 'cd' ? 'lyric' :'cd'
+  }
+
+  useEffect(()=>{
+    const bScroll = lyricScrollRef.current?.getBScroll()
+    if(!bScroll)return
+   
+   
+    if(currentLyricIndex>5){
+      // 保持当前歌词在第 5 条的位置
+      let lineEl = lyricLineRef.current[currentLyricIndex - 5].current;
+      bScroll.scrollToElement(lineEl, 1000);
+    }else {
+      // 当前歌词行数 <=5, 直接滚动到最顶端
+      bScroll.scrollTo(0, 0, 1000);
+    }
+
+  },[currentLyricIndex])
+
+  const renderLyric = ()=>{
+    return (
+      <CSSTransition in={currentModeRef.current === 'lyric'} timeout={300}  classNames="fade" nodeRef={lyricCssNodeRef}>
+        <LyricContainer ref={lyricCssNodeRef}>
+          <Scroll ref={lyricScrollRef}>
+              <LyricWrapper className="lyric_wrapper" style={{visibility: currentModeRef.current === 'lyric' ? 'visible' :'hidden' }}>
+                {
+                  currentLyric ? currentLyric.lines.map((item,index)=>{
+                    // 拿到每一行的歌词dom
+                    lyricLineRef.current[index] = React.createRef()
+                    return (
+                      <p className={`text ${currentLyricIndex === index ? 'current' : ''}`} key={item+index} ref={lyricLineRef.current[index]}> {item.text} </p>
+                    )
+                  }) : <p className="text pure"> 纯音乐，请欣赏。</p>
+                }
+              </LyricWrapper>
+          </Scroll>
+        </LyricContainer>
+      </CSSTransition>
+    )
   }
 
   const renderPlayer = ()=> {
@@ -41,12 +92,9 @@ function NormalPlayer(props){
             <h1 className="title"> {song.name} </h1>
             <h1 className="subtitle"> {getName(song.ar)} </h1>
         </Top>
-        <Middle ref={cdWrapperRef}>
-          <CDWrapper>
-            <div className="cd">
-              <img className={`image ${playing ? 'play' :'pause'}`} src={`${song.al.picUrl}?param=400x400`} alt="cd"/>
-            </div>
-          </CDWrapper>
+        <Middle ref={cdWrapperRef}  onClick={(e)=>toggleModeChange(e)}>
+            {renderCD()}
+            {renderLyric()}
         </Middle>
         <Bottom className="bottom">
         <ProgressWrapper>
@@ -81,6 +129,22 @@ function NormalPlayer(props){
     )
   }
 
+  const renderCD = ()=>{
+    return (
+      <CSSTransition in={currentModeRef.current === 'cd'} timeout={300}  classNames="fade" nodeRef={cdCssNodeRef}>
+        <CDWrapper ref={cdCssNodeRef} style={{visibility: currentModeRef.current === 'cd' ? 'visible' :'hidden' }}>
+        <div className="cd">
+          <img className={`image ${playing ? 'play' :'pause'}`} src={`${song.al.picUrl}?param=400x400`} alt="cd"/>
+          
+        </div>
+        <p className="playing_lyric"> {playingLyric} </p>
+    </CDWrapper>
+    </CSSTransition>
+  
+     
+    )
+  }
+
   return (   
     <CSSTransition 
       classNames="normal"
@@ -97,5 +161,4 @@ function NormalPlayer(props){
     </CSSTransition>
   )
 }
-
 export default React.memo(NormalPlayer)

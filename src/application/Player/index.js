@@ -1,8 +1,10 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { PlayMode } from "../../api/constant";
+import { getLyricRequest } from "../../api/request";
 import { getRandomInt, getSongUrl } from "../../api/utils";
 import Toast from "../../baseUI/Toast";
 import { CurrentIndexContext, ShowPlayListContext } from "../Home";
+import Lyric from "./Lyric/model";
 import MiniPlayer from "./miniPlayer";
 import NormalPlayer from "./normalPlayer";
 
@@ -16,6 +18,9 @@ function Player(props){
   
   const [ currentTime,setCurrentTime ] = useState(0)
   const [ currentSong,setCurrentSong ] = useState({})
+  const [playingLyric,setPlayingLyric] = useState('')
+  const currentLyric = useRef()
+  const currentLineIndex = useRef(0)
 
   const setCurrentIndex = useContext(CurrentIndexContext)
   const setShowPlayList = useContext(ShowPlayListContext)
@@ -28,7 +33,31 @@ function Player(props){
   const clickPlaying = useCallback((event,state)=>{
     event.stopPropagation();
     setPlaying(state)
+    if(currentLyric.current){
+      currentLyric.current.togglePlay(currentTime * 1000)
+    }
   },[])
+
+  const handleLyric = ({lineIndex,text})=>{
+    if(!currentLyric.current)return
+    currentLineIndex.current = lineIndex
+    setPlayingLyric(text)
+  }
+
+  const getLyric = id => {
+    getLyricRequest(id).then(res=>{
+      const {lyric} = res.lrc
+      if(!lyric){
+        currentLyric.current = null
+        return
+      }
+      currentLyric.current = new Lyric(lyric,handleLyric)
+      currentLyric.current.play()
+      currentLineIndex.current = 0
+    })
+  }
+
+
 
   useEffect(()=>{
     setModeText(currentMode.desc)
@@ -42,7 +71,7 @@ function Player(props){
     const current = playList && playList[currentIndex]
     if(!current) return
     setCurrentSong(current||{})
-    
+    getLyric(current.id)
     setCurrentTime(0)
     setPercent(0)
     setPlaying(true)
@@ -69,6 +98,10 @@ function Player(props){
     if(!playing){
       setPlaying(true)
     }
+    if (currentLyric.current) {
+      currentLyric.current.seek (time * 1000);
+    }
+
   }
 
   const onAudioError = ()=>{
@@ -152,11 +185,12 @@ function Player(props){
     <>
       {
         currentSong.al ? <>
-        <NormalPlayer mode={currentMode}  percent={percent} duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen} song={currentSong} clickPlaying={clickPlaying} onProgressChange={onProgressChange} handlePre={handlePre} handleNext={handleNext} handleShowList={handleShowList}>
+        <NormalPlayer currentLyric={currentLyric.current} playingLyric={playingLyric} currentLyricIndex={currentLineIndex.current}  mode={currentMode}  percent={percent} duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen} song={currentSong} clickPlaying={clickPlaying} onProgressChange={onProgressChange} handlePre={handlePre} handleNext={handleNext} handleShowList={handleShowList}>
               </NormalPlayer>
             <MiniPlayer percent={percent}  duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen}  song={currentSong} clickPlaying={clickPlaying} handleShowList={handleShowList}> </MiniPlayer>
         </> : null
       }
+      
       <audio autoPlay ref={audioRef} onTimeUpdate={updateTime} onEnded={handlePlayEnded} onError={onAudioError} onPlay={handlePlay}></audio>
       <Toast ref={toastRef} text={modeText}></Toast>
     </>
