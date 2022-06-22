@@ -34,9 +34,10 @@ function Player(props){
     event.stopPropagation();
     setPlaying(state)
     if(currentLyric.current){
+      console.log('clickPlaying:',currentTime)
       currentLyric.current.togglePlay(currentTime * 1000)
     }
-  },[])
+  },[currentLyric,currentTime])
 
   const handleLyric = ({lineIndex,text})=>{
     if(!currentLyric.current)return
@@ -77,7 +78,7 @@ function Player(props){
     setPlaying(true)
     setDuration(current.dt/1000 | 0)
     audioRef.current.src = getSongUrl(current.id)
-  },[playList,currentIndex])
+  },[playList,,currentIndex])
 
   useEffect(()=>{
     setTimeout(() => {
@@ -93,13 +94,14 @@ function Player(props){
   const onProgressChange = (percent) =>{
     const time = duration * percent
     setCurrentTime(time)
+    console.log('onProgressChange:',time)
     setPercent(percent)
     audioRef.current.currentTime = time
     if(!playing){
       setPlaying(true)
     }
     if (currentLyric.current) {
-      currentLyric.current.seek (time * 1000);
+      currentLyric.current.seek(time * 1000);
     }
 
   }

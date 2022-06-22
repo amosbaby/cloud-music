@@ -44,7 +44,6 @@ function NormalPlayer(props){
     const bScroll = lyricScrollRef.current?.getBScroll()
     if(!bScroll)return
    
-   
     if(currentLyricIndex>5){
       // 保持当前歌词在第 5 条的位置
       let lineEl = lyricLineRef.current[currentLyricIndex - 5].current;
@@ -140,8 +139,6 @@ function NormalPlayer(props){
         <p className="playing_lyric"> {playingLyric} </p>
     </CDWrapper>
     </CSSTransition>
-  
-     
     )
   }
 

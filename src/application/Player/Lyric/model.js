@@ -15,6 +15,7 @@ export default class Lyric {
     this.state = STATE_PAUSE
     this.currentLineIndex = 0
     this.startStamp = 0
+    this.timerList = []
     this.lines = this._initLines() // 解析后的数组，每一项包含对应的歌词和时间
   }
 
@@ -65,7 +66,6 @@ export default class Lyric {
     // 根据时间进度判断开始播放开始时间
     this.startStamp = +new Date() - offset
     if(this.currentLineIndex < this.lines.length){
-      clearTimeout(this.timer)
       this._playRest(isSeek)
     }
 
@@ -76,33 +76,40 @@ export default class Lyric {
     const currentLineTime = this.lines[this.currentLineIndex].time
     let delay = 0
     if(isSeek){
-      delay = currentLineTime - new Date()
+      delay = currentLineTime - (new Date() - this.startStamp)
     }else {
       const preLineTime = this.lines[this.currentLineIndex-1] ? this.lines[this.currentLineIndex-1].time : 0
       delay = currentLineTime - preLineTime
     }
 
-    this.timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       this._callHandler(this.currentLineIndex++)
-      this._playRest()
+      if(this.currentLineIndex < this.lines.length && this.state === STATE_PLAYING){
+        this._playRest()
+      }
     }, delay);
+    this.timerList.push(timer)
   }
 
   stop(){
-    clearTimeout(this.timer)
-    this.timer = -1
+    this.timerList.forEach(timer=>{
+      clearTimeout(timer)
+    })
+    this.timerList = []
     this.state = STATE_PAUSE
   }
 
+
   seek(offset){
+    this.stop()
     this.play(offset,true)
   }
 
-  togglePlay(){
+  togglePlay(offset){
     if(this.state === STATE_PLAYING){
       this.stop()
     }else{
-      this.play()
+      this.play(offset)
     }
   }
 }
