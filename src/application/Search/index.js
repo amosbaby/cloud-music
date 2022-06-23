@@ -59,6 +59,10 @@ function Search(props){
     )
   }
 
+  const onEnterAlbum = (id) => {
+    props.history.push(`/album/${id}`)
+  }
+
   const renderAlbum = ()=>{
     const albums = suggestList.playlists
     if(!albums?.length) return 
@@ -69,7 +73,7 @@ function Search(props){
         {
           albums.map((item,index) => {
            return (
-            <ListItem key={item.accountId+""+index}>
+            <ListItem key={item.accountId+""+index} onClick={()=>onEnterAlbum(item.id)}>
             <div className="img_wrapper">
               <LazyLoad placeholder={<img width="100%" height="100%" src={require('./music.png')} alt="p"/>}>
                 <img src={item.coverImgUrl} width="100%" height="100%" alt="music"/>
@@ -78,6 +82,35 @@ function Search(props){
             <span className="name"> 歌单：{item.name} </span>
           </ListItem>
            )
+          })
+        }
+      </List>
+    )
+  }
+
+  const onEnterSinger = (id) => {
+    props.history.push(`/singer/${id}`)
+  }
+
+  const renderSingers = ()=>{
+    const singers = suggestList.artists
+    if(!singers.length) return 
+
+    return (
+      <List>
+        <h1 className="title"> 相关歌手 </h1>
+        {
+          singers.map((item,index)=>{
+            return (
+              <ListItem key={item.accountId+""+index} onClick={()=>onEnterSinger(item.id)}>
+              <div className="img_wrapper">
+              <LazyLoad placeholder={<img width="100%" height="100%" src={require('./music.png')} alt="p"/>}>
+                <img src={item.pic} width="100%" height="100%" alt="music"/>
+                </LazyLoad>
+              </div>
+              <span className="name"> 歌手：{item.name} </span>
+            </ListItem>
+            )
           })
         }
       </List>
@@ -106,6 +139,7 @@ function Search(props){
                   <h1 className="title"> 热门搜索 </h1>
                   {renderHotKeys()}
                   {renderAlbum()}
+                  {renderSingers()}
                 </HotKey>
               </div>
             </Scroll>

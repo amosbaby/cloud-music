@@ -24,6 +24,18 @@ import Singers from "../application/Singers";
       component:Search
     },
     {
+      path:'/album/:id',
+      exact: true,
+      key:'album',
+      component:Album
+    },
+    {
+      path:'/singer/:id',
+      exact: true,
+      key:'singer',
+      component:Singer
+    },
+    {
       path:'/recommend',
       component:Recommend,
       routes:[
