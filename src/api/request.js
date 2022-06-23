@@ -67,3 +67,29 @@ export const getArtistRequest = (id) => {
 export const getLyricRequest = (id) => {
   return axiosInstance.get(`/lyric?id=${id}`)
 }
+
+/**
+ * 获取热门关键词
+ * @returns 
+ */
+export const getHotKeyWordsRequest = () => {
+  return axiosInstance.get(`/search/hot`);
+};
+
+/**
+ * 获取关键词建议列表
+ * @param {string} keywords 
+ * @returns 
+ */
+export const getSuggestListRequest = keywords => {
+  return axiosInstance.get(`/search/suggest?keywords=${keywords}`);
+};
+
+/**
+ * 根据关键词查询对应的歌曲列表
+ * @param {string} keywords 
+ * @returns 
+ */
+export const getResultSongsListRequest = keywords => {
+  return axiosInstance.get(`/search?keywords=${keywords}`);
+};
