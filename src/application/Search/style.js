@@ -88,3 +88,34 @@ export const ListItem = styled.div`
     font-weight: 500;
   }
 `;
+
+export const SongItem = styled.ul`
+  >li {
+    display: flex;
+    height: 60px;
+    align-items: center;  
+    .index {
+      width: 60px;
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+    }
+    .info {
+      box-sizing: border-box;
+      flex: 1;
+      display: flex;
+      height: 100%;
+      padding: 5px 0;
+      flex-direction: column;
+      justify-content: space-around;
+      border-bottom: 1px solid ${GlobalStyle["border-color"]};
+      >span:first-child {
+        color: ${GlobalStyle["font-color-desc"]};
+      }
+      >span:last-child {
+        font-size: ${GlobalStyle["font-size-s"]};
+        color: #bba8a8;
+      }
+    }
+  }
+`

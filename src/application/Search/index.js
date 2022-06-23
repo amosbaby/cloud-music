@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import LazyLoad from "react-lazyload";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
+import { getName } from "../../api/utils";
 import Loading from "../../components/loading";
 import Scroll from "../../components/scroll";
 import SearchBox from "./SearchBox";
 import { mapDispatchToProps, mapStateToProps } from "./store/utils";
-import { Container, HotKey, List, ListItem, ShortcutWrapper } from "./style";
+import { SongItem,Container, HotKey, List, ListItem, ShortcutWrapper } from "./style";
 
 function Search(props){
 
@@ -94,7 +95,7 @@ function Search(props){
 
   const renderSingers = ()=>{
     const singers = suggestList.artists
-    if(!singers.length) return 
+    if(!singers?.length) return 
 
     return (
       <List>
@@ -114,6 +115,27 @@ function Search(props){
           })
         }
       </List>
+    )
+  }
+
+  const renderSongs = ()=>{
+    return (
+      <SongItem style={{paddingLeft:"20px"}}>
+        {
+          songList.map((item,index)=>{
+            return (
+              <li key={item.id}>
+                <div className="info">
+                  <span> {item.name} </span>
+                  <span> 
+                    { getName(item.artists)} - {item.album.name}
+                  </span>
+                </div>
+              </li>
+            )
+          })
+        }
+      </SongItem>
     )
   }
 
@@ -140,6 +162,7 @@ function Search(props){
                   {renderHotKeys()}
                   {renderAlbum()}
                   {renderSingers()}
+                  {renderSongs()}
                 </HotKey>
               </div>
             </Scroll>
