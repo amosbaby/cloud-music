@@ -12,6 +12,9 @@ export const Top = styled.div`
     color: #f1f1f1;
     font-size: 20px;
   }
+  .search-button{
+    ${GlobalStyle.extendClick}
+  }
 `
 export const Tab = styled.div`
   height: 44px;

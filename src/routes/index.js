@@ -4,6 +4,7 @@ import Album from "../application/Album";
 import Home from "../application/Home";
 import Rank from "../application/Rank";
 import Recommend from "../application/Recommend";
+import Search from "../application/Search";
 import Singer from "../application/Singer";
 import Singers from "../application/Singers";
 
@@ -17,6 +18,10 @@ import Singers from "../application/Singers";
       render:()=>{
         <Redirect to={"/recommend"} />
       } 
+    },
+    {
+      path:'/search',
+      component:Search
     },
     {
       path:'/recommend',

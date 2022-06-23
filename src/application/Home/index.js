@@ -47,7 +47,7 @@ function Home(props){
         <Top>
         <span> <ion-icon name="grid-outline"></ion-icon> </span>
         <span> 网易云音乐 </span>
-        <span> <ion-icon name="search-outline"></ion-icon> </span>
+        <span className="search-button" onClick={()=>props.history.push('/search')}> <ion-icon name="search-outline"></ion-icon> </span>
       </Top>
       <Tab>
         <NavLink to="/recommend" activeClassName="selected">

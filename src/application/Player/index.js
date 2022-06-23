@@ -78,7 +78,7 @@ function Player(props){
     setPlaying(true)
     setDuration(current.dt/1000 | 0)
     audioRef.current.src = getSongUrl(current.id)
-  },[playList,,currentIndex])
+  },[playList,currentIndex])
 
   useEffect(()=>{
     setTimeout(() => {
