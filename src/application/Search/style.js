@@ -34,6 +34,9 @@ export const ShortcutWrapper = styled.div`
   top: 40px;
   bottom: 0;
   width: 100%;
+`
+
+export const ResultWrapper = styled.div`
   display: ${props => props.show ? "":"none"};
 `
 

@@ -2,7 +2,7 @@ import { fromJS } from 'immutable'
 import * as actionTypes  from './constants'
 
 const defaultState = fromJS({
-  loading:true,
+  loading:false,
   hotList:[],
   suggestList:[],
   songList:[],

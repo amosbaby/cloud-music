@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import LazyLoad from "react-lazyload";
+import LazyLoad, { forceCheck } from "react-lazyload";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { getName } from "../../api/utils";
@@ -39,8 +39,10 @@ function Search(props){
   },[])
 
   const handleQuery = useCallback((query)=>{
-    if(!query) return
     setQuery(query)
+    if(!query) {
+      return
+    }
     updateLoadingDispatch(true)
     getSuggestListDispatch(query)
   },[])
@@ -106,7 +108,7 @@ function Search(props){
               <ListItem key={item.accountId+""+index} onClick={()=>onEnterSinger(item.id)}>
               <div className="img_wrapper">
               <LazyLoad placeholder={<img width="100%" height="100%" src={require('./music.png')} alt="p"/>}>
-                <img src={item.pic} width="100%" height="100%" alt="music"/>
+                <img src={item.picUrl} width="100%" height="100%" alt="music"/>
                 </LazyLoad>
               </div>
               <span className="name"> 歌手：{item.name} </span>
@@ -120,6 +122,8 @@ function Search(props){
 
   const renderSongs = ()=>{
     return (
+      <List>
+       <h1 className="title"> 相关歌曲 </h1>
       <SongItem style={{paddingLeft:"20px"}}>
         {
           songList.map((item,index)=>{
@@ -136,6 +140,7 @@ function Search(props){
           })
         }
       </SongItem>
+     </List>
     )
   }
 
@@ -154,16 +159,19 @@ function Search(props){
           <SearchBox back={handleBack} hotQuery={query} handleQuery={handleQuery} ></SearchBox>
           </div>
 
-          <ShortcutWrapper show={query}>
-            <Scroll>
+          <ShortcutWrapper>
+            <Scroll onScroll={forceCheck}>
               <div>
                 <HotKey>
                   <h1 className="title"> 热门搜索 </h1>
                   {renderHotKeys()}
-                  {renderAlbum()}
-                  {renderSingers()}
-                  {renderSongs()}
                 </HotKey>
+                 
+                 <div show={query}>
+                   {renderAlbum()}
+                   {renderSingers()}
+                   {renderSongs()}
+                 </div>
               </div>
             </Scroll>
           </ShortcutWrapper>
