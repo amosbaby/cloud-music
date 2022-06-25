@@ -1,6 +1,7 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CurrentPlayModeContext, HasMiniPlayerContext, SetCurrentPlayModeContext } from "../../application/Home";
 import { PlayMode } from "../constant";
+import { getSongDetailRequest } from "../request";
 
 
 /**
@@ -130,4 +131,22 @@ export function GetNextPlayMode(mode){
   const currentModeIndex =(currentMode.index + 1) % 3
   return Object.values(PlayMode).find(item=>item.index === currentModeIndex)
   
+}
+
+/**
+ * 获取歌曲详情hook
+ * @param {string} id 歌曲id
+ * @returns 
+ */
+export function useSongDetail(id){
+  const [song,setSong] = useState(null)
+
+  if(id){
+    getSongDetailRequest(id).then(res=>{
+      setSong(res.songs[0])
+    })
+  }
+
+
+  return song
 }

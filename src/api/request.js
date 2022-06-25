@@ -93,3 +93,12 @@ export const getSuggestListRequest = keywords => {
 export const getResultSongsListRequest = keywords => {
   return axiosInstance.get(`/search?keywords=${keywords}`);
 };
+
+/**
+ * 获取歌曲详情
+ * @param {string} id 
+ * @returns 
+ */
+export const getSongDetailRequest = id => {
+  return axiosInstance.get(`/song/detail?ids=${id}`)
+}

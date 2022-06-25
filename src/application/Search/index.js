@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import LazyLoad, { forceCheck } from "react-lazyload";
 import { connect } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { getName } from "../../api/utils";
 import Loading from "../../components/loading";
 import Scroll from "../../components/scroll";
+import { AddSongContext } from "../Home";
 import SearchBox from "./SearchBox";
 import { mapDispatchToProps, mapStateToProps } from "./store/utils";
 import { SongItem,Container, HotKey, List, ListItem, ShortcutWrapper } from "./style";
@@ -22,6 +23,7 @@ function Search(props){
 
   const [show,setShow] = useState(false)
   const containerRef = useRef()
+
 
   const {getHotListDispatch,updateLoadingDispatch,getSuggestListDispatch} = props
 
@@ -46,6 +48,8 @@ function Search(props){
     updateLoadingDispatch(true)
     getSuggestListDispatch(query)
   },[])
+
+  const setAddSongId = useContext(AddSongContext)
 
   const renderHotKeys = ()=>{
     const list = hotList.toJS() || []
@@ -128,7 +132,7 @@ function Search(props){
         {
           songList.map((item,index)=>{
             return (
-              <li key={item.id}>
+              <li key={item.id} onClick={()=>setAddSongId(item.id)}>
                 <div className="info">
                   <span> {item.name} </span>
                   <span> 

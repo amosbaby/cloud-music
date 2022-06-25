@@ -1,4 +1,4 @@
-import React, {  useEffect, useState } from "react";
+import React, {  useCallback, useEffect, useState } from "react";
 import { renderRoutes } from "react-router-config";
 import { NavLink } from "react-router-dom";
 import { PlayMode } from "../../api/constant";
@@ -6,6 +6,7 @@ import PlayList from "../../components/play-list";
 import Player from "../Player";
 import { Tab, TabItem, Top } from "./style";
 import { cloneDeep } from 'lodash'
+import { useSongDetail } from "../../api/utils";
 
 
 export const HasMiniPlayerContext = React.createContext(false)
@@ -15,6 +16,7 @@ export const CurrentIndexContext= React.createContext()
 export const CurrentPlayModeContext = React.createContext()
 export const SetCurrentPlayModeContext = React.createContext()
 export const DeleteSongIndexContext = React.createContext()
+export const AddSongContext = React.createContext()
 
 function Home(props){
 
@@ -23,8 +25,10 @@ function Home(props){
   const [currentMode,setCurrentPlayMode] = useState(PlayMode.sequence)
   const [showPlayList,setShowPlayList] = useState(false)
   const [currentIndex,setCurrentIndex] = useState(0)
+  
   const hasMiniPlayer = playList && playList.length > 0
 
+  
   useEffect(()=>{
     // 防止逻辑漏盘
     if(deleteSongIndex>=0 &&deleteSongIndex !== currentIndex ){
@@ -40,6 +44,20 @@ function Home(props){
     
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[deleteSongIndex])
+
+  const [addSongId,setAddSongId] = useState()
+
+  const addSongDetail = useSongDetail(addSongId)
+
+  useEffect(()=>{
+    if(addSongDetail && addSongId){
+      setPlayList([addSongDetail,...playList])
+      setCurrentIndex(0)
+      setAddSongId()
+    }
+
+  },[addSongDetail,playList,addSongId])
+
 
   const renderHome = ()=>{
     return (
@@ -77,7 +95,9 @@ function Home(props){
               <CurrentPlayModeContext.Provider value={currentMode}>
                 <SetCurrentPlayModeContext.Provider value={setCurrentPlayMode}>
                   <DeleteSongIndexContext.Provider value={setDeleteSongIndex}>
+                    <AddSongContext.Provider value={setAddSongId}>
                     {renderHome()}
+                    </AddSongContext.Provider>
                   </DeleteSongIndexContext.Provider>
                 </SetCurrentPlayModeContext.Provider>
               </CurrentPlayModeContext.Provider>
