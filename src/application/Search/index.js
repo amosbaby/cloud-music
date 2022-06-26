@@ -1,12 +1,13 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import LazyLoad, { forceCheck } from "react-lazyload";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import { getName } from "../../api/utils";
 import Loading from "../../components/loading";
 import Scroll from "../../components/scroll";
 import { AddSongContext } from "../Home";
 import SearchBox from "./SearchBox";
+import { updateSongList, updateSuggestList } from "./store/actionCreators";
 import { mapDispatchToProps, mapStateToProps } from "./store/utils";
 import { SongItem,Container, HotKey, List, ListItem, ShortcutWrapper } from "./style";
 
@@ -40,9 +41,12 @@ function Search(props){
     setShow(false)
   },[])
 
+  const dispatch = useDispatch()
   const handleQuery = useCallback((query)=>{
     setQuery(query)
     if(!query) {
+      dispatch(updateSuggestList([]))
+      dispatch(updateSongList([]))
       return
     }
     updateLoadingDispatch(true)
@@ -125,6 +129,7 @@ function Search(props){
   }
 
   const renderSongs = ()=>{
+    if(!songList.length) return
     return (
       <List>
        <h1 className="title"> 相关歌曲 </h1>

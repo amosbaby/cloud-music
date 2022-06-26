@@ -146,7 +146,5 @@ export function useSongDetail(id){
       setSong(res.songs[0])
     })
   }
-
-
   return song
 }

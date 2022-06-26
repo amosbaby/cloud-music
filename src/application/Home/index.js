@@ -1,4 +1,4 @@
-import React, {  useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { renderRoutes } from "react-router-config";
 import { NavLink } from "react-router-dom";
 import { PlayMode } from "../../api/constant";
@@ -30,7 +30,7 @@ function Home(props){
 
   
   useEffect(()=>{
-    // 防止逻辑漏盘
+    // 防止逻辑漏判
     if(deleteSongIndex>=0 &&deleteSongIndex !== currentIndex ){
       const list = cloneDeep(playList)
       const newList = list.slice(0,deleteSongIndex).concat(list.slice(deleteSongIndex+1))
@@ -50,13 +50,14 @@ function Home(props){
   const addSongDetail = useSongDetail(addSongId)
 
   useEffect(()=>{
-    if(addSongDetail && addSongId){
+    if(addSongDetail && addSongDetail.id === addSongId){
+      console.log(addSongDetail)
       setPlayList([addSongDetail,...playList])
       setCurrentIndex(0)
       setAddSongId()
     }
 
-  },[addSongDetail,playList,addSongId])
+  },[addSongDetail,addSongId,playList])
 
 
   const renderHome = ()=>{

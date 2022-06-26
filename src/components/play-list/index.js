@@ -53,7 +53,7 @@ function PlayList(props){
   }
 
   const renderCurrentIcon = (item)=>{
-    const iconName = item.id === currentSong.id 
+    const iconName = item.id === currentSong?.id 
     return (
        <span className='current' >
        {
