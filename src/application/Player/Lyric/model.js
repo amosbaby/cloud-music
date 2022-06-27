@@ -9,7 +9,8 @@ export default class Lyric {
    * @param {string} lrc 
    * @param {function} handler 
    */
-  constructor(lrc,handler = ()=>{}){
+  constructor(lrc,handler = ()=>{},speed){
+    this.speed = speed || 1
     this.lrc = lrc
     this.handler = handler
     this.state = STATE_PAUSE
@@ -87,7 +88,7 @@ export default class Lyric {
       if(this.currentLineIndex < this.lines.length && this.state === STATE_PLAYING){
         this._playRest()
       }
-    }, delay);
+    }, delay/this.speed);
     this.timerList.push(timer)
   }
 
@@ -111,5 +112,9 @@ export default class Lyric {
     }else{
       this.play(offset)
     }
+  }
+
+  changeSpeed(speed){
+    this.speed = speed
   }
 }

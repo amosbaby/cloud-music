@@ -9,3 +9,8 @@ export const PlayMode = {
   /** 循环播放 */
   loop:{ index:2, desc:'循环播放',icon:'reload-outline' }
  }
+
+/**
+ * 播放速度
+ */
+ export const PlaySpeed = [0.75 , 1, 1.25, 2]

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import GlobalStyle from '../../../assets/global-style';
+import GlobalStyle from   '../../../assets/global-style';
 import needle from './needle.png'
 
 export const NormalPlayerContainer = styled.div`
@@ -237,3 +237,33 @@ export const LyricWrapper = styled.div`
     }
   }
 `;
+
+export const SpeedButtonList = styled.div`
+  width: 70%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  justify-content: space-around;
+  overflow: hidden;
+  >span:first-of-type {
+    display: block;
+    flex: 0 0 auto;
+    padding: 5px 0;
+    color: ${GlobalStyle["font-color-desc-v2"]};
+    font-size: ${GlobalStyle["font-size-m"]};
+    vertical-align: middle;
+  }
+`
+export const SpeedButton = styled.span`
+  flex: 0 0 auto;
+  font-size: ${GlobalStyle["font-size-m"]};
+  padding: 5px 5px;
+  border-radius: 10px;
+  color: ${GlobalStyle["font-color-desc-v2"]};
+  &.selected {
+    color: ${GlobalStyle["theme-color"]};
+    border: 1px solid ${GlobalStyle["theme-color"]};
+    opacity: 0.8;
+  }
+`

@@ -1,16 +1,17 @@
 import React, { useContext, useEffect, useRef } from "react";
 import {CSSTransition} from 'react-transition-group'
 import { formatPlayTime, getName, GetNextPlayMode } from "../../../api/utils";
-import { Bottom, CDWrapper, LyricContainer, LyricWrapper, Middle, NormalPlayerContainer, Operators, ProgressWrapper, Top } from "./style";
+import { Bottom, CDWrapper, LyricContainer, LyricWrapper, Middle, NormalPlayerContainer, Operators, ProgressWrapper, SpeedButton, SpeedButtonList, Top } from "./style";
 import ProgressBar from "../../../baseUI/ProgressBar";
 import { createAfterEnter, createAfterLeave, createEnter, createLeave } from "./animation";
-import { SetCurrentPlayModeContext } from "../../Home";
+import {  SetCurrentPlayModeContext } from "../../Home";
 import Scroll from "../../../components/scroll";
+import { PlaySpeed } from "../../../api/constant";
 
 function NormalPlayer(props){
 
-  const {song,playing,percent,duration,currentTime,fullScreen,mode} = props
-  const {handleShowList,handlePre,handleNext,clickPlaying,toggleFullScreen,onProgressChange} = props
+  const {song,playing,percent,duration,currentTime,fullScreen,mode,speed} = props
+  const {handleShowList,handlePre,handleNext,clickPlaying,toggleFullScreen,onProgressChange,handleChangeSpeed} = props
   const {currentLyric,playingLyric,currentLyricIndex} = props
 
   const currentModeRef = useRef('cd')
@@ -55,6 +56,21 @@ function NormalPlayer(props){
 
   },[currentLyricIndex])
 
+  const renderSpeedButtons = ()=>{
+    return (
+      <SpeedButtonList>
+        <span> 倍速听歌 </span>
+        {
+          PlaySpeed.map(item=>{
+            return (
+              <SpeedButton key={item} className={`${speed === item ? 'selected' : ''}`} onClick={(e)=>{ handleChangeSpeed(e,item) }}> {`x${item}`} </SpeedButton>
+            )
+          })
+        }
+      </SpeedButtonList>
+    )
+  }
+
   const renderLyric = ()=>{
     return (
       <CSSTransition in={currentModeRef.current === 'lyric'} timeout={300}  classNames="fade" nodeRef={lyricCssNodeRef}>
@@ -96,6 +112,7 @@ function NormalPlayer(props){
             {renderLyric()}
         </Middle>
         <Bottom className="bottom">
+          { renderSpeedButtons() }
         <ProgressWrapper>
           <span className="time time-l">{ formatPlayTime(currentTime) } </span>
           <div className="progress-bar-wrapper">

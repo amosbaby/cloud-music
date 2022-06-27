@@ -9,6 +9,7 @@ import { cloneDeep } from 'lodash'
 import { useSongDetail } from "../../api/utils";
 
 
+
 export const HasMiniPlayerContext = React.createContext(false)
 export const PlayListContext = React.createContext()
 export const ShowPlayListContext = React.createContext(false)
@@ -41,7 +42,6 @@ function Home(props){
 
        setPlayList(newList)
     }
-    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[deleteSongIndex])
 
@@ -51,7 +51,6 @@ function Home(props){
 
   useEffect(()=>{
     if(addSongDetail && addSongDetail.id === addSongId){
-      console.log(addSongDetail)
       setPlayList([addSongDetail,...playList])
       setCurrentIndex(0)
       setAddSongId()
@@ -81,7 +80,7 @@ function Home(props){
       </Tab>
       {/* renderRoutes只能渲染一层，所以home下的路由需要再Home页再执行一次 */}
      { renderRoutes(props.route.routes) }
-     <Player currentMode={currentMode} currentIndex={currentIndex} playList={playList}></Player>
+     <Player  currentMode={currentMode} currentIndex={currentIndex} playList={playList}></Player>
      <PlayList currentMode={currentMode} show={showPlayList} playList={playList} currentSong={playList[currentIndex]}></PlayList>
      </>
     )
@@ -97,7 +96,10 @@ function Home(props){
                 <SetCurrentPlayModeContext.Provider value={setCurrentPlayMode}>
                   <DeleteSongIndexContext.Provider value={setDeleteSongIndex}>
                     <AddSongContext.Provider value={setAddSongId}>
-                    {renderHome()}
+                      
+                      {renderHome()}
+                  
+                    
                     </AddSongContext.Provider>
                   </DeleteSongIndexContext.Provider>
                 </SetCurrentPlayModeContext.Provider>

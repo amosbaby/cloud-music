@@ -15,6 +15,8 @@ function Player(props){
   const [percent,setPercent] = useState(0)
   const [ playing,setPlaying ] = useState(false)
   const [ duration,setDuration ] = useState(0)
+  // 播放速度
+   const [speed,setSpeed] = useState(1)
   
   const [ currentTime,setCurrentTime ] = useState(0)
   const [ currentSong,setCurrentSong ] = useState({})
@@ -29,6 +31,9 @@ function Player(props){
   const [modeText, setModeText] = useState("");
   const toastRef = useRef();
 
+  const handleChangeSpeed = useCallback((event,speedRate)=>{
+    setSpeed(speedRate)
+  })
 
   const clickPlaying = useCallback((event,state)=>{
     event.stopPropagation();
@@ -58,8 +63,6 @@ function Player(props){
     })
   }
 
-
-
   useEffect(()=>{
     setModeText(currentMode.desc)
   },[currentMode])
@@ -78,7 +81,17 @@ function Player(props){
     setPlaying(true)
     setDuration(current.dt/1000 | 0)
     audioRef.current.src = getSongUrl(current.id)
+  
   },[playList,currentIndex])
+
+  useEffect(()=>{
+    
+    audioRef.current.playbackRate = speed
+    if(currentLyric.current){
+      currentLyric.current.seek(currentTime*1000)
+      currentLyric.current.changeSpeed(speed)
+    }
+  },[speed])
 
   useEffect(()=>{
     setTimeout(() => {
@@ -187,7 +200,7 @@ function Player(props){
     <>
       {
         currentSong.al ? <>
-        <NormalPlayer currentLyric={currentLyric.current} playingLyric={playingLyric} currentLyricIndex={currentLineIndex.current}  mode={currentMode}  percent={percent} duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen} song={currentSong} clickPlaying={clickPlaying} onProgressChange={onProgressChange} handlePre={handlePre} handleNext={handleNext} handleShowList={handleShowList}>
+        <NormalPlayer  speed={speed} currentLyric={currentLyric.current} playingLyric={playingLyric} currentLyricIndex={currentLineIndex.current}  mode={currentMode}  percent={percent} duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen} song={currentSong} clickPlaying={clickPlaying} onProgressChange={onProgressChange} handlePre={handlePre} handleNext={handleNext} handleShowList={handleShowList} handleChangeSpeed={handleChangeSpeed}>
               </NormalPlayer>
             <MiniPlayer percent={percent}  duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen}  song={currentSong} clickPlaying={clickPlaying} handleShowList={handleShowList}> </MiniPlayer>
         </> : null
