@@ -132,6 +132,8 @@ function NormalPlayer(props){
     return (
       <CSSTransition in={currentModeRef.current === 'cd'} timeout={300}  classNames="fade" nodeRef={cdCssNodeRef}>
         <CDWrapper ref={cdCssNodeRef} style={{visibility: currentModeRef.current === 'cd' ? 'visible' :'hidden' }}>
+        {/* 可旋转needle */}
+        <div className={`needle ${playing ? '' : 'pause'}`}></div>
         <div className="cd">
           <img className={`image ${playing ? 'play' :'pause'}`} src={`${song.al.picUrl}?param=400x400`} alt="cd"/>
           

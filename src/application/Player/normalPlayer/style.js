@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import GlobalStyle from '../../../assets/global-style';
-
+import needle from './needle.png'
 
 export const NormalPlayerContainer = styled.div`
   position: fixed;
@@ -100,6 +100,22 @@ export const CDWrapper = styled.div`
   width: 80%;
   box-sizing: border-box;
   height: 80vw;
+  .needle {
+    position: absolute;
+    top: -16.67vw;
+    left: 30vw;
+    width: 25vw;
+    height: 40vw;
+    z-index: 100;
+    background-image: url(${needle});
+    ${GlobalStyle.bgFull};
+    transform-origin: 4.5vw 4.5vw;
+    transition: all 0.3s;
+    transform: rotate(0);
+    &.pause {
+      transform: rotate(-30deg);
+    }
+  }
   .cd {
     width: 100%;
     height: 100%;

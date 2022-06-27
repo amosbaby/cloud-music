@@ -62,6 +62,11 @@ const rotate = keyframes`
   }
 `;
 
+const bgFull =css`
+    background-position: 50%;
+    background-size: contain;
+    background-repeat: no-repeat;
+  `
 
 const GlobalStyle = {
   'theme-color': '#d44439',
@@ -87,7 +92,8 @@ const GlobalStyle = {
   /** 底部到顶部淡入淡出 */
   fadeBottomToTop,
   /** 旋转 */
-  rotate
+  rotate,
+  bgFull
 }
 
 
