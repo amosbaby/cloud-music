@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import GlobalStyle from "../../assets/global-style"
+import styled from 'styled-components';
+import GlobalStyle from '../../assets/global-style';
 
 export const ProgressBarWrapper = styled.div`
   height: 30px;
@@ -11,7 +11,7 @@ export const ProgressBarWrapper = styled.div`
     .progress {
       position: absolute;
       height: 100%;
-      background: ${GlobalStyle["theme-color"]};
+      background: ${GlobalStyle['theme-color']};
     }
     .progress-btn-wrapper {
       position: absolute;
@@ -26,10 +26,10 @@ export const ProgressBarWrapper = styled.div`
         box-sizing: border-box;
         width: 16px;
         height: 16px;
-        border: 3px solid ${GlobalStyle["border-color"]};
+        border: 3px solid ${GlobalStyle['border-color']};
         border-radius: 50%;
-        background: ${GlobalStyle["theme-color"]};
+        background: ${GlobalStyle['theme-color']};
       }
     }
   }
-`
+`;

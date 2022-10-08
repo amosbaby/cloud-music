@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import GlobalStyle from '../../assets/global-style'
+import styled from 'styled-components';
+import GlobalStyle from '../../assets/global-style';
 
 export const ToastWrapper = styled.div`
   position: fixed;
@@ -25,6 +25,6 @@ export const ToastWrapper = styled.div`
     line-height: 50px;
     text-align: center;
     color: #fff;
-    font-size: ${GlobalStyle["font-size-l"]};
+    font-size: ${GlobalStyle['font-size-l']};
   }
-`
+`;

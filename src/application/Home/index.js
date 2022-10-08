@@ -1,115 +1,69 @@
-import React, { useEffect, useState } from "react";
-import { renderRoutes } from "react-router-config";
-import { NavLink } from "react-router-dom";
-import { PlayMode } from "../../api/constant";
-import PlayList from "../../components/play-list";
-import Player from "../Player";
-import { Tab, TabItem, Top } from "./style";
-import { cloneDeep } from 'lodash'
-import { useSongDetail } from "../../api/utils";
+import React, { useReducer } from 'react';
+import { renderRoutes } from 'react-router-config';
+import { NavLink } from 'react-router-dom';
+import PlayList from '../../components/play-list';
+import Player from '../Player';
+import { Tab, TabItem, Top } from './style';
+import {
+  defaultPlayerConfig, PlayerConfigContext, PlayerConfigDispatchContext, playerReducer,
+} from '../Player/player.model';
 
+function Home(props) {
+  const { history, route } = props;
+  const [playerConfig, playerDispatch] = useReducer(playerReducer, defaultPlayerConfig);
 
+  const onShowSearch = () => {
+    history.push('/search');
+  };
 
-export const HasMiniPlayerContext = React.createContext(false)
-export const PlayListContext = React.createContext()
-export const ShowPlayListContext = React.createContext(false)
-export const CurrentIndexContext= React.createContext()
-export const CurrentPlayModeContext = React.createContext()
-export const SetCurrentPlayModeContext = React.createContext()
-export const DeleteSongIndexContext = React.createContext()
-export const AddSongContext = React.createContext()
-
-function Home(props){
-
-  const [playList,setPlayList] = useState([])
-  const [deleteSongIndex,setDeleteSongIndex] = useState(-1)
-  const [currentMode,setCurrentPlayMode] = useState(PlayMode.sequence)
-  const [showPlayList,setShowPlayList] = useState(false)
-  const [currentIndex,setCurrentIndex] = useState(0)
-  
-  const hasMiniPlayer = playList && playList.length > 0
-
-  
-  useEffect(()=>{
-    // 防止逻辑漏判
-    if(deleteSongIndex>=0 &&deleteSongIndex !== currentIndex ){
-      const list = cloneDeep(playList)
-      const newList = list.slice(0,deleteSongIndex).concat(list.slice(deleteSongIndex+1))
-
-      if(deleteSongIndex < currentIndex){
-        setCurrentIndex(currentIndex - 1)
-      }
-
-       setPlayList(newList)
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[deleteSongIndex])
-
-  const [addSongId,setAddSongId] = useState()
-
-  const addSongDetail = useSongDetail(addSongId)
-
-  useEffect(()=>{
-    if(addSongDetail && addSongDetail.id === addSongId){
-      setPlayList([addSongDetail,...playList])
-      setCurrentIndex(0)
-      setAddSongId()
-    }
-
-  },[addSongDetail,addSongId,playList])
-
-
-  const renderHome = ()=>{
-    return (
-      <>
-        <Top>
-        <span> <ion-icon name="grid-outline"></ion-icon> </span>
+  const renderHome = () => (
+    <>
+      <Top>
+        <span>
+          <ion-icon name="grid-outline" />
+        </span>
         <span> 网易云音乐 </span>
-        <span className="search-button" onClick={()=>props.history.push('/search')}> <ion-icon name="search-outline"></ion-icon> </span>
+        <span className="search-button" onClick={() => onShowSearch()}>
+          <ion-icon name="search-outline" />
+        </span>
       </Top>
       <Tab>
         <NavLink to="/recommend" activeClassName="selected">
-           <TabItem> <span> 推荐 </span> </TabItem> 
+          <TabItem>
+
+            <span> 推荐 </span>
+
+          </TabItem>
         </NavLink>
         <NavLink to="/singers" activeClassName="selected">
-           <TabItem> <span> 歌手 </span> </TabItem> 
+          <TabItem>
+
+            <span> 歌手 </span>
+
+          </TabItem>
         </NavLink>
         <NavLink to="/rank" activeClassName="selected">
-           <TabItem> <span> 排行榜 </span> </TabItem> 
+          <TabItem>
+
+            <span> 排行榜 </span>
+
+          </TabItem>
         </NavLink>
       </Tab>
       {/* renderRoutes只能渲染一层，所以home下的路由需要再Home页再执行一次 */}
-     { renderRoutes(props.route.routes) }
-     <Player  currentMode={currentMode} currentIndex={currentIndex} playList={playList}></Player>
-     <PlayList currentMode={currentMode} show={showPlayList} playList={playList} currentSong={playList[currentIndex]}></PlayList>
-     </>
-    )
-  }
+      { renderRoutes(route.routes) }
+      <Player />
+      <PlayList />
+    </>
+  );
 
   return (
-    <>
-      <PlayListContext.Provider value={setPlayList}>
-        <CurrentIndexContext.Provider value={setCurrentIndex}>
-          <HasMiniPlayerContext.Provider value={hasMiniPlayer}>
-            <ShowPlayListContext.Provider value={setShowPlayList}>
-              <CurrentPlayModeContext.Provider value={currentMode}>
-                <SetCurrentPlayModeContext.Provider value={setCurrentPlayMode}>
-                  <DeleteSongIndexContext.Provider value={setDeleteSongIndex}>
-                    <AddSongContext.Provider value={setAddSongId}>
-                      
-                      {renderHome()}
-                  
-                    
-                    </AddSongContext.Provider>
-                  </DeleteSongIndexContext.Provider>
-                </SetCurrentPlayModeContext.Provider>
-              </CurrentPlayModeContext.Provider>
-            </ShowPlayListContext.Provider>
-            </HasMiniPlayerContext.Provider>
-        </CurrentIndexContext.Provider>
-      </PlayListContext.Provider>
-    </>
-  )
+    <PlayerConfigContext.Provider value={playerConfig}>
+      <PlayerConfigDispatchContext.Provider value={playerDispatch}>
+        {renderHome()}
+      </PlayerConfigDispatchContext.Provider>
+    </PlayerConfigContext.Provider>
+  );
 }
 
-export default React.memo(Home)
+export default React.memo(Home);

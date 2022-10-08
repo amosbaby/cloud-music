@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, {keyframes} from'styled-components';
+import styled, { keyframes } from 'styled-components';
 import GlobalStyle from '../../assets/global-style';
 
 const dance = keyframes`
@@ -10,7 +10,7 @@ const dance = keyframes`
     20%{
       transform: scaleY(1);
     }
-`
+`;
 const Loading = styled.div`
     height: 10px;
     width: 100%;
@@ -19,7 +19,7 @@ const Loading = styled.div`
     font-size: 10px;
     >div {
       display: inline-block;
-      background-color: ${GlobalStyle["theme-color"]};
+      background-color: ${GlobalStyle['theme-color']};
       height: 100%;
       width: 1px;
       margin-right:2px;
@@ -38,19 +38,19 @@ const Loading = styled.div`
       animation-delay: -0.2s;
     } 
 
-`
+`;
 
-function LoadingV2 () {
+function LoadingV2() {
   return (
     <Loading>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <span > 拼命加载中...</span>
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+      <span> 拼命加载中...</span>
     </Loading>
   );
 }
- 
-export default React.memo (LoadingV2);
+
+export default React.memo(LoadingV2);

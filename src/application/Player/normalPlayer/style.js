@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import GlobalStyle from   '../../../assets/global-style';
-import needle from './needle.png'
+import styled from 'styled-components';
+import GlobalStyle from '../../../assets/global-style';
+import needle from './needle.png';
 
 export const NormalPlayerContainer = styled.div`
   position: fixed;
@@ -9,7 +9,7 @@ export const NormalPlayerContainer = styled.div`
   top: 0;
   bottom: 0;
   z-index: 150;
-  background: ${GlobalStyle["background-color"]};
+  background: ${GlobalStyle['background-color']};
   .background {
     position: absolute;
     left: 0;
@@ -20,7 +20,7 @@ export const NormalPlayerContainer = styled.div`
     opacity: 0.6;
     filter: blur(20px);
     &.layer {
-      background: ${GlobalStyle["font-color-desc"]};
+      background: ${GlobalStyle['font-color-desc']};
       opacity: 0.3;
       filter: none;
     }
@@ -60,7 +60,7 @@ export const Top = styled.div`
       display: block;
       padding: 9px;
       font-size: 24px;
-      color: ${GlobalStyle["font-color-desc"]};
+      color: ${GlobalStyle['font-color-desc']};
       font-weight: bold;
       /* transform: rotate(90deg); */
     }
@@ -70,15 +70,15 @@ export const Top = styled.div`
     margin: 0 auto;
     line-height: 40px;
     text-align: center;
-    font-size: ${GlobalStyle["font-size-l"]};
-    color: ${GlobalStyle["font-color-desc"]};
+    font-size: ${GlobalStyle['font-size-l']};
+    color: ${GlobalStyle['font-color-desc']};
     ${GlobalStyle.noWrap};
   }
   .subtitle {
     line-height: 20px;
     text-align: center;
-    font-size: ${GlobalStyle["font-size-m"]};
-    color: ${GlobalStyle["font-color-desc-v2"]};
+    font-size: ${GlobalStyle['font-size-m']};
+    color: ${GlobalStyle['font-color-desc-v2']};
     ${GlobalStyle.noWrap};
   }
 `;
@@ -160,8 +160,8 @@ export const ProgressWrapper = styled.div`
   margin: 0px auto;
   padding: 10px 0;
   .time {
-    color: ${GlobalStyle["font-color-desc"]};
-    font-size: ${GlobalStyle["font-size-s"]};
+    color: ${GlobalStyle['font-color-desc']};
+    font-size: ${GlobalStyle['font-size-s']};
     flex: 0 0 30px;
     line-height: 30px;
     width: 30px;
@@ -183,9 +183,9 @@ export const Operators = styled.div`
   .icon {
     font-weight: 300;
     flex: 1;
-    color: ${GlobalStyle["font-color-desc"]};
+    color: ${GlobalStyle['font-color-desc']};
     &.disable {
-      color: ${GlobalStyle["theme-color-shadow"]};
+      color: ${GlobalStyle['theme-color-shadow']};
     }
     ion-icon {
       font-weight: 300;
@@ -206,7 +206,7 @@ export const Operators = styled.div`
     text-align: left;
   }
   .icon-favorite {
-    color: ${GlobalStyle["theme-color"]};
+    color: ${GlobalStyle['theme-color']};
   }
 `;
 export const LyricContainer = styled.div`
@@ -227,7 +227,7 @@ export const LyricWrapper = styled.div`
     line-height: 32px;
     color: rgba(255, 255, 255, 0.5);
     white-space: normal;
-    font-size: ${GlobalStyle["font-size-l"]};
+    font-size: ${GlobalStyle['font-size-l']};
     &.current {
       color: #fff;
     }
@@ -250,20 +250,20 @@ export const SpeedButtonList = styled.div`
     display: block;
     flex: 0 0 auto;
     padding: 5px 0;
-    color: ${GlobalStyle["font-color-desc-v2"]};
-    font-size: ${GlobalStyle["font-size-m"]};
+    color: ${GlobalStyle['font-color-desc-v2']};
+    font-size: ${GlobalStyle['font-size-m']};
     vertical-align: middle;
   }
-`
+`;
 export const SpeedButton = styled.span`
   flex: 0 0 auto;
-  font-size: ${GlobalStyle["font-size-m"]};
+  font-size: ${GlobalStyle['font-size-m']};
   padding: 5px 5px;
   border-radius: 10px;
-  color: ${GlobalStyle["font-color-desc-v2"]};
+  color: ${GlobalStyle['font-color-desc-v2']};
   &.selected {
-    color: ${GlobalStyle["theme-color"]};
-    border: 1px solid ${GlobalStyle["theme-color"]};
+    color: ${GlobalStyle['theme-color']};
+    border: 1px solid ${GlobalStyle['theme-color']};
     opacity: 0.8;
   }
-`
+`;

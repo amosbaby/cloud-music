@@ -1,13 +1,13 @@
-import styled from 'styled-components'
-import GlobalStyle from "../../assets/global-style"
+import styled from 'styled-components';
+import GlobalStyle from '../../assets/global-style';
 
 export const CircleWrapper = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: ${(props) =>`${props.radius}px`};
-  width: ${(props) =>`${props.radius}px`};
+  height: ${(props) => `${props.radius}px`};
+  width: ${(props) => `${props.radius}px`};
   svg{
     position: absolute;
   }
@@ -16,11 +16,11 @@ export const CircleWrapper = styled.div`
     transform-origin: center;
     &.progress-background {
       transform: scale(0.9);
-      stroke: ${GlobalStyle["theme-color-shadow"]};
+      stroke: ${GlobalStyle['theme-color-shadow']};
     }
     &.progress-bar {
       transform: scale(0.9) rotate(-90deg);
-      stroke: ${GlobalStyle["theme-color"]};
+      stroke: ${GlobalStyle['theme-color']};
     }
   }
-`
+`;

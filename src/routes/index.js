@@ -1,80 +1,80 @@
-import React, { lazy, Suspense } from "react";
-import { Redirect } from "react-router-dom";
-import Home from "../application/Home";
+import React, { lazy, Suspense } from 'react';
+import { Redirect } from 'react-router-dom';
+import Home from '../application/Home';
 
-const RecommendComponent = lazy(()=>import('../application/Recommend/'))
-const SingersComponent = lazy(()=>import('../application/Singers/'))
-const RankComponent = lazy(()=>import('../application/Rank/'))
-const AlbumComponent = lazy(()=>import('../application/Album/'))
-const SingerComponent = lazy(()=>import('../application/Singer/'))
-const SearchComponent = lazy(()=>import('../application/Search/'))
+const RecommendComponent = lazy(() => import('../application/Recommend'));
+const SingersComponent = lazy(() => import('../application/Singers'));
+const RankComponent = lazy(() => import('../application/Rank'));
+const AlbumComponent = lazy(() => import('../application/Album'));
+const SingerComponent = lazy(() => import('../application/Singer'));
+const SearchComponent = lazy(() => import('../application/Search'));
 
-const SuspenseComponent = Component => props => {
+const SuspenseComponent = (Component) => function (props) {
   return (
     <Suspense fallback={null}>
-      <Component {...props}></Component>
+      <Component {...props} />
     </Suspense>
-  )
-}
+  );
+};
 
- const routes = [{
-  path:'/',
-  component:Home,
-  routes:[
+const routes = [{
+  path: '/',
+  component: Home,
+  routes: [
     {
-      path:'/',
-      exact:true,
-      render:()=>{
-        <Redirect to={"/recommend"} />
-      } 
-    },
-    {
-      path:'/search',
-      component:SuspenseComponent(SearchComponent)
-    },
-    {
-      path:'/album/:id',
+      path: '/',
       exact: true,
-      key:'album',
-      component:SuspenseComponent(AlbumComponent)
+      render: () => {
+        <Redirect to="/recommend" />;
+      },
     },
     {
-      path:'/singer/:id',
+      path: '/search',
+      component: SuspenseComponent(SearchComponent),
+    },
+    {
+      path: '/album/:id',
       exact: true,
-      key:'singer',
-      component:SuspenseComponent(SingerComponent)
+      key: 'album',
+      component: SuspenseComponent(AlbumComponent),
     },
     {
-      path:'/recommend',
-      component:SuspenseComponent(RecommendComponent),
-      routes:[
-        {
-          path:'/recommend/:id',
-          component:SuspenseComponent(AlbumComponent)
-        },
-      ]
+      path: '/singer/:id',
+      exact: true,
+      key: 'singer',
+      component: SuspenseComponent(SingerComponent),
     },
     {
-      path:'/rank',
-      component:SuspenseComponent(RankComponent),
-      routes:[
+      path: '/recommend',
+      component: SuspenseComponent(RecommendComponent),
+      routes: [
         {
-          path:'/rank/:id',
-          component:SuspenseComponent(AlbumComponent)
+          path: '/recommend/:id',
+          component: SuspenseComponent(AlbumComponent),
         },
-      ]
+      ],
     },
     {
-      path:'/singers',
-      component:SuspenseComponent(SingersComponent),
-      routes:[
+      path: '/rank',
+      component: SuspenseComponent(RankComponent),
+      routes: [
         {
-          path:'/singers/:id',
-          component:SuspenseComponent(SingerComponent)
+          path: '/rank/:id',
+          component: SuspenseComponent(AlbumComponent),
         },
-      ]
-    }
-  ]
-}]
+      ],
+    },
+    {
+      path: '/singers',
+      component: SuspenseComponent(SingersComponent),
+      routes: [
+        {
+          path: '/singers/:id',
+          component: SuspenseComponent(SingerComponent),
+        },
+      ],
+    },
+  ],
+}];
 
-export default routes
+export default routes;

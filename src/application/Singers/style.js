@@ -8,7 +8,7 @@ export const NavContainer = styled.div`
   padding: 5px;
   position: fixed;
   top: 95px;
-`
+`;
 export const ListContainer = styled.div`
   position: fixed;
   top: 160px;
@@ -16,7 +16,7 @@ export const ListContainer = styled.div`
   bottom: 0;
   overflow: hidden;
   width: 100%;
-  bottom: ${props=>props.addBottom ? '60px' : 0};
+  bottom: ${(props) => (props.addBottom ? '60px' : 0)};
 `;
 
 export const List = styled.div`
@@ -26,8 +26,8 @@ export const List = styled.div`
   overflow: hidden;
   .title {
     margin:10px 0 10px 10px;
-    color: ${GlobalStyle["font-color-desc"]};
-    font-size: ${GlobalStyle["font-size-s"]};
+    color: ${GlobalStyle['font-color-desc']};
+    font-size: ${GlobalStyle['font-size-s']};
   }
 `;
 export const ListItem = styled.div`
@@ -37,7 +37,7 @@ export const ListItem = styled.div`
   margin: 0 5px;
   padding: 5px 0;
   align-items: center;
-  border-bottom: 1px solid ${GlobalStyle["border-color"]};
+  border-bottom: 1px solid ${GlobalStyle['border-color']};
   .img_wrapper {
     margin-right: 20px;
     img {
@@ -47,8 +47,8 @@ export const ListItem = styled.div`
     }
   }
   .name {
-    font-size: ${GlobalStyle["font-size-m"]};
-    color: ${GlobalStyle["font-color-desc"]};
+    font-size: ${GlobalStyle['font-size-m']};
+    color: ${GlobalStyle['font-color-desc']};
     font-weight: 500;
   }
 `;
@@ -59,4 +59,4 @@ export const EnterLoading = styled.div`
   width: 100px;
   height: 100px;
   margin: auto;
-`
+`;

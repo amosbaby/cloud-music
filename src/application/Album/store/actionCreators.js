@@ -1,22 +1,20 @@
-import { fromJS } from 'immutable'
-import { getAlbumDetailRequest } from '../../../api/request'
-import * as actionTypes from './constant'
+import { fromJS } from 'immutable';
+import { getAlbumDetailRequest } from '../../../api/request';
+import * as actionTypes from './constant';
 
 export const updateAlbumDetail = (data) => ({
   type: actionTypes.UPDATE_ALBUM_DETAIL,
-  data: fromJS(data)
-})
+  data: fromJS(data),
+});
 
-export const updateLoadingStatus = (data)=>({
+export const updateLoadingStatus = (data) => ({
   type: actionTypes.UPDATE_LOADING_STATUS,
-  data
-})
+  data,
+});
 
-export const getAlbumDetail = (id) => {
-  return (dispatch) => {
-    getAlbumDetailRequest(id).then(res=>{
-      dispatch(updateAlbumDetail(res.playlist))
-      dispatch(updateLoadingStatus(false))
-    })
-  }
-}
+export const getAlbumDetail = (id) => (dispatch) => {
+  getAlbumDetailRequest(id).then((res) => {
+    dispatch(updateAlbumDetail(res.playlist));
+    dispatch(updateLoadingStatus(false));
+  });
+};

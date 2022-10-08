@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from'styled-components';
+import styled, { keyframes } from 'styled-components';
 import GlobalStyle from '../../assets/global-style';
 
 const loading = keyframes`
@@ -9,7 +9,7 @@ const loading = keyframes`
   50% {
     transform: scale(1.0);
   }
-`
+`;
 const LoadingWrapper = styled.div`
   >div {
     position: absolute;
@@ -23,20 +23,20 @@ const LoadingWrapper = styled.div`
     height: 60px;
     opacity: 0.6;
     border-radius: 50%;
-    background-color: ${GlobalStyle["theme-color"]};
+    background-color: ${GlobalStyle['theme-color']};
     animation: ${loading} 1.4s infinite ease-in;
   }
   >div:nth-child(2) {
     animation-delay: -0.7s;
   }
-`
-function Loading (props)  {
+`;
+function Loading(props) {
   return (
-    <LoadingWrapper >
-      <div></div>
-      <div></div>
+    <LoadingWrapper>
+      <div />
+      <div />
     </LoadingWrapper>
   );
 }
- 
-export default React.memo (Loading);
+
+export default React.memo(Loading);

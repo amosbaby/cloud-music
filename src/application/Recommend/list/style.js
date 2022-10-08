@@ -9,14 +9,14 @@ export const ListWrapper = styled.div`
     font-size: 14px;
     line-height: 60px;
   }
-`
+`;
 export const List = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-`
+`;
 
 export const ListItem = styled.div`
   position: relative;
@@ -42,9 +42,9 @@ export const ListItem = styled.div`
       position: absolute;
       right: 2px;
       top: 2px;
-      font-size: ${GlobalStyle["font-size-s"]};
+      font-size: ${GlobalStyle['font-size-s']};
       line-height: 15px;
-      color: ${GlobalStyle["font-color-light"]};
+      color: ${GlobalStyle['font-color-light']};
       .paly{
         vertical-align: top;
        
@@ -66,7 +66,7 @@ export const ListItem = styled.div`
       padding: 0 2px;
       height: 50px;
       text-align: left;
-      font-size: ${GlobalStyle["font-size-s"]};
-      color: ${GlobalStyle["font-color-desc"]};
+      font-size: ${GlobalStyle['font-size-s']};
+      color: ${GlobalStyle['font-color-desc']};
     }
-`
+`;

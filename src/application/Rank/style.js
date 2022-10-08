@@ -4,38 +4,38 @@ import GlobalStyle from '../../assets/global-style';
 export const Container = styled.div`
   position: fixed;
   top: 90px;
-  bottom: ${props=>props.addBottom ? '60px' : 0};
+  bottom: ${(props) => (props.addBottom ? '60px' : 0)};
   width: 100%;
   .official,.global {
     margin: 10px 5px;
     padding-top: 15px;
     font-weight: 700;
-    font-size: ${GlobalStyle["font-size-m"]};
-    color: ${GlobalStyle["font-color-desc"]};
+    font-size: ${GlobalStyle['font-size-m']};
+    color: ${GlobalStyle['font-color-desc']};
   }
 `;
 export const List = styled.ul`
   margin-top: 10px;
   padding: 0 5px;
-  display: ${props => props.isGlobal ? "flex": "" };
+  display: ${(props) => (props.isGlobal ? 'flex' : '')};
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-  background: ${GlobalStyle["background-color"]};
+  background: ${GlobalStyle['background-color']};
   &::after {
     content:"";
     display:block;
     width: 32vw;
   }
-`
+`;
 export const ListItem = styled.li`
-  display: ${props => props.tracks.length ? "flex": ""};
+  display: ${(props) => (props.tracks.length ? 'flex' : '')};
   padding: 3px 0;
-  border-bottom: 1px solid ${GlobalStyle["border-color"]};
-  width: ${props => props.isGlobal ? "" : "100%"};
+  border-bottom: 1px solid ${GlobalStyle['border-color']};
+  width: ${(props) => (props.isGlobal ? '' : '100%')};
   .img_wrapper {
-    width:  ${props => props.tracks.length ? "27vw": "32vw"};
-    height: ${props => props.tracks.length ? "27vw": "32vw"};
+    width:  ${(props) => (props.tracks.length ? '27vw' : '32vw')};
+    height: ${(props) => (props.tracks.length ? '27vw' : '32vw')};
     border-radius: 3px;
     position: relative;
     .decorate {
@@ -55,8 +55,8 @@ export const ListItem = styled.li`
       position: absolute;
       left: 7px;
       bottom: 7px;
-      font-size: ${GlobalStyle["font-size-ss"]};
-      color: ${GlobalStyle["font-color-light"]};
+      font-size: ${GlobalStyle['font-size-ss']};
+      color: ${GlobalStyle['font-color-light']};
     }
   }
 `;
@@ -67,7 +67,7 @@ export const SongList = styled.ul`
   justify-content: space-around;
   padding: 10px 10px;
   >li {
-    font-size: ${GlobalStyle["font-size-s"]};
+    font-size: ${GlobalStyle['font-size-s']};
     color: grey;
     flex: 1;
     width: 100%;

@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import GlobalStyle from "../../assets/global-style";
+import styled from 'styled-components';
+import GlobalStyle from '../../assets/global-style';
 
 export const Top = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 5px 10px;
-  background-color: ${GlobalStyle["theme-color"]};
+  background-color: ${GlobalStyle['theme-color']};
   &>span {
     line-height: 40px;
     color: #f1f1f1;
@@ -15,7 +15,7 @@ export const Top = styled.div`
   .search-button{
     ${GlobalStyle.extendClick}
   }
-`
+`;
 export const Tab = styled.div`
   height: 44px;
   display: flex;
@@ -36,11 +36,11 @@ export const Tab = styled.div`
       }
     }
   }
-`
+`;
 export const TabItem = styled.div`
   height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-`
+`;

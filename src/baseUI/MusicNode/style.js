@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import GlobalStyle from '../../assets/global-style'
+import styled from 'styled-components';
+import GlobalStyle from '../../assets/global-style';
 
 export const Container = styled.div`
   .icon_wrapper {
@@ -7,7 +7,7 @@ export const Container = styled.div`
     z-index: 1000;
     margin-top: -10px;
     margin-left: -10px;
-    color: ${GlobalStyle["theme-color"]};
+    color: ${GlobalStyle['theme-color']};
     font-size: 14px;
     display: none;
     transition: transform 1s cubic-bezier(.62,-0.1,.86,.57);
@@ -19,4 +19,4 @@ export const Container = styled.div`
   ion-icon{
     font-size: 30px;
   }
-`
+`;

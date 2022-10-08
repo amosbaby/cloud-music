@@ -1,16 +1,16 @@
-import styled from 'styled-components'
-import GlobalStyle from '../../assets/global-style'
+import styled from 'styled-components';
+import GlobalStyle from '../../assets/global-style';
 
 export const Content = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  bottom: ${props=>props.addBottom ? '60px' : 0};
+  bottom: ${(props) => (props.addBottom ? '60px' : 0)};
   z-index: 1000;
-  background: ${GlobalStyle["background-color"]};
+  background: ${GlobalStyle['background-color']};
   ${GlobalStyle.rightToLeftAnimation}
-`
+`;
 
 // 添加 TopDesc 和 Menu
 export const TopDesc = styled.div`
@@ -27,7 +27,7 @@ export const TopDesc = styled.div`
   position: relative;
   .background {
     z-index: -1;
-    background: url(${props => props.background}) no-repeat;
+    background: url(${(props) => props.background}) no-repeat;
     background-position: 0 0;
     background-size: 100% 100%;
     position: absolute;
@@ -59,9 +59,9 @@ export const TopDesc = styled.div`
       position: absolute;
       right: 2px;
       top: 2px;
-      font-size: ${GlobalStyle["font-size-s"]};
+      font-size: ${GlobalStyle['font-size-s']};
       line-height: 15px;
-      color: ${GlobalStyle["font-color-light"]};
+      color: ${GlobalStyle['font-color-light']};
       display: flex;
       align-items: center;
       .play {
@@ -84,10 +84,10 @@ export const TopDesc = styled.div`
     padding: 0 10px;
     .title {
       max-height: 70px;
-      color: ${GlobalStyle["font-color-light"]};
+      color: ${GlobalStyle['font-color-light']};
       font-weight: 700;
       line-height: 1.5;
-      font-size: ${GlobalStyle["font-size-l"]};
+      font-size: ${GlobalStyle['font-size-l']};
     }
     .person {
       display: flex;
@@ -103,8 +103,8 @@ export const TopDesc = styled.div`
       }
       .name {
         line-height: 20px;
-        font-size: ${GlobalStyle["font-size-m"]};
-        color: ${GlobalStyle["font-color-desc-v2"]};
+        font-size: ${GlobalStyle['font-size-m']};
+        color: ${GlobalStyle['font-color-desc-v2']};
       }
     }
   }
@@ -123,8 +123,8 @@ export const Menu = styled.div`
     line-height: 20px;
     text-align: center;
     align-items: center;
-    font-size: ${GlobalStyle["font-size-s"]};
-    color: ${GlobalStyle["font-color-light"]};
+    font-size: ${GlobalStyle['font-size-s']};
+    color: ${GlobalStyle['font-color-light']};
     z-index:1000;
     font-weight: 500;
     .iconfont {
@@ -132,10 +132,6 @@ export const Menu = styled.div`
     }
   }
 `;
-
-
-
-
 
 export const Marquee = styled.div`
   width: 100%;
@@ -164,4 +160,4 @@ export const Marquee = styled.div`
     transform: translateX(-100%);
     }
   }
-`
+`;

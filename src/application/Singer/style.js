@@ -9,14 +9,14 @@ export const Container = styled.div`
   right: 0;
   background: black;
   ${GlobalStyle.rightToLeftAnimation}
-`
+`;
 export const ImgWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 0;
   padding-top: 75%;
   transform-origin: top;
-  background: url(${props => props.bgUrl});
+  background: url(${(props) => props.bgUrl});
   background-size: cover;
   z-index: 50;
   .filter {
@@ -27,7 +27,7 @@ export const ImgWrapper = styled.div`
     height: 100%;
     background: rgba(7, 17, 27, 0.3);
   }
-`
+`;
 export const CollectButton = styled.div`
   position: absolute;
   left: 0; right: 0;
@@ -40,8 +40,8 @@ export const CollectButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${GlobalStyle["theme-color"]};
-  color: ${GlobalStyle["font-color-light"]};
+  background: ${GlobalStyle['theme-color']};
+  color: ${GlobalStyle['font-color-light']};
   border-radius: 20px;
   font-size: 0;
   line-height: 40px;
@@ -55,7 +55,7 @@ export const CollectButton = styled.div`
     font-size:14px;
     letter-spacing: 5px;
   }
-`
+`;
 export const BgLayer = styled.div`
   position: absolute;
   top: 0;
@@ -64,7 +64,7 @@ export const BgLayer = styled.div`
   background: white;
   border-radius: 10px;
   z-index: 50;
-`
+`;
 
 export const SongListWrapper = styled.div`
   position: absolute;
@@ -79,4 +79,4 @@ export const SongListWrapper = styled.div`
     width: 100%;
     overflow: visible;
   }
-`
+`;

@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ScrollContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
   position: relative;
-`
+`;
 
 export const PullUpLoading = styled.div`
   position: absolute;
@@ -15,7 +15,7 @@ export const PullUpLoading = styled.div`
   width: 60px;
   height: 60px;
   bottom: 5px;
-`
+`;
 export const PullDownLoading = styled.div`
   position: absolute;
   top: 0;
@@ -23,4 +23,4 @@ export const PullDownLoading = styled.div`
   margin: auto;
   right: 0;
   height: 60px;
-`
+`;

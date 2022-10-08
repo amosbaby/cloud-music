@@ -1,4 +1,4 @@
-import styled,{  css, keyframes, } from "styled-components";
+import styled, { css, keyframes } from 'styled-components';
 /** 扩大点击区域 */
 const extendClick = styled.div`
   position: relative;
@@ -10,15 +10,15 @@ const extendClick = styled.div`
     left: -10px;
     right: -10px;
   }
-`
-/** 一行文字溢出部分用...代替 */ 
+`;
+/** 一行文字溢出部分用...代替 */
 const noWrap = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-`
+`;
 /** 从右到左动画 */
-const rightToLeftAnimation=css`
+const rightToLeftAnimation = css`
   transform-origin: right bottom;
   &.fly-enter, &.fly-appear {
     transform: translate3d(100%, 0, 0);
@@ -34,9 +34,9 @@ const rightToLeftAnimation=css`
     transition: transform .3s;
     transform: translate3d(100%, 0, 0);
   }
-`
+`;
 
-const fadeBottomToTop=css`
+const fadeBottomToTop = css`
   &.list-fade-enter {
     opacity: 0;
   }
@@ -51,7 +51,7 @@ const fadeBottomToTop=css`
     opacity: 0;
     transition: all 0.3s;
   }
-`
+`;
 
 const rotate = keyframes`
   0%{
@@ -62,24 +62,24 @@ const rotate = keyframes`
   }
 `;
 
-const bgFull =css`
+const bgFull = css`
     background-position: 50%;
     background-size: contain;
     background-repeat: no-repeat;
-  `
+  `;
 
 const GlobalStyle = {
   'theme-color': '#d44439',
   'theme-color-shadow': 'rgba(212, 68, 57, .5)',
   'font-color-light': '#f1f1f1',
   'font-color-desc': '#2E3030',
-  'font-color-desc-v2': '#bba8a8',// 略淡
+  'font-color-desc-v2': '#bba8a8', // 略淡
   'font-size-ss': '10px',
   'font-size-s': '12px',
   'font-size-m': '14px',
   'font-size-l': '16px',
   'font-size-ll': '18px',
-  "border-color": '#e4e4e4',
+  'border-color': '#e4e4e4',
   'background-color': '#f2f3f4',
   'background-color-shadow': 'rgba(0, 0, 0, 0.3)',
   'highlight-background-color': '#fff',
@@ -93,8 +93,7 @@ const GlobalStyle = {
   fadeBottomToTop,
   /** 旋转 */
   rotate,
-  bgFull
-}
+  bgFull,
+};
 
-
-export default GlobalStyle
+export default GlobalStyle;

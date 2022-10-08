@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import GlobalStyle from '../../../assets/global-style'
+import styled from 'styled-components';
+import GlobalStyle from '../../../assets/global-style';
 
 export const MiniPlayerContainer = styled.div`
   display: flex;
@@ -10,7 +10,7 @@ export const MiniPlayerContainer = styled.div`
   z-index: 1000;
   width: 100%;
   height: 60px;
-  background: ${GlobalStyle["highlight-background-color"]};
+  background: ${GlobalStyle['highlight-background-color']};
   &.mini-enter {
     transform: translate3d(0, 100%, 0);
   }
@@ -50,13 +50,13 @@ export const MiniPlayerContainer = styled.div`
     overflow: hidden;
     .name {
       margin-bottom: 2px;
-      font-size: ${GlobalStyle["font-size-m"]};
-      color: ${GlobalStyle["font-color-desc"]};
+      font-size: ${GlobalStyle['font-size-m']};
+      color: ${GlobalStyle['font-color-desc']};
       ${GlobalStyle.noWrap}
     }
     .desc {
-      font-size: ${GlobalStyle["font-size-s"]};
-      color: ${GlobalStyle["font-color-desc-v2"]};
+      font-size: ${GlobalStyle['font-size-s']};
+      color: ${GlobalStyle['font-color-desc-v2']};
       ${GlobalStyle.noWrap}
     }
   }
@@ -65,7 +65,7 @@ export const MiniPlayerContainer = styled.div`
     padding: 0 10px;
     ion-icon, .icon-playlist {
       font-size: 25px;
-      color: ${GlobalStyle["theme-color"]};
+      color: ${GlobalStyle['theme-color']};
     }
     .icon-mini {
       font-size: 16px;
@@ -77,4 +77,4 @@ export const MiniPlayerContainer = styled.div`
       }
     }
   }
-`
+`;

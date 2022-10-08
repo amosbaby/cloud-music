@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import GlobalStyle from '../../assets/global-style'
+import styled from 'styled-components';
+import GlobalStyle from '../../assets/global-style';
 
 export const HeaderContainer = styled.div`
   position: fixed;
@@ -11,13 +11,13 @@ export const HeaderContainer = styled.div`
   z-index: 100;
   display: flex;
   line-height: 40px;
-  color: ${GlobalStyle["font-color-light"]};
+  color: ${GlobalStyle['font-color-light']};
   .back-button {
     font-size: 24px;
     line-height: 100%;
   }
   >h1 {
-    font-size: ${GlobalStyle["font-size-l"]};
+    font-size: ${GlobalStyle['font-size-l']};
     font-weight: 700;
   }
-`
+`;
