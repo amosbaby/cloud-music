@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import GlobalStyle from '../../assets/global-style';
 
-export const ProgressBarWrapper = styled.div`
+const ProgressBarWrapper = styled.div`
   height: 30px;
   .bar-inner {
     position: relative;
@@ -33,3 +33,4 @@ export const ProgressBarWrapper = styled.div`
     }
   }
 `;
+export default ProgressBarWrapper;

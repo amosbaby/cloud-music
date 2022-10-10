@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import GlobalStyle from '../../assets/global-style';
 
-export const CircleWrapper = styled.div`
+const CircleWrapper = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
@@ -24,3 +24,5 @@ export const CircleWrapper = styled.div`
     }
   }
 `;
+
+export default CircleWrapper;

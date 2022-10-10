@@ -1,10 +1,10 @@
 import React, { forwardRef, useContext } from 'react';
-import * as propsTypes from 'prop-types';
+import * as PropsTypes from 'prop-types';
 import { formatPlayCount, getName } from '../../api/utils';
 import { SongList as ListStyle, SongItem } from './style';
 import { PlayerActionType, PlayerConfigDispatchContext } from '../Player/player.model';
 
-const SongList = forwardRef((props, refs) => {
+const SongList = forwardRef((props) => {
   const {
     songs, collectCount, showCollect, musicAnimation,
   } = props;
@@ -13,7 +13,9 @@ const SongList = forwardRef((props, refs) => {
     <div className="add_list">
       <ion-icon name="star" />
       <span>
-        收藏({formatPlayCount(collectCount)})
+        收藏(
+        {formatPlayCount(collectCount)}
+        )
       </span>
     </div>
   );
@@ -21,7 +23,7 @@ const SongList = forwardRef((props, refs) => {
 
   const selectItem = (event, index) => {
     musicAnimation(event.nativeEvent.clientX, event.nativeEvent.clientY);
-    playerDispatcher({ type: PlayerActionType.switchList, data: {playList:songs,playIndex: index } })
+    playerDispatcher({ type: PlayerActionType.switchList, data: { playList: songs, playIndex: index } });
   };
 
   const renderSongItem = () => (
@@ -30,19 +32,19 @@ const SongList = forwardRef((props, refs) => {
           songs.map((item, index) => (
             <li key={item.name + index} onClick={(e) => selectItem(e, index)}>
               <span className="index">
-                
+
                 {index + 1}
-                
+
               </span>
               <div className="info">
                 <span>
-                  
+
                   {item.name}
-                  
+
                 </span>
                 <span>
                   { getName(item.ar)}
-                  
+
                   -
                   {item.al.name}
                 </span>
@@ -59,7 +61,7 @@ const SongList = forwardRef((props, refs) => {
         <div className="play_all">
           <ion-icon name="play-circle-outline" />
           <span>
-            
+
             播放全部
             <span className="sum">
               (共
@@ -84,9 +86,10 @@ SongList.defaultProps = {
 };
 
 SongList.propTypes = {
-  songs: propsTypes.array,
-  collectCount: propsTypes.number,
-  showCollect: propsTypes.bool,
+  songs: PropsTypes.arrayOf(PropsTypes.any),
+  collectCount: PropsTypes.number,
+  showCollect: PropsTypes.bool,
+  musicAnimation: PropsTypes.func.isRequired,
 };
 
 export default React.memo(SongList);

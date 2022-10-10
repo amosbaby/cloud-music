@@ -1,4 +1,4 @@
-import {
+import React, {
   forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState,
 } from 'react';
 import * as PropTypes from 'prop-types';
@@ -30,7 +30,6 @@ const Scroll = forwardRef((props, ref) => {
     });
     setBScroll(scroll);
     return () => setBScroll(null);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const {
     onScroll, pullDown, pullUp, refresh,
@@ -107,15 +106,15 @@ const Scroll = forwardRef((props, ref) => {
       { props.children }
       {/* 滑倒底部加载动画 */}
       <PullUpLoading style={pullUpLoadingStyle}>
-        
+
         <Loading />
-        
+
       </PullUpLoading>
       {/* 顶部下来刷新动画 */}
       <PullDownLoading style={pullDownLoadingStyle}>
-        
+
         <LoadingV2 />
-        
+
       </PullDownLoading>
     </ScrollContainer>
   );
@@ -134,6 +133,7 @@ Scroll.propTypes = {
   pullDownLoading: PropTypes.bool, // 是否显示下拉 loading 动画
   bounceTop: PropTypes.bool, // 是否支持向上吸顶
   bounceBottom: PropTypes.bool, // 是否支持向下吸底
+  children: PropTypes.element,
 };
 
 Scroll.defaultProps = {
@@ -147,4 +147,5 @@ Scroll.defaultProps = {
   pullDown: null,
   bounceTop: true,
   bounceBottom: true,
+  children: null,
 };

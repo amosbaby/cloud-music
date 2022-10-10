@@ -9,10 +9,14 @@ const AlbumComponent = lazy(() => import('../application/Album'));
 const SingerComponent = lazy(() => import('../application/Singer'));
 const SearchComponent = lazy(() => import('../application/Search'));
 
-const SuspenseComponent = (Component) => function (props) {
+const SuspenseComponent = (Component) => function setup(props) {
   return (
     <Suspense fallback={null}>
-      <Component {...props} />
+
+      <Component
+      // eslint-disable-next-line react/jsx-props-no-spreading
+        {...props}
+      />
     </Suspense>
   );
 };

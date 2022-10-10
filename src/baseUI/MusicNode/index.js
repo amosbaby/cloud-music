@@ -2,7 +2,7 @@ import React, {
   forwardRef, useEffect, useImperativeHandle, useRef,
 } from 'react';
 import { prefixStyle } from '../../api/utils/css';
-import { Container } from './style';
+import Container from './style';
 // 容器里最多只能装3个音符
 const MAX_ICON_NUMBER = 3;
 
@@ -26,11 +26,11 @@ const MusicNode = forwardRef((props, ref) => {
     const domArray = Array.from(iconsRef.current.children);
     domArray.forEach((item) => {
       item.running = false;
-      item.addEventListener('transitionend', function () {
-        this.style.display = 'none';
-        this.style[transform] = 'translate3d(0,0,0)';
-        this.running = false;
-        const icon = this.querySelector('ion-icon');
+      item.addEventListener('transitionend', () => {
+        item.style.display = 'none';
+        item.style[transform] = 'translate3d(0,0,0)';
+        item.running = false;
+        const icon = item.querySelector('ion-icon');
         icon.style[transform] = 'translate3d(0,0,0)';
       }, false);
     });

@@ -1,14 +1,32 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ProgressBarWrapper } from './style';
+import React, {
+  useContext, useEffect, useRef, useState,
+} from 'react';
+import { PlayerActionType, PlayerConfigContext, PlayerConfigDispatchContext } from '../../application/Player/player.model';
+import ProgressBarWrapper from './style';
 
-function ProgressBar(props) {
-  const { updatePercent, percent } = props;
+function ProgressBar() {
+  const {
+    progress,
+  } = useContext(PlayerConfigContext);
+  const playerDispatcher = useContext(PlayerConfigDispatchContext);
   const progressBarRef = useRef();
   const progressRef = useRef();
   const progressBtnWrapperRef = useRef();
 
   const [touch, setTouch] = useState({});
   const progressBtnWidth = 16;
+
+  const _changePercent = () => {
+    const barWidth = progressBarRef.current.clientWidth - progressBtnWidth;
+    const curPercent = progressRef.current.clientWidth / barWidth;// 新的进度计算
+    playerDispatcher({ type: PlayerActionType.updateProgress, data: curPercent });
+  };
+
+  const updateOffset = (offsetWidth) => {
+    progressRef.current.style.width = `${offsetWidth}px`;
+    progressBtnWrapperRef.current.style.transform = `translate3d(${offsetWidth}px,0,0)`;
+    _changePercent();
+  };
 
   const touchStart = (e) => {
     const startTouch = {};
@@ -35,25 +53,12 @@ function ProgressBar(props) {
     updateOffset(offsetWidth);
   };
 
-  const updateOffset = (offsetWidth) => {
-    progressRef.current.style.width = `${offsetWidth}px`;
-    progressBtnWrapperRef.current.style.transform = `translate3d(${offsetWidth}px,0,0)`;
-    _changePercent();
-  };
-
-  const _changePercent = () => {
-    const barWidth = progressBarRef.current.clientWidth - progressBtnWidth;
-    const curPercent = progressRef.current.clientWidth / barWidth;// 新的进度计算
-    updatePercent && updatePercent(curPercent);// 把新的进度传给回调函数并执行
-  };
   useEffect(() => {
     const { clientWidth } = progressBarRef.current;
-    const offsetWidth = clientWidth * percent;
+    const offsetWidth = clientWidth * progress;
     progressRef.current.style.width = `${offsetWidth}px`;
     progressBtnWrapperRef.current.style.transform = `translate3d(${offsetWidth}px,0,0)`;
-    // updateOffset(offsetWidth)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [percent]);
+  }, [progress]);
 
   return (
     <ProgressBarWrapper>

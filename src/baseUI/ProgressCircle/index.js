@@ -1,5 +1,6 @@
 import React from 'react';
-import { CircleWrapper } from './style';
+import * as PropTypes from 'prop-types';
+import CircleWrapper from './style';
 
 function ProgressCircle(props) {
   const { radius, percent } = props;
@@ -26,5 +27,16 @@ function ProgressCircle(props) {
     </CircleWrapper>
   );
 }
+
+ProgressCircle.propTypes = {
+  children: PropTypes.element,
+  radius: PropTypes.number,
+  percent: PropTypes.number,
+};
+ProgressCircle.defaultProps = {
+  children: null,
+  radius: 0,
+  percent: 0,
+};
 
 export default React.memo(ProgressCircle);

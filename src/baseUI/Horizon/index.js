@@ -1,5 +1,5 @@
+import React, { memo, useEffect, useRef } from 'react';
 import * as PropTypes from 'prop-types';
-import { memo, useEffect, useRef } from 'react';
 import Scroll from '../../components/scroll';
 import { List, ListItem } from './style';
 
@@ -22,9 +22,7 @@ function Horizon(props) {
       <div ref={listRef}>
         <List>
           <span>
-            
             {title}
-            
           </span>
           {
               list.map((item, index) => (
@@ -43,8 +41,8 @@ function Horizon(props) {
   );
 }
 
-Horizon.propType = {
-  list: PropTypes.array,
+Horizon.propTypes = {
+  list: PropTypes.arrayOf({ key: PropTypes.string, name: PropTypes.string }),
   preValue: PropTypes.string,
   title: PropTypes.string,
   handleClick: PropTypes.func,

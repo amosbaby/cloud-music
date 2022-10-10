@@ -1,6 +1,6 @@
 import React from 'react';
 import * as propTypes from 'prop-types';
-import { HeaderContainer } from './style';
+import HeaderContainer from './style';
 
 const Header = React.forwardRef((props, ref) => {
   const { handleClick, title, isMarquee } = props;
@@ -12,10 +12,11 @@ const Header = React.forwardRef((props, ref) => {
       </span>
       {
         isMarquee ? (
+          // eslint-disable-next-line jsx-a11y/no-distracting-elements
           <marquee>
-            
+
             <h1>{title}</h1>
-            
+
           </marquee>
         ) : <h1>{title}</h1>
       }

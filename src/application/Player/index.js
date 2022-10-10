@@ -12,8 +12,8 @@ import NormalPlayer from './normalPlayer';
 import { PlayerConfigContext, PlayerConfigDispatchContext } from './player.model';
 
 function Player() {
-  // const currentLyric = useRef();
-  // const currentLineIndex = useRef(0);
+  const currentLyric = useRef();
+  const currentLineIndex = useRef(0);
 
   const playerConfig = useContext(PlayerConfigContext);
   const playerDispatcher = useContext(PlayerConfigDispatchContext);
@@ -53,7 +53,6 @@ function Player() {
   const onProgressChange = (percent) => {
     const time = duration * percent;
     setCurrentTime(time);
-    console.log('onProgressChange:', time);
     setPercent(percent);
     audioRef.current.currentTime = time;
     if (!playing) {
@@ -146,7 +145,7 @@ function Player() {
         currentSong.al ? (
           <>
             <NormalPlayer speed={speed} currentLyric={currentLyric.current} playingLyric={playingLyric} currentLyricIndex={currentLineIndex.current} mode={currentMode} percent={percent} duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen} song={currentSong} clickPlaying={clickPlaying} onProgressChange={onProgressChange} handlePre={handlePre} handleNext={handleNext} handleShowList={handleShowList} handleChangeSpeed={handleChangeSpeed} />
-            <MiniPlayer percent={percent} duration={duration} currentTime={currentTime} playing={playing} fullScreen={fullScreen} toggleFullScreen={setFullScreen} song={currentSong} clickPlaying={clickPlaying} handleShowList={handleShowList}> </MiniPlayer>
+            <MiniPlayer> </MiniPlayer>
           </>
         ) : null
       }

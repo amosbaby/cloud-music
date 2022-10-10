@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import GlobalStyle from '../../assets/global-style';
 
-export const HeaderContainer = styled.div`
+const HeaderContainer = styled.div`
   position: fixed;
   padding: 5px 10px;
   padding-top: 0;
@@ -21,3 +21,5 @@ export const HeaderContainer = styled.div`
     font-weight: 700;
   }
 `;
+
+export default HeaderContainer;

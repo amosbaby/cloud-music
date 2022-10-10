@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import GlobalStyle from '../../assets/global-style';
 
-export const Container = styled.div`
+const Container = styled.div`
   .icon_wrapper {
     position: fixed;
     z-index: 1000;
@@ -20,3 +20,4 @@ export const Container = styled.div`
     font-size: 30px;
   }
 `;
+export default Container;

@@ -24,6 +24,7 @@ export function SharedStatus(props) {
   const [data, dispatch] = useReducer(reducer, fromJS({ category: { type: -1, area: -1, key: '1000' }, alpha: '' }));
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <CategoryDataContext.Provider value={{ data, dispatch }}>
       { props.children }
     </CategoryDataContext.Provider>

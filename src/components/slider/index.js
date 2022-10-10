@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Swiper from 'swiper';
-import 'swiper/css';
-import { SliderContainer } from './style';
+import * as PropTypes from 'prop-types';
+import SliderContainer from './style';
 
 function Slider(props) {
   const [sliderSwiper, setSliderSwiper] = useState(null);
@@ -43,5 +43,9 @@ function Slider(props) {
     </SliderContainer>
   );
 }
+
+Slider.propTypes = {
+  bannerList: PropTypes.arrayOf({ imageUrl: PropTypes.string }).isRequired,
+};
 
 export default React.memo(Slider);

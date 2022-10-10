@@ -17,8 +17,7 @@ import MusicNode from '../../baseUI/MusicNode';
 import { PlayerConfigContext, showMiniPlayer } from '../Player/player.model';
 
 export function Album(props) {
-
-  const playerConfig = useContext(PlayerConfigContext)
+  const playerConfig = useContext(PlayerConfigContext);
 
   const [showStatus, setShowStatus] = useState(true);
   const [title, setTitle] = useState('歌单');
@@ -34,7 +33,6 @@ export function Album(props) {
       dispatch(updateLoadingStatus(true));
       dispatch(getAlbumDetail(props.match.params.id));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const nodeRef = useRef(); // CSSTransition用于引用子组件
@@ -71,26 +69,26 @@ export function Album(props) {
         <div className="play_count">
           <ion-icon name="play-circle-outline" className="play" />
           <span className="count">
-            
+
             {formatPlayCount(currentAlbum.subscribedCount)}
-            
+
           </span>
         </div>
       </div>
       <div className="desc_wrapper">
         <div className="title">
-          
+
           {currentAlbum.name}
-          
+
         </div>
         <div className="person">
           <div className="avatar">
             <img src={currentAlbum.creator.avatarUrl} alt="avatar" />
           </div>
           <div className="name">
-            
+
             {currentAlbum.creator.nickname}
-            
+
           </div>
         </div>
       </div>
@@ -102,7 +100,7 @@ export function Album(props) {
     musicNodeRef.current.startAnimation({ x, y });
   };
 
-  const addBottom = showMiniPlayer(playerConfig)
+  const addBottom = showMiniPlayer(playerConfig);
 
   return (
     <CSSTransition
@@ -124,22 +122,22 @@ export function Album(props) {
               <Menu>
                 <div>
                   <ion-icon name="chatbox-ellipses-outline" />
-                  
+
                   评论
                 </div>
                 <div>
                   <ion-icon name="thumbs-up-outline" />
-                  
+
                   点赞
                 </div>
                 <div>
                   <ion-icon name="star-outline" />
-                  
+
                   收藏
                 </div>
                 <div>
                   <ion-icon name="ellipsis-horizontal-outline" />
-                  
+
                   更多
                 </div>
               </Menu>

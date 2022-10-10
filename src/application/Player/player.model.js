@@ -9,6 +9,7 @@ export const defaultPlayerConfig = {
   originPlayList: [],
   playIndex: -1,
   speedRatio: 1,
+  progress: 0,
 
   showList: false,
   isFullScreen: false,
@@ -21,16 +22,12 @@ export const defaultPlayerConfig = {
 /**
  * 显示mini播放器
  */
-export const showMiniPlayer = (config) =>{
-  return config && config.isPlaying && !isFullScreen
-}
+export const showMiniPlayer = (config) => config && config.isPlaying && !config.isFullScreen;
 
 /**
  * 显示完全播放器
  */
- export const showFullScreenPlayer = (config) =>{
-  return config && config.isPlaying && isFullScreen
-}
+export const showFullScreenPlayer = (config) => config && config.isPlaying && config.isFullScreen;
 
 export const PlayerActionType = {
   switchList: 'SWITCHLIST',
@@ -43,14 +40,15 @@ export const PlayerActionType = {
   changeSpeed: 'CHANGESPEED',
   showHideLyric: 'SHOWLYRIC',
   switchPlaying: 'SWITCHPLAYING',
+  updateProgress: 'UPDATEPROGRESS',
 };
 
 export const playerReducer = async (state, action) => {
   switch (action.type) {
     case PlayerActionType.switchList:
-      // 更新播放列表后，将播放下标重置为0
-      const {playList,playIndex = 0} = action.data
-      return { ...state, playList, playIndex };
+    { // 更新播放列表后，将播放下标重置为0
+      const { playList, playIndex = 0 } = action.data;
+      return { ...state, playList, playIndex }; }
     case PlayerActionType.switchMode:
       return { ...state, mode: action.data };
     case PlayerActionType.changeSong:
@@ -58,9 +56,10 @@ export const playerReducer = async (state, action) => {
     case PlayerActionType.showHideList:
       return { ...state, showList: action.data };
     case PlayerActionType.switchFullScreen:
-      // 切换全屏与最小化
-      return { ...state, isFullScreen: !action.data};
-      
+    { // 切换全屏与最小化
+      const isFullScreen = state.isPlaying && action.data;
+      return { ...state, isFullScreen }; }
+
     case PlayerActionType.deleteSong:
     {
       const playList = state.playList.filter((_, index) => index !== action.data);
@@ -88,6 +87,10 @@ export const playerReducer = async (state, action) => {
     case PlayerActionType.switchPlaying:
     {
       return { ...state, isPlaying: action.data };
+    }
+    case PlayerActionType.updateProgress:
+    {
+      return { ...state, progress: action.data };
     }
     default:
       return state;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import GlobalStyle from '../../assets/global-style';
 
-export const ToastWrapper = styled.div`
+const ToastWrapper = styled.div`
   position: fixed;
   bottom: 0;
   z-index: 1000;
@@ -28,3 +28,5 @@ export const ToastWrapper = styled.div`
     font-size: ${GlobalStyle['font-size-l']};
   }
 `;
+
+export default ToastWrapper;

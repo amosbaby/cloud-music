@@ -11,7 +11,8 @@ const defaultState = fromJS({
   pullUpLoading: false, // 上拉加载
 });
 
-const fn = (state = defaultState, action) => {
+const fn = (state, action) => {
+  state = state || defaultState;
   switch (action.type) {
     case UPDATE_SINGER_LIST:
       return state.set('singerList', action.data);

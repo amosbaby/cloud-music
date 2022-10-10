@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import GlobalStyle from '../../assets/global-style';
 
-export const SliderContainer = styled.div`
+const SliderContainer = styled.div`
   position: relative;
   box-sizing: border-box;
   width: 100%;
@@ -38,3 +38,4 @@ export const SliderContainer = styled.div`
     }
   }
 `;
+export default SliderContainer;
