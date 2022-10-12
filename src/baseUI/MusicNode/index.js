@@ -40,6 +40,7 @@ const MusicNode = forwardRef((props, ref) => {
     for (let i = 0; i < MAX_ICON_NUMBER; i++) {
       const domArray = [].slice.call(iconsRef.current.children);
       const item = domArray[i];
+
       // 选择一个空闲的元素来开始动画
       if (item.running === false) {
         item.style.left = `${x}px`;

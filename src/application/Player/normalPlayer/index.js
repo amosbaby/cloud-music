@@ -15,9 +15,10 @@ import { PlayerActionType, PlayerContext } from '../player.model';
 function NormalPlayer() {
   const { config, dispatcher } = useContext(PlayerContext);
   const {
-    isFullScreen, progress, speedRation, isPlaying, playList, playIndex, duration, currentTime, currentLyric, isPlayingLyric, currentLyricIndex, mode,
+    isFullScreen, progress, speedRation, isPlaying, playList, playIndex, currentTime, currentLyric, isPlayingLyric, currentLyricIndex, mode,
   } = config;
   const currentSong = playList[playIndex];
+  const duration = currentSong.dt;
 
   const currentModeRef = useRef('cd');
   const playerRef = useRef();
@@ -145,7 +146,7 @@ function NormalPlayer() {
       </div>
       <div className="background layer" />
       <Top className="top">
-        <div className="back" onClick={() => handleBack()}>
+        <div className="back" onClick={(e) => handleBack(e)}>
           <ion-icon name="chevron-down-outline" />
         </div>
         <h1 className="title">

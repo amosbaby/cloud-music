@@ -22,6 +22,8 @@ const SongList = forwardRef((props) => {
   const { dispatcher } = useContext(PlayerContext);
 
   const selectItem = (event, index) => {
+    event.stopPropagation();
+
     musicAnimation(event.nativeEvent.clientX, event.nativeEvent.clientY);
     dispatcher({ type: PlayerActionType.switchList, data: { playList: songs, playIndex: index } });
   };

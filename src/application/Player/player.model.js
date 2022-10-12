@@ -57,7 +57,9 @@ export const playerReducer = (state, action) => {
     case PlayerActionType.switchList:
     { // 更新播放列表后，将播放下标重置为0
       const { playList, playIndex = 0 } = action.data;
-      return { ...state, playList, playIndex }; }
+      return {
+        ...state, playList, playIndex, isPlaying: true, currentTime: 0,
+      }; }
     case PlayerActionType.switchMode:
     {
       const mode = getNextMode(action.data);
@@ -127,7 +129,9 @@ export const playerReducer = (state, action) => {
     }
     case PlayerActionType.updateCurrentTime:
     {
-      const progress = action.data / (state.duration || 1);
+      const { playList, playIndex } = state;
+      const duration = playList[playIndex].dt;
+      const progress = action.data / (duration || 1);
       return { ...state, progress, currentTime: action.data };
     }
     case PlayerActionType.updateLyric:

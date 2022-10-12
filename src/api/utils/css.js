@@ -10,16 +10,13 @@ const vendor = (() => {
     ms: 'msTransform',
     standard: 'Transform',
   };
-  Object.keys(transformNames).forEach((key) => {
-    if (elementStyle[transformNames[key]] !== undefined) {
-      return key;
-    }
-  });
+  const list = Object.keys(elementStyle).filter((k) => k.endsWith('Transform'));
 
-  return false;
+  const target = Object.keys(transformNames).find((key) => list.includes(transformNames[key]));
+
+  return target || false;
 })();
-
-export default function prefixStyle(style) {
+function prefixStyle(style) {
   if (vendor === false) {
     return false;
   }
@@ -28,3 +25,5 @@ export default function prefixStyle(style) {
   }
   return vendor + style.charAt(0).toUpperCase() + style.substr(1);
 }
+
+export default prefixStyle;

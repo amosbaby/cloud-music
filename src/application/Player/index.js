@@ -4,7 +4,7 @@ import React, {
   useEffect, useRef, useState,
 } from 'react';
 import { getLyricRequest } from '../../api/request';
-import { throttle } from '../../api/utils';
+import { getSongUrl } from '../../api/utils';
 import Toast from '../../baseUI/Toast';
 import Lyric from './Lyric/model';
 import MiniPlayer from './miniPlayer';
@@ -20,15 +20,20 @@ function Player() {
 
   const { config, dispatcher } = useContext(PlayerContext);
   const {
-    playList, playIndex, duration, isPlaying,
+    playList, playIndex, isPlaying,
   } = config;
   const currentSong = playList[playIndex];
-  console.log('test');
+  const duration = currentSong ? currentSong.dt : 0;
+
+  useEffect(() => {
+    if (currentSong?.id) { audioRef.current.src = getSongUrl(currentSong.id); }
+  }, [currentSong]);
+
   const update = () => {
     // eslint-disable-next-line no-unused-expressions
     isPlaying ? audioRef.current.play() : audioRef.current.pause();
   };
-  const updatePlaying = useCallback(throttle(update, 1500));
+  const updatePlaying = useCallback(update);
 
   useEffect(() => {
     updatePlaying();
@@ -57,9 +62,9 @@ function Player() {
     toastRef.current.show();
   }, [modeText]);
 
-  const updateTime = (event) => {
-    dispatcher({ type: PlayerActionType.updateCurrentTime, data: event.target.currentTime });
-  };
+  // const updateTime = (event) => {
+  //   dispatcher({ type: PlayerActionType.updateCurrentTime, data: event.target.currentTime });
+  // };
 
   const onProgressChange = (percent) => {
     const time = duration * percent;
@@ -86,7 +91,7 @@ function Player() {
   // };
 
   const handlePlay = () => {
-    dispatcher({ type: PlayerActionType.switchPlaying });
+    // dispatcher({ type: PlayerActionType.switchPlaying });
   };
 
   const handlePlayEnded = () => {
@@ -103,8 +108,8 @@ function Player() {
           </>
         ) : null
       }
-
-      <audio autoPlay ref={audioRef} onTimeUpdate={updateTime} onEnded={handlePlayEnded} onError={onAudioError} onPlay={handlePlay}>
+      {/* onTimeUpdate={updateTime} */}
+      <audio autoPlay ref={audioRef} onEnded={handlePlayEnded} onError={onAudioError} onPlay={handlePlay}>
         <track kind="captions" />
 
       </audio>
