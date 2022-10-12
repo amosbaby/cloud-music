@@ -29,8 +29,8 @@ function Singers(props) {
   }, [singerList, dispatch]);
 
   const handleCategoryClick = (index) => {
-    const data = categoryTypes[index];
-    sharedDataDispatch({ type: UPDATE_CATEGORY, data });
+    const categoryData = categoryTypes[index];
+    sharedDataDispatch({ type: UPDATE_CATEGORY, data: categoryData });
     dispatch(getSingerList(data.type, category.area, alpha));
   };
 
@@ -52,13 +52,13 @@ function Singers(props) {
           singersListJS.map((item, index) => (
             <ListItem key={`${item.id}${index}`} onClick={() => handleEnterDetail(item.id)}>
               <div className="img_wrapper">
-                <LazyLoad placeholder={<img width="100%" height="100%" src={require('./singer.png')} alt="music" />}>
+                <LazyLoad placeholder={<img width="100%" height="100%" src="./singer.png" alt="music" />}>
                   <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music" />
                 </LazyLoad>
                 <span className="name">
-                  
+
                   {item.name}
-                  
+
                 </span>
               </div>
             </ListItem>

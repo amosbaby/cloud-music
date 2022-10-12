@@ -10,15 +10,16 @@ const vendor = (() => {
     ms: 'msTransform',
     standard: 'Transform',
   };
-  for (const key in transformNames) {
+  Object.keys(transformNames).forEach((key) => {
     if (elementStyle[transformNames[key]] !== undefined) {
       return key;
     }
-  }
+  });
+
   return false;
 })();
 
-export function prefixStyle(style) {
+export default function prefixStyle(style) {
   if (vendor === false) {
     return false;
   }

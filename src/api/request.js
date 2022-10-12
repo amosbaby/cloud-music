@@ -24,7 +24,7 @@ export const getTopSingerListRequest = (offset) => axiosInstance.get(`/top/artis
  * @param {number} offset 当前位置
  * @returns
  */
-export const getSignerListRequest = (type, area, alpha, offset, initial = 30) => axiosInstance.get(`/artist/list?type=${type}&area=${area}&initial=${alpha.toLowerCase()}&offset=${offset}`);
+export const getSignerListRequest = (type, area, alpha, offset) => axiosInstance.get(`/artist/list?type=${type}&area=${area}&initial=${alpha.toLowerCase()}&offset=${offset}`);
 
 /**
  * 调用此接口,可获取所有榜单内容摘要

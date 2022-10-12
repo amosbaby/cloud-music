@@ -42,7 +42,7 @@ function Horizon(props) {
 }
 
 Horizon.propTypes = {
-  list: PropTypes.arrayOf({ key: PropTypes.string, name: PropTypes.string }),
+  list: PropTypes.arrayOf(PropTypes.shape({ key: PropTypes.string, name: PropTypes.string })),
   preValue: PropTypes.string,
   title: PropTypes.string,
   handleClick: PropTypes.func,

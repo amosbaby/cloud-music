@@ -7,7 +7,8 @@ const defaultState = fromJS({
   loading: true,
 });
 
-const fn = (state = defaultState, action) => {
+const fn = (state, action) => {
+  state = state || defaultState;
   switch (action.type) {
     case actionTypes.UPDATE_LOADING:
       return state.set('loading', action.data);

@@ -14,10 +14,10 @@ import Loading from '../../components/loading';
 import SongList from '../SongList';
 import { HEADER_HEIGHT } from '../../api/constant';
 import MusicNode from '../../baseUI/MusicNode';
-import { PlayerConfigContext, showMiniPlayer } from '../Player/player.model';
+import { PlayerContext, showMiniPlayer } from '../Player/player.model';
 
 export function Album(props) {
-  const playerConfig = useContext(PlayerConfigContext);
+  const { config } = useContext(PlayerContext);
 
   const [showStatus, setShowStatus] = useState(true);
   const [title, setTitle] = useState('歌单');
@@ -100,7 +100,7 @@ export function Album(props) {
     musicNodeRef.current.startAnimation({ x, y });
   };
 
-  const addBottom = showMiniPlayer(playerConfig);
+  const addBottom = showMiniPlayer(config);
 
   return (
     <CSSTransition

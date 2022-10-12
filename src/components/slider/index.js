@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Swiper from 'swiper';
 import * as PropTypes from 'prop-types';
 import SliderContainer from './style';
+// eslint-disable-next-line import/no-unresolved
+import 'swiper/css';
 
 function Slider(props) {
   const [sliderSwiper, setSliderSwiper] = useState(null);
@@ -45,7 +47,7 @@ function Slider(props) {
 }
 
 Slider.propTypes = {
-  bannerList: PropTypes.arrayOf({ imageUrl: PropTypes.string }).isRequired,
+  bannerList: PropTypes.arrayOf(PropTypes.shape({ imageUrl: PropTypes.string })).isRequired,
 };
 
 export default React.memo(Slider);

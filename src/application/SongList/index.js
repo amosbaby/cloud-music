@@ -2,7 +2,7 @@ import React, { forwardRef, useContext } from 'react';
 import * as PropsTypes from 'prop-types';
 import { formatPlayCount, getName } from '../../api/utils';
 import { SongList as ListStyle, SongItem } from './style';
-import { PlayerActionType, PlayerConfigDispatchContext } from '../Player/player.model';
+import { PlayerActionType, PlayerContext } from '../Player/player.model';
 
 const SongList = forwardRef((props) => {
   const {
@@ -19,11 +19,11 @@ const SongList = forwardRef((props) => {
       </span>
     </div>
   );
-  const playerDispatcher = useContext(PlayerConfigDispatchContext);
+  const { dispatcher } = useContext(PlayerContext);
 
   const selectItem = (event, index) => {
     musicAnimation(event.nativeEvent.clientX, event.nativeEvent.clientY);
-    playerDispatcher({ type: PlayerActionType.switchList, data: { playList: songs, playIndex: index } });
+    dispatcher({ type: PlayerActionType.switchList, data: { playList: songs, playIndex: index } });
   };
 
   const renderSongItem = () => (

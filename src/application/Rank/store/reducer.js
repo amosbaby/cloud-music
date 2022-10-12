@@ -6,7 +6,8 @@ const defaultState = fromJS({
   loading: true,
 });
 
-const reducer = (state = defaultState, action) => {
+const reducer = (state, action) => {
+  state = state || defaultState;
   switch (action.type) {
     case actionTypes.UPDATE_RANK_LIST:
       return state.set('rankList', action.data);
@@ -17,4 +18,4 @@ const reducer = (state = defaultState, action) => {
   }
 };
 
-export { reducer };
+export default { reducer };

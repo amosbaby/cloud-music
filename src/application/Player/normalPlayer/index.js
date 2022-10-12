@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { formatPlayTime, getName, GetNextPlayMode } from '../../../api/utils';
+import { formatPlayTime, getName } from '../../../api/utils';
 import {
   Bottom, CDWrapper, LyricContainer, LyricWrapper, Middle, NormalPlayerContainer, Operators, ProgressWrapper, SpeedButton, SpeedButtonList, Top,
 } from './style';
@@ -10,12 +10,14 @@ import {
 } from './animation';
 import Scroll from '../../../components/scroll';
 import { PlaySpeedList } from '../../../api/constant';
+import { PlayerActionType, PlayerContext } from '../player.model';
 
-function NormalPlayer(props) {
+function NormalPlayer() {
+  const { config, dispatcher } = useContext(PlayerContext);
   const {
-    song, playing, percent, duration, currentTime, fullScreen, mode, speed,
-  } = props;
-  const { currentLyric, playingLyric, currentLyricIndex } = props;
+    isFullScreen, progress, speedRation, isPlaying, playList, playIndex, duration, currentTime, currentLyric, isPlayingLyric, currentLyricIndex, mode,
+  } = config;
+  const currentSong = playList[playIndex];
 
   const currentModeRef = useRef('cd');
   const playerRef = useRef();
@@ -31,12 +33,37 @@ function NormalPlayer(props) {
   const leave = createLeave(cdWrapperRef);
   const afterLeave = createAfterLeave(playerRef, cdWrapperRef, currentModeRef);
 
-  const handleClickMode = () => {
-    const currentMode = GetNextPlayMode(mode);
-    // TODO
+  const handleClickMode = (event) => {
+    event.stopPropagation();
+    dispatcher({ type: PlayerActionType.switchMode });
   };
 
+  const handleChangeSong = (event, dir) => {
+    event.stopPropagation();
+    dispatcher({ type: PlayerActionType.changeSongDirection, data: dir });
+  };
+
+  const handleChangeSpeed = (event, speed) => {
+    event.stopPropagation();
+    dispatcher({ type: PlayerActionType.changeSpeed, data: speed });
+  };
+
+  const handlePlaying = (event, playing) => {
+    event.stopPropagation();
+    dispatcher({ type: PlayerActionType.switchPlaying, data: playing });
+  };
+
+  const handleShowList = (event) => {
+    event.stopPropagation();
+    dispatcher({ type: PlayerActionType.showHideList, data: true });
+  };
+
+  const handleBack = (event) => {
+    event.stopPropagation();
+    dispatcher({ type: PlayerActionType.switchFullScreen, data: false });
+  };
   const toggleModeChange = (event) => {
+    event.stopPropagation();
     currentModeRef.current = currentModeRef.current === 'cd' ? 'lyric' : 'cd';
   };
 
@@ -59,10 +86,10 @@ function NormalPlayer(props) {
       <span> 倍速听歌 </span>
       {
           PlaySpeedList.map((item) => (
-            <SpeedButton key={item} className={`${speed === item ? 'selected' : ''}`} onClick={(e) => { handleChangeSpeed(e, item); }}>
-              
+            <SpeedButton key={item} className={`${speedRation === item ? 'selected' : ''}`} onClick={(e) => { handleChangeSpeed(e, item); }}>
+
               {`x${item}`}
-              
+
             </SpeedButton>
           ))
         }
@@ -80,9 +107,9 @@ function NormalPlayer(props) {
                     lyricLineRef.current[index] = React.createRef();
                     return (
                       <p className={`text ${currentLyricIndex === index ? 'current' : ''}`} key={item + index} ref={lyricLineRef.current[index]}>
-                        
+
                         {item.text}
-                        
+
                       </p>
                     );
                   }) : <p className="text pure"> 纯音乐，请欣赏。</p>
@@ -93,25 +120,43 @@ function NormalPlayer(props) {
     </CSSTransition>
   );
 
+  const renderCD = () => (
+    <CSSTransition in={currentModeRef.current === 'cd'} timeout={300} classNames="fade" nodeRef={cdCssNodeRef}>
+      <CDWrapper ref={cdCssNodeRef} style={{ visibility: currentModeRef.current === 'cd' ? 'visible' : 'hidden' }}>
+        {/* 可旋转needle */}
+        <div className={`needle ${isPlaying ? '' : 'pause'}`} />
+        <div className="cd">
+          <img className={`image ${isPlaying ? 'play' : 'pause'}`} src={`${currentSong.al.picUrl}?param=400x400`} alt="cd" />
+
+        </div>
+        <p className="isPlaying_lyric">
+
+          {isPlayingLyric}
+
+        </p>
+      </CDWrapper>
+    </CSSTransition>
+  );
+
   const renderPlayer = () => (
     <NormalPlayerContainer ref={playerRef}>
       <div className="background">
-        <img src={song.al.picUrl} alt="歌曲图片" width="100%" height="100%" />
+        <img src={currentSong.al.picUrl} alt="歌曲图片" width="100%" height="100%" />
       </div>
       <div className="background layer" />
       <Top className="top">
-        <div className="back" onClick={() => toggleFullScreen && toggleFullScreen(false)}>
+        <div className="back" onClick={() => handleBack()}>
           <ion-icon name="chevron-down-outline" />
         </div>
         <h1 className="title">
-          
-          {song.name}
-          
+
+          {currentSong.name}
+
         </h1>
         <h1 className="subtitle">
-          
-          {getName(song.ar)}
-          
+
+          {getName(currentSong.ar)}
+
         </h1>
       </Top>
       <Middle ref={cdWrapperRef} onClick={(e) => toggleModeChange(e)}>
@@ -123,33 +168,33 @@ function NormalPlayer(props) {
         <ProgressWrapper>
           <span className="time time-l">
             { formatPlayTime(currentTime) }
-            
+
           </span>
           <div className="progress-bar-wrapper">
-            <ProgressBar percent={percent} updatePercent={onProgressChange} />
+            <ProgressBar percent={progress} />
           </div>
           <div className="time time-r">
             { formatPlayTime(duration) }
-            
+
           </div>
         </ProgressWrapper>
         <Operators>
-          <div className="icon i-left" onClick={() => handleClickMode()}>
+          <div className="icon i-left" onClick={(e) => handleClickMode(e)}>
             <ion-icon name={mode.icon} />
           </div>
-          <div className="icon i-left" onClick={handlePre}>
+          <div className="icon i-left" onClick={(e) => handleChangeSong(e, 'Pre')}>
             <ion-icon name="play-skip-back-outline" />
           </div>
           <div className="icon i-center">
             {
-                playing ? <ion-icon name="pause-circle-outline" onClick={(e) => clickPlaying(e, false)} />
-                  : <ion-icon name="caret-forward-circle-outline" onClick={(e) => clickPlaying(e, true)} />
+                isPlaying ? <ion-icon name="pause-circle-outline" onClick={(e) => handlePlaying(e, false)} />
+                  : <ion-icon name="caret-forward-circle-outline" onClick={(e) => handlePlaying(e, true)} />
               }
           </div>
-          <div className="icon i-right" onClick={handleNext}>
+          <div className="icon i-right" onClick={(e) => handleChangeSong(e, 'Next')}>
             <ion-icon name="play-skip-forward-outline" />
           </div>
-          <div className="icon i-right" onClick={handleShowList}>
+          <div className="icon i-right" onClick={(e) => handleShowList(e)}>
             <ion-icon name="list-circle-outline" />
           </div>
         </Operators>
@@ -157,28 +202,10 @@ function NormalPlayer(props) {
     </NormalPlayerContainer>
   );
 
-  const renderCD = () => (
-    <CSSTransition in={currentModeRef.current === 'cd'} timeout={300} classNames="fade" nodeRef={cdCssNodeRef}>
-      <CDWrapper ref={cdCssNodeRef} style={{ visibility: currentModeRef.current === 'cd' ? 'visible' : 'hidden' }}>
-        {/* 可旋转needle */}
-        <div className={`needle ${playing ? '' : 'pause'}`} />
-        <div className="cd">
-          <img className={`image ${playing ? 'play' : 'pause'}`} src={`${song.al.picUrl}?param=400x400`} alt="cd" />
-
-        </div>
-        <p className="playing_lyric">
-          
-          {playingLyric}
-          
-        </p>
-      </CDWrapper>
-    </CSSTransition>
-  );
-
   return (
     <CSSTransition
       classNames="normal"
-      in={fullScreen}
+      in={isFullScreen}
       timeout={400}
       onEnter={() => enter()}
       onEntered={() => afterEnter()}

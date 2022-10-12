@@ -4,10 +4,11 @@ import React, {
 import LazyLoad, { forceCheck } from 'react-lazyload';
 import { connect, useDispatch } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
+import { getSongDetailRequest } from '../../api/request';
 import { getName } from '../../api/utils';
 import Loading from '../../components/loading';
 import Scroll from '../../components/scroll';
-import { PlayerActionType, PlayerConfigDispatchContext } from '../Player/player.model';
+import { PlayerActionType, PlayerContext } from '../Player/player.model';
 import SearchBox from './SearchBox';
 import { updateSongList, updateSuggestList } from './store/actionCreators';
 import { mapDispatchToProps, mapStateToProps } from './store/utils';
@@ -16,8 +17,7 @@ import {
 } from './style';
 
 function Search(props) {
-
-  const playerDispatcher = useContext(PlayerConfigDispatchContext);
+  const { dispatcher } = useContext(PlayerContext);
 
   const {
     loading, hotList: immutableHotList,
@@ -48,18 +48,16 @@ function Search(props) {
   }, []);
 
   const dispatch = useDispatch();
-  const handleQuery = useCallback((query) => {
-    setQuery(query);
-    if (!query) {
+  const handleQuery = useCallback((queryT) => {
+    setQuery(queryT);
+    if (!queryT) {
       dispatch(updateSuggestList([]));
       dispatch(updateSongList([]));
       return;
     }
     updateLoadingDispatch(true);
-    getSuggestListDispatch(query);
+    getSuggestListDispatch(queryT);
   }, []);
-
-
 
   const renderHotKeys = () => {
     const list = hotList.toJS() || [];
@@ -68,9 +66,9 @@ function Search(props) {
         {
           list.map((item) => (
             <li className="item" key={item.first} onClick={() => setQuery(item.first)}>
-              
+
               { item.first}
-              
+
             </li>
           ))
         }
@@ -93,12 +91,12 @@ function Search(props) {
           albums.map((item, index) => (
             <ListItem key={`${item.accountId}${index}`} onClick={() => onEnterAlbum(item.id)}>
               <div className="img_wrapper">
-                <LazyLoad placeholder={<img width="100%" height="100%" src={require('./music.png')} alt="p" />}>
+                <LazyLoad placeholder={<img width="100%" height="100%" src="./music.png" alt="p" />}>
                   <img src={item.coverImgUrl} width="100%" height="100%" alt="music" />
                 </LazyLoad>
               </div>
               <span className="name">
-                
+
                 歌单：
                 {item.name}
               </span>
@@ -124,12 +122,12 @@ function Search(props) {
           singers.map((item, index) => (
             <ListItem key={`${item.accountId}${index}`} onClick={() => onEnterSinger(item.id)}>
               <div className="img_wrapper">
-                <LazyLoad placeholder={<img width="100%" height="100%" src={require('./music.png')} alt="p" />}>
+                <LazyLoad placeholder={<img width="100%" height="100%" src="./music.png" alt="p" />}>
                   <img src={item.picUrl} width="100%" height="100%" alt="music" />
                 </LazyLoad>
               </div>
               <span className="name">
-                
+
                 歌手：
                 {item.name}
               </span>
@@ -140,6 +138,11 @@ function Search(props) {
     );
   };
 
+  const handleSelectSong = async (songId) => {
+    const res = await getSongDetailRequest(songId);
+    dispatcher({ type: PlayerActionType.addSong, data: res.songs[0] });
+  };
+
   const renderSongs = () => {
     if (!songList.length) return;
     return (
@@ -148,16 +151,13 @@ function Search(props) {
         <SongItem style={{ paddingLeft: '20px' }}>
           {
           songList.map((item) => (
-            <li key={item.id} onClick={() => playerDispatcher({ type: PlayerActionType.addSong, data: item.id })}>
+            <li key={item.id} onClick={() => handleSelectSong(item.id)}>
               <div className="info">
                 <span>
-                  
                   {item.name}
-                  
                 </span>
                 <span>
                   { getName(item.artists)}
-                  
                   -
                   {item.album.name}
                 </span>

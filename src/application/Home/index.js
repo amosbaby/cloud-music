@@ -1,16 +1,17 @@
-import React, { useReducer } from 'react';
+import React, { useMemo } from 'react';
 import { renderRoutes } from 'react-router-config';
 import { NavLink } from 'react-router-dom';
 import PlayList from '../../components/play-list';
 import Player from '../Player';
 import { Tab, TabItem, Top } from './style';
 import {
-  defaultPlayerConfig, PlayerConfigContext, PlayerConfigDispatchContext, playerReducer,
+  getPlayerReducer, PlayerContext,
 } from '../Player/player.model';
 
 function Home(props) {
   const { history, route } = props;
-  const [playerConfig, playerDispatch] = useReducer(playerReducer, defaultPlayerConfig);
+
+  const [config, dispatcher] = getPlayerReducer();
 
   const onShowSearch = () => {
     history.push('/search');
@@ -28,7 +29,7 @@ function Home(props) {
         </span>
       </Top>
       <Tab>
-        <NavLink to="/recommend" activeClassName="selected">
+        <NavLink to="/" exact activeClassName="selected">
           <TabItem>
 
             <span> 推荐 </span>
@@ -56,13 +57,11 @@ function Home(props) {
       <PlayList />
     </>
   );
-
+  const playerContext = useMemo(() => ({ config, dispatcher }), [config]);
   return (
-    <PlayerConfigContext.Provider value={playerConfig}>
-      <PlayerConfigDispatchContext.Provider value={playerDispatch}>
-        {renderHome()}
-      </PlayerConfigDispatchContext.Provider>
-    </PlayerConfigContext.Provider>
+    <PlayerContext.Provider value={playerContext}>
+      {renderHome()}
+    </PlayerContext.Provider>
   );
 }
 

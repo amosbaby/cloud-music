@@ -1,14 +1,14 @@
 import React, {
   useContext, useEffect, useRef, useState,
 } from 'react';
-import { PlayerActionType, PlayerConfigContext, PlayerConfigDispatchContext } from '../../application/Player/player.model';
+import { PlayerActionType, PlayerContext } from '../../application/Player/player.model';
 import ProgressBarWrapper from './style';
 
 function ProgressBar() {
+  const { config, dispatcher } = useContext(PlayerContext);
   const {
     progress,
-  } = useContext(PlayerConfigContext);
-  const playerDispatcher = useContext(PlayerConfigDispatchContext);
+  } = config;
   const progressBarRef = useRef();
   const progressRef = useRef();
   const progressBtnWrapperRef = useRef();
@@ -19,7 +19,7 @@ function ProgressBar() {
   const _changePercent = () => {
     const barWidth = progressBarRef.current.clientWidth - progressBtnWidth;
     const curPercent = progressRef.current.clientWidth / barWidth;// 新的进度计算
-    playerDispatcher({ type: PlayerActionType.updateProgress, data: curPercent });
+    dispatcher({ type: PlayerActionType.updateProgress, data: curPercent });
   };
 
   const updateOffset = (offsetWidth) => {

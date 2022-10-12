@@ -16,22 +16,22 @@ function RecommendList(props) {
       <div className="img_wrapper">
         <div className="decorate" />
         {/* 加参数可减小请求的图片资源大小 */}
-        <LazyLoad placeholder={<img width="100%" height="100%" src={require('./music.png')} alt="music" />}>
+        <LazyLoad placeholder={<img width="100%" height="100%" src="./music.png" alt="music" />}>
           <img src={`${item.picUrl}?param=300x300`} alt="music" />
         </LazyLoad>
         <div className="play-count">
           <ion-icon name="play-circle-outline" className="play" />
           <span className="count">
-            
+
             {formatPlayCount(item.playCount)}
-            
+
           </span>
         </div>
       </div>
       <div className="desc">
-        
+
         {item.name}
-        
+
       </div>
     </ListItem>
   ));

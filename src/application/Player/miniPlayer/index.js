@@ -2,28 +2,28 @@ import React, { useContext, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { getName } from '../../../api/utils';
 import ProgressCircle from '../../../baseUI/ProgressCircle';
-import { PlayerActionType, PlayerConfigContext, PlayerConfigDispatchContext } from '../player.model';
-import { MiniPlayerContainer } from './style';
+import { PlayerActionType, PlayerContext } from '../player.model';
+import MiniPlayerContainer from './style';
 
 function MiniPlayer() {
+  const { config, dispatcher } = useContext(PlayerContext);
   const {
     progress, isPlaying, playList, playIndex, isFullScreen,
-  } = useContext(PlayerConfigContext);
+  } = config;
   const currentSong = playList[playIndex];
-  const playerDispatcher = useContext(PlayerConfigDispatchContext);
 
   const playerRef = useRef();
   const switchPlaying = (event, status) => {
     event.stopPropagation();
-    playerDispatcher({ type: PlayerActionType.switchPlaying, data: status });
+    dispatcher({ type: PlayerActionType.switchPlaying, data: status });
   };
   const showFullScreen = (event) => {
     event.stopPropagation();
-    playerDispatcher({ type: PlayerActionType.switchFullScreen, data: true });
+    dispatcher({ type: PlayerActionType.switchFullScreen, data: true });
   };
   const switchShowList = (event) => {
     event.stopPropagation();
-    playerDispatcher({ type: PlayerActionType.showHideList, data: true });
+    dispatcher({ type: PlayerActionType.showHideList, data: true });
   };
   const renderPlayer = () => (
     <MiniPlayerContainer ref={playerRef}>

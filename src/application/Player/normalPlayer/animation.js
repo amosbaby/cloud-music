@@ -1,5 +1,5 @@
 import animations from 'create-keyframe-animation';
-import { prefixStyle } from '../../../api/utils/css';
+import prefixStyle from '../../../api/utils/css';
 
 const transform = prefixStyle('transform');
 

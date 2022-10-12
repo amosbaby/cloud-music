@@ -7,7 +7,8 @@ const defaultState = fromJS({
   loadingStatus: true,
 });
 
-const fn = (state = defaultState, action) => {
+const fn = (state, action) => {
+  state = state || defaultState;
   switch (action.type) {
     case actionTypes.UPDATE_BANNER:
       return state.set('bannerList', action.data);

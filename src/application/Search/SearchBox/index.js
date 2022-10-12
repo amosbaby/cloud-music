@@ -1,8 +1,8 @@
-import react, {
+import React, {
   useEffect, useMemo, useRef, useState,
 } from 'react';
 import { debounce } from '../../../api/utils';
-import { SearchBoxWrapper } from './style';
+import SearchBoxWrapper from './style';
 
 function SearchBox(props) {
   const inputRef = useRef();
@@ -49,12 +49,12 @@ function SearchBox(props) {
       </span>
       <input ref={inputRef} className="box" placeholder="搜索歌曲、歌手、专辑" value={query} onChange={handleInputChange} />
       <span style={clearBtnDisplay} className="clear-button" onClick={() => clearInput()}>
-        
+
         <ion-icon name="close-circle-outline" />
-        
+
       </span>
     </SearchBoxWrapper>
   );
 }
 
-export default react.memo(SearchBox);
+export default React.memo(SearchBox);

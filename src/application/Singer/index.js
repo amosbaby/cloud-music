@@ -13,10 +13,10 @@ import { HEADER_HEIGHT } from '../../api/constant';
 import { getArtist, updateLoading } from './store/actionCreators';
 import Loading from '../../components/loading';
 import MusicNode from '../../baseUI/MusicNode';
-import { PlayerConfigContext, showMiniPlayer } from '../Player/player.model';
+import { PlayerContext, showMiniPlayer } from '../Player/player.model';
 
 function Singer(props) {
-  const playerConfig = useContext(PlayerConfigContext)
+  const { config } = useContext(PlayerContext);
   const [showStatus, setShowStatus] = useState(true);
   const nodeRef = useRef();
 
@@ -36,7 +36,6 @@ function Singer(props) {
       dispatch(updateLoading(true));
       dispatch(getArtist(currentId));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const loading = useSelector((state) => state.artist.getIn(['loading']));
 
@@ -100,7 +99,7 @@ function Singer(props) {
     musicNodeRef.current.startAnimation({ x, y });
   };
 
-  const addBottom = showMiniPlayer(playerConfig)
+  const addBottom = showMiniPlayer(config);
 
   return (
     <CSSTransition

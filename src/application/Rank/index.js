@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
 import Loading from '../../components/loading';
 import Scroll from '../../components/scroll';
-import { PlayerConfigContext, showMiniPlayer } from '../Player/player.model';
+import { PlayerContext, showMiniPlayer } from '../Player/player.model';
 import { getRankList } from './store/actionCreators';
 import {
   Container, List, ListItem, SongList,
 } from './style';
 
 function Rank(props) {
-  const playerConfig = useContext(PlayerConfigContext)
+  const { config } = useContext(PlayerContext);
   const rankList = useSelector((state) => state.rank.getIn(['rankList']));
   const dispatch = useDispatch();
 
@@ -31,16 +31,11 @@ function Rank(props) {
       {
           list.map((item, index) => (
             <li key={item.first + index}>
-              
               {index + 1}
               .
-              
               {item.first}
-              
               -
-              
               {item.second}
-              
             </li>
           ))
         }
@@ -65,9 +60,7 @@ function Rank(props) {
                   <img src={item.coverImgUrl} alt="rank" />
                   <div className="decorate" />
                   <span className="update_frequency">
-                    
                     {item.updateFrequency}
-                    
                   </span>
                 </div>
                 { renderSongList(item.tracks) }
@@ -78,7 +71,7 @@ function Rank(props) {
   );
   const displayStyle = { display: loading ? '' : 'none' };
 
-  const addBottom = showMiniPlayer(playerConfig)
+  const addBottom = showMiniPlayer(config);
 
   return (
     <Container addBottom={addBottom}>

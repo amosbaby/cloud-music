@@ -1,7 +1,7 @@
 import React, {
   forwardRef, useEffect, useImperativeHandle, useRef,
 } from 'react';
-import { prefixStyle } from '../../api/utils/css';
+import prefixStyle from '../../api/utils/css';
 import Container from './style';
 // 容器里最多只能装3个音符
 const MAX_ICON_NUMBER = 3;

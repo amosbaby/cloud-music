@@ -3,16 +3,15 @@ import React, {
 } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { getName } from '../../api/utils';
-import { prefixStyle } from '../../api/utils/css';
-import { PlayerActionType, PlayerConfigContext, PlayerConfigDispatchContext } from '../../application/Player/player.model';
+import prefixStyle from '../../api/utils/css';
+import { PlayerActionType, PlayerContext } from '../../application/Player/player.model';
 import Scroll from '../scroll';
 import {
   ListContent, ListHeader, PlayListWrapper, ScrollWrapper,
 } from './style';
 
 function PlayList() {
-  const playerConfig = useContext(PlayerConfigContext);
-  const playerDispatcher = useContext(PlayerConfigDispatchContext);
+  const { config, dispatcher } = useContext(PlayerContext);
 
   const [isShow, setIsShow] = useState(false);
 
@@ -44,7 +43,7 @@ function PlayList() {
   };
   const {
     mode, playIndex, playList, showList,
-  } = playerConfig;
+  } = config;
   const renderModeInfo = () => (
     <div onClick={(e) => handleChangeMode(e)}>
       <ion-icon name={mode.icon} />
@@ -69,17 +68,17 @@ function PlayList() {
 
   const handleDelete = useCallback((e, index) => {
     e.stopPropagation();
-    playerDispatcher({ type: PlayerActionType.deleteSong, data: index });
+    dispatcher({ type: PlayerActionType.deleteSong, data: index });
   });
 
   const handleChangeSong = useCallback((e, index) => {
     e.stopPropagation();
-    playerDispatcher({ type: PlayerActionType.changeSong, data: index });
+    dispatcher({ type: PlayerActionType.changeSongIndex, data: index });
   });
 
   const hideList = useCallback((e) => {
     e.stopPropagation();
-    playerDispatcher({ type: PlayerActionType.showHideList, data: false });
+    dispatcher({ type: PlayerActionType.showHideList, data: false });
   });
 
   const renderList = () => (

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import GlobalStyle from '../../../assets/global-style';
 
-export const SearchBoxWrapper = styled.div`
+const SearchBoxWrapper = styled.div`
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -43,3 +43,5 @@ export const SearchBoxWrapper = styled.div`
 }
 
 `;
+
+export default SearchBoxWrapper;

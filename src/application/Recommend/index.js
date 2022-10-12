@@ -5,13 +5,13 @@ import { renderRoutes } from 'react-router-config';
 import Scroll from '../../components/scroll';
 import Slider from '../../components/slider';
 import RecommendList from './list';
-import { Content } from './style';
+import Content from './style';
 import * as actionTypes from './store/actionCreators';
 import Loading from '../../components/loading';
-import { PlayerConfigContext, showMiniPlayer } from '../Player/player.model';
+import { PlayerContext, showMiniPlayer } from '../Player/player.model';
 
 function Recommend(props) {
-  const playerConfig = useContext(PlayerConfigContext)
+  const { config } = useContext(PlayerContext);
   const bannerList = useSelector((state) => state.recommend.getIn(['bannerList']));
   const recommendList = useSelector((state) => state.recommend.getIn(['recommendList']));
 
@@ -24,7 +24,6 @@ function Recommend(props) {
     if (!recommendList.size) {
       dispatch(actionTypes.getRecommendList());
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadingStatus = useSelector((state) => state.recommend.getIn(['loadingStatus']));
@@ -32,7 +31,7 @@ function Recommend(props) {
   const bannerListJS = bannerList ? bannerList.toJS() : [];
   const recommendListJS = recommendList ? recommendList.toJS() : [];
 
-  const addBottom = showMiniPlayer(playerConfig)
+  const addBottom = showMiniPlayer(config);
 
   return (
     <Content addBottom={addBottom}>

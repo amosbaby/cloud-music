@@ -8,7 +8,8 @@ const defaultState = fromJS({
   songList: [],
 });
 
-export default function reducer(state = defaultState, action) {
+export default function reducer(state, action) {
+  state = state || defaultState;
   switch (action.type) {
     case actionTypes.UPDATE_LOADING:
       return state.set('loading', action.data);

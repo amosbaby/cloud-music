@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import GlobalStyle from '../../../assets/global-style';
 
-export const MiniPlayerContainer = styled.div`
+const MiniPlayerContainer = styled.div`
   display: flex;
   align-items: center;
   position: fixed;
@@ -78,3 +78,4 @@ export const MiniPlayerContainer = styled.div`
     }
   }
 `;
+export default MiniPlayerContainer;

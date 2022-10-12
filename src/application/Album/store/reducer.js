@@ -6,7 +6,8 @@ const defaultState = fromJS({
   loading: true,
 });
 
-const fn = (state = defaultState, action) => {
+const fn = (state, action) => {
+  state = state || defaultState;
   switch (action.type) {
     case actionTypes.UPDATE_ALBUM_DETAIL:
       return state.set('albumDetail', action.data);

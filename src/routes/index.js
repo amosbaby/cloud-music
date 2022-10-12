@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import Home from '../application/Home';
 
 const RecommendComponent = lazy(() => import('../application/Recommend'));
@@ -28,9 +28,7 @@ const routes = [{
     {
       path: '/',
       exact: true,
-      render: () => {
-        <Redirect to="/recommend" />;
-      },
+      component: SuspenseComponent(RecommendComponent),
     },
     {
       path: '/search',

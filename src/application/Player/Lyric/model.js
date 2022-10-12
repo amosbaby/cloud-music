@@ -9,7 +9,8 @@ export default class Lyric {
    * @param {string} lrc
    * @param {function} handler
    */
-  constructor(lrc, handler = () => {}, speed) {
+  constructor(lrc, handler, speed) {
+    handler = handler || (() => {});
     this.speed = speed || 1;
     this.lrc = lrc;
     this.handler = handler;

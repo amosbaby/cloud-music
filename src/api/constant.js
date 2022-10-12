@@ -10,6 +10,11 @@ export const PlayMode = {
   loop: { index: 2, desc: '循环播放', icon: 'reload-outline' },
 };
 
+export const getNextMode = (currentMode) => {
+  const index = currentMode ? (currentMode.index + 1) % 3 : 0;
+  return Object.values(PlayMode).find((mode) => mode.index === index);
+};
+
 /**
  * 播放速度
  */

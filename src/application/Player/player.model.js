@@ -1,6 +1,5 @@
-import { createContext } from 'react';
-import { PlayMode } from '../../api/constant';
-import { getSongDetailRequest } from '../../api/request';
+import { createContext, useCallback, useReducer } from 'react';
+import { getNextMode, PlayMode } from '../../api/constant';
 
 export const defaultPlayerConfig = {
   // 实际播放列表,有可能随机了或者删减了
@@ -15,6 +14,12 @@ export const defaultPlayerConfig = {
   isFullScreen: false,
   isPlaying: false,
   isShowLyric: false,
+
+  currentLyric: null,
+  playingLyricText: '',
+
+  duration: 0,
+  currentTime: 0,
 
   mode: PlayMode.sequence,
 };
@@ -32,27 +37,58 @@ export const showFullScreenPlayer = (config) => config && config.isPlaying && co
 export const PlayerActionType = {
   switchList: 'SWITCHLIST',
   switchMode: 'SWITCHMODE',
-  changeSong: 'CHANGESONG',
+  changeSongIndex: 'CHANGESONGINDEX',
+  changeSongDirection: 'CHANGESONGDIRECTION',
   switchFullScreen: 'SWITCHFULLSCREEN',
   showHideList: 'SHOWHIDELIST',
   deleteSong: 'DELETESONG',
   addSong: 'ADDSONG',
   changeSpeed: 'CHANGESPEED',
   showHideLyric: 'SHOWLYRIC',
+  updateLyric: 'UPDATELYRIC',
+  updateLyricText: 'UPDATELYRICTEXT',
   switchPlaying: 'SWITCHPLAYING',
   updateProgress: 'UPDATEPROGRESS',
+  updateCurrentTime: 'UPDATECURRENTTIME',
 };
 
-export const playerReducer = async (state, action) => {
+export const playerReducer = (state, action) => {
   switch (action.type) {
     case PlayerActionType.switchList:
     { // 更新播放列表后，将播放下标重置为0
       const { playList, playIndex = 0 } = action.data;
       return { ...state, playList, playIndex }; }
     case PlayerActionType.switchMode:
-      return { ...state, mode: action.data };
-    case PlayerActionType.changeSong:
+    {
+      const mode = getNextMode(action.data);
+      return { ...state, mode };
+    }
+
+    case PlayerActionType.changeSongDirection:
+    {
+      const dt = action.data === 'Pre' ? -1 : 1;
+      const { playIndex, playList, mode } = state;
+      const total = playList.length;
+      let index = playIndex;
+      switch (mode) {
+        case PlayMode.loop:
+        case PlayMode.random:
+          index = playIndex === total - 1 ? 0 : playIndex + dt;
+          break;
+        case PlayMode.sequence:
+          index = Math.min(playIndex + dt, total - 1);
+          break;
+        default:
+          index = total - 1;
+          break;
+      }
+
+      return { ...state, playIndex: index };
+    }
+
+    case PlayerActionType.changeSongIndex:
       return { ...state, playIndex: action.data };
+
     case PlayerActionType.showHideList:
       return { ...state, showList: action.data };
     case PlayerActionType.switchFullScreen:
@@ -69,11 +105,11 @@ export const playerReducer = async (state, action) => {
     }
     case PlayerActionType.addSong:
     {
-      const res = await getSongDetailRequest(action.data);
       // 将新歌放在数组最后
-      const playList = [...state.playList, res.songs[0]];
+      const playList = [...state.playList, action.data];
       // 同时更新播放下标
       const playIndex = playList.length - 1;
+
       return { ...state, playList, playIndex };
     }
     case PlayerActionType.changeSpeed:
@@ -86,16 +122,36 @@ export const playerReducer = async (state, action) => {
     }
     case PlayerActionType.switchPlaying:
     {
-      return { ...state, isPlaying: action.data };
+      const isPlaying = action.data || !state.isPlaying;
+      return { ...state, isPlaying };
+    }
+    case PlayerActionType.updateCurrentTime:
+    {
+      const progress = action.data / (state.duration || 1);
+      return { ...state, progress, currentTime: action.data };
+    }
+    case PlayerActionType.updateLyric:
+    {
+      return { ...state, currentLyric: action.data };
+    }
+    case PlayerActionType.updateLyricText:
+    {
+      return { ...state, playingLyricText: action.data };
     }
     case PlayerActionType.updateProgress:
     {
-      return { ...state, progress: action.data };
+      const currentTime = action.data * state.duration;
+      return {
+        ...state, currentTime, isPlaying: true, progress: action.data,
+      };
     }
     default:
       return state;
   }
 };
 
-export const PlayerConfigContext = createContext();
-export const PlayerConfigDispatchContext = createContext();
+export function getPlayerReducer() {
+  return useReducer(useCallback(playerReducer), defaultPlayerConfig);
+}
+
+export const PlayerContext = createContext();
